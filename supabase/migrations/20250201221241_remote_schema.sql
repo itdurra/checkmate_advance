@@ -230,7 +230,7 @@ alter table "public"."subscriptions" drop constraint "subscriptions_user_id_fkey
 
 alter table "public"."users" drop constraint "users_id_fkey";
 
-drop function if exists "public"."handle_new_user"();
+drop function if exists "public"."handle_new_user"() cascade;
 
 alter table "public"."customers" drop constraint "customers_pkey";
 
