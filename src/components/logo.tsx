@@ -10,9 +10,9 @@ export function Logo() {
         height={40}
         priority
         quality={100}
-        alt='UPDATE_THIS_WITH_YOUR_APP_DISPLAY_NAME logo mark'
+        alt='Checkmate Advance logo mark'
       />
-      <span className='font-alt text-xl text-white'>UPDATE_THIS_WITH_YOUR_APP_DISPLAY_NAME</span>
+      <span className='font-alt text-xl text-white'>Checkmate Advance</span>
     </Link>
   );
 }
