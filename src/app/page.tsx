@@ -25,9 +25,9 @@ function HeroSection() {
               Generate banners with DALL·E
             </span>
           </div>
-          <h1>Instantly craft stunning Twitter banners.</h1>
+          <h1>Control your Gameboy with a chess game</h1>
           <Button asChild variant='sexy'>
-            <Link href='/signup'>Get started for free</Link>
+            <Link href='/signup'>Make an account</Link>
           </Button>
         </div>
       </Container>

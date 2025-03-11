@@ -1,0 +1,127 @@
+{
+  "bosses": [
+    {
+      "level": 1,
+      "name": "Dr. Blunder",
+      "image": "/img/level1picture.png",
+      "bg": "#ddceb4",
+      "baseBg": "#c381b5",
+      "textColor": "#30210b",
+      "borderColor": "#30210b",
+      "shadowColor": "#30210b",
+      "description": "Dr. Blunder is the polite, bumbling alter ego of the horrible Mr Mate. When Dr. Blunder’s circuits overload, Mr. Mate emerges leading to devastating checkmates.",
+      "weakness": "Try out some powerups to gain an extra advantage",
+      "depth": 1,
+      "elo": 1200,
+      "moveTime": 300,
+      "song": "/music/OGG/16. Conviction.ogg",
+      "taunts": [
+        "Oh dear, did I just hang a piece? Or was that part of my master plan?",
+        "I may be glitching, but at least I'm not predictable!",
+        "Calculating... calculating... oh bother, let’s just wing it!"
+      ],
+      "cutscene": [
+        {
+          "title": "A new enemy approaches...",
+          "text": "I am Dr. Blunder, the museum’s finest chess automaton",
+          "image": "/img/level1picture.png"
+        },
+        {
+          "title": "A new enemy approaches...",
+          "text": "Oh dear… something… feels… wrong. My circuits... are... glitching...!",
+          "image": "/img/level1slide1.png"
+        },
+        {
+          "title": "A new enemy approaches...",
+          "text": "ME MR. MATE! NO MORE POLITE—ONLY TOTAL DESTRUCTION!",
+          "image": "/img/level1slide3.png"
+        }
+      ],
+      "attack": "??? My logic processing unit is malfunctioning ??? Selecting move at random ???",
+      "undo": "Calculating 99% chance human will make same mistake again",
+      "engine": "No fair, I'm the only engine around here!"
+    },
+    {
+      "level": 2,
+      "name": "Mr. Mate",
+      "image": "/img/level2picture.png",
+      "bg": "#ddceb4",
+      "baseBg": "#c381b5",
+      "textColor": "#30210b",
+      "borderColor": "#30210b",
+      "shadowColor": "#30210b",
+      "description": "Mr. Mate is the aggressive, chaotic alter ego of Dr. Blunder. Mr. Mate is a tactical genius, just as long as he stays transformed.",
+      "weakness": "The attack power-up is effective",
+      "depth": 1,
+      "elo": 2100,
+      "moveTime": 300,
+      "song": "/music/OGG/13. Menace.ogg",
+      "taunts": [
+        "ME MR. MATE! YOUR KING WILL FALL IN THREE MOVES—OR LESS!",
+        "NO MORE POLITE! ONLY PAIN! CHECKMATE IS COMING!",
+        "YOU THINK YOU CAN WIN? I’LL CRUSH YOU LIKE A BUG!"
+      ],
+      "cutscene": [
+        {
+          "title": "A new enemy approaches...",
+          "text": "I am Dr. Blunder, the museum’s finest chess automaton",
+          "image": "/img/level1slide2.webp"
+        },
+        {
+          "title": "A new enemy approaches...",
+          "text": "Oh dear… something… feels… wrong. My circuits... are... glitching...!",
+          "image": "/img/level1slide3.webp"
+        },
+        {
+          "title": "A new enemy approaches...",
+          "text": "ME MR. MATE! NO MORE POLITE—ONLY TOTAL DESTRUCTION!",
+          "image": "/img/level1slide4.webp"
+        }
+      ],
+      "attack": "??? ME NO FEEL GOOD ???",
+      "undo": "HOW YOU DO THAT?",
+      "engine": "THAT IS CHEATING!"
+    },
+    {
+      "level": 3,
+      "name": "Illusion.exe",
+      "image": "/img/level3picture.png",
+      "bg": "#fefcd0",
+      "baseBg": "#c381b5",
+      "textColor": "black",
+      "borderColor": "black",
+      "shadowColor": "#c381b5",
+      "description": "A cursed chess engine, corrupted by unseen forces. Illusion.exe manipulates perception, making pieces appear and disappear at will. Can you trust your memory, or will you fall victim to its tricks?",
+      "weakness": "The undo powerup can undo its powerful spell",
+      "depth": 1,
+      "elo": 1200,
+      "moveTime": 300,
+      "song": "/music/OGG/16. Conviction.ogg",
+      "taunts": [
+        "Are you sure that piece was there?",
+        "Your reality is... unstable.",
+        "Perhaps you were seeing things."
+      ],
+      "cutscene": [
+        {
+          "title": "A new presence emerges...",
+          "text": "I have waited in the shadows... for my next opponent.",
+          "image": "/img/level3picture.png"
+        },
+        {
+          "title": "Your vision deceives you...",
+          "text": "Not all pieces are seen... but they are always there.",
+          "image": "/img/level3picture.png"
+        },
+        {
+          "title": "The board shifts...",
+          "text": "Do you remember where they are? Ha ha haa...",
+          "image": "/img/level3slide8.png"
+        }
+      ],
+      "attack": "I... I cannot see...",
+      "undo": "Your frail mind clings to the past...",
+      "engine": "You cannot compute the unknowable!"
+    }
+  ]
+}

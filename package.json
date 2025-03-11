@@ -26,22 +26,30 @@
     "@radix-ui/react-tabs": "^1.1.2",
     "@radix-ui/react-toast": "^1.2.4",
     "@react-email/components": "^0.0.32",
-    "@stripe/stripe-js": "^2.4.0",
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.47.12",
+    "@treasure-chess/chess-achievements": "^0.1.5",
     "@vercel/analytics": "^1.4.1",
+    "chess.js": "^1.0.0",
     "class-variance-authority": "^0.7.1",
     "classnames": "^2.5.1",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.4.5",
+    "gameboy-emulator": "^1.1.2",
+    "howler": "^2.2.4",
+    "localforage": "^1.10.0",
     "lucide-react": "^0.474.0",
     "next": "^15.1.6",
     "next-route-handler-pipe": "^1.0.5",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "pixel-retroui": "^1.0.67",
+    "react": "^19.0.0",
+    "react-chessboard": "^4.7.2",
+    "react-dom": "^19.0.0",
     "react-email": "^3.0.6",
     "react-icons": "^5.4.0",
     "resend": "^4.1.1",
     "socket.io": "^4.8.1",
+    "stockfish": "^16.0.0",
     "stripe": "^14.25.0",
     "tailwind-merge": "^2.6.0",
     "tailwindcss": "^3.4.17",
@@ -49,6 +57,9 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@stripe/stripe-js": "^5.10.0",
+    "@types/chess.js": "^0.13.7",
+    "@types/howler": "^2.2.12",
     "@types/react": "19.0.4",
     "@types/react-dom": "19.0.2",
     "autoprefixer": "^10.4.20",
@@ -68,5 +79,9 @@
   "overrides": {
     "@types/react": "19.0.4",
     "@types/react-dom": "19.0.2"
+  },
+  "resolutions": {
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
   }
 }

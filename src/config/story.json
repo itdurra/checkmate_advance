@@ -1,0 +1,24 @@
+{
+  "story": [
+    {
+      "title": "A Storm to Remember",
+      "text": "Lightning split the sky—CRACK! Deep in the Grandmaster’s Chess Museum, something… woke up.",
+      "image": "/img/storyslide1.png"
+    },
+    {
+      "title": "",
+      "text": "Ancient chess computers flickered to life. Their screens glowed. Their circuits hummed. They remembered every game…",
+      "image": "/img/storyslide2.png"
+    },
+    {
+      "title": "",
+      "text": "The chessboard trembled. Pieces moved on their own. This wasn’t just a game anymore…",
+      "image": "/img/storyslide3.png"
+    },
+    {
+      "title": "",
+      "text": "The museum doors slammed shut. Only one way out… Win. Or stay forever.",
+      "image": "/img/storyslide4.png"
+    }
+  ]
+}

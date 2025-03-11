@@ -1,6 +1,30 @@
+@import 'pixel-retroui/dist/index.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Minecraft-Bold';
+  src: url('/fonts/3_Minecraft-Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Minecraft';
+  src: url('/fonts/1_Minecraft-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-minecraft-bold {
+  font-family: 'Minecraft-Bold', sans-serif;
+}
+
+.font-minecraft {
+  font-family: 'Minecraft', sans-serif;
+}
+
 @layer base {
   :root {
     --background: 240 6% 10%;
@@ -82,7 +106,7 @@
     @apply min-w-0;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-white bg-[linear-gradient(to_right,#d1d1d1_1px,transparent_1px),linear-gradient(to_bottom,#d1d1d1_1px,transparent_1px)] bg-[size:16px_16px];
     font-feature-settings: 'rlig' 1, 'calt' 1;
   }
   html {
@@ -91,17 +115,69 @@
   body {
     @apply h-full;
   }
-  h1 {
-    @apply font-alt;
-    @apply font-bold;
-    @apply text-4xl;
-    @apply text-white;
-    @apply lg:text-6xl;
-    @apply bg-clip-text;
-    @apply drop-shadow-[0_0_15px_rgba(0,0,0,1)];
-    @apply lg:text-transparent;
-    @apply lg:bg-gradient-to-br;
-    @apply from-white;
-    @apply to-neutral-400;
+  @media (max-width: 640px) {
+    body {
+      overflow: hidden;
+    }
   }
 }
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hidden {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+}
+
+@keyframes earthquake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+@keyframes short-earthquake {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-2px, 2px); }
+  20% { transform: translate(2px, -2px); }
+  30% { transform: translate(-3px, 3px); }
+  40% { transform: translate(3px, -3px); }
+  50% { transform: translate(-1px, 1px); }
+  60% { transform: translate(1px, -1px); }
+  70% { transform: translate(-2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  90% { transform: translate(-1px, 1px); }
+}
+
+.animate-earthquake {
+  animation: earthquake 0.5s infinite ease-in-out;
+}
+
+.animate-short-earthquake {
+  animation: short-earthquake 0.3s ease-in-out;
+}
+
+@keyframes retroFlash {
+  0% { filter: brightness(100%); }
+  50% { filter: brightness(300%); }
+  100% { filter: brightness(100%); }
+}
+
+@keyframes retroShake {
+  0% { transform: translateX(-3px); }
+  50% { transform: translateX(3px); }
+  100% { transform: translateX(-3px); }
+}
+
+

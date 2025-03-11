@@ -57,6 +57,8 @@ const config: Config = {
       fontFamily: {
         sans: ['var(--font-montserrat)', ...fontFamily.sans],
         alt: ['var(--font-montserrat-alternates)'],
+        minecraftBold: ['"Minecraft-Bold"', 'sans-serif'],
+        minecraft: ['"Minecraft"', 'sans-serif'],
       },
       keyframes: {
         'accordion-down': {
