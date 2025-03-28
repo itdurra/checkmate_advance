@@ -17,7 +17,15 @@ import { Game } from './game';
 import { StoryMode } from './story-mode';
 
 export const MainMenu = () => {
-  const { theme, mapping, setMapping, menu, setMenu } = useGame();
+  const {
+    theme,
+    mapping,
+    setMapping,
+    menu,
+    setMenu,
+    musicEnabled,
+    setMusicEnabled,
+  } = useGame();
   const color =
     themes.themes.find((b) => b.theme === theme) || themes.themes[0];
 
@@ -68,25 +76,61 @@ export const MainMenu = () => {
         </div>
         <div>
           <div>
-            <ButtonRetro
+            <ButtonAltRetro
               onClick={() => setMenu('cutscene')}
               className='my-4 w-64 py-1 text-lg'
             >
               Play Demo
-            </ButtonRetro>
-          </div>
-          <div>
-            <ButtonAltRetro
-              onClick={() => setMenu('settings')}
-              className='my-4 w-64 py-1 text-lg'
-            >
-              Settings
             </ButtonAltRetro>
           </div>
+          <div>
+            <ButtonRetro
+              onClick={handleToggleMusic}
+              className='my-4 w-64 py-1 text-lg'
+            >
+              Music [{musicEnabled ? 'On' : 'Off'}]
+            </ButtonRetro>
+          </div>
+          <ButtonRetro
+            onClick={() =>
+              window.open(
+                'https://docs.google.com/forms/d/e/1FAIpQLSd2UyVk5W1cDmfaQTHdwdePJNI62BaiTVbQ67Se_ZZjY6GYLw/viewform?usp=sharing',
+                '_blank'
+              )
+            }
+            className='my-4 w-64 py-1 text-lg'
+          >
+            Give Feedback
+          </ButtonRetro>
         </div>
       </div>
     );
   }
+
+  function FeedbackForm() {
+    return (
+      <div className='flex items-center justify-center p-4'>
+        <iframe
+          src='https://docs.google.com/forms/d/e/1FAIpQLSd2UyVk5W1cDmfaQTHdwdePJNI62BaiTVbQ67Se_ZZjY6GYLw/viewform?embedded=true'
+          width='640'
+          height='883'
+        >
+          Loading…
+        </iframe>
+        <div className='mt-4 w-full text-center'>
+          <ButtonRetro onClick={() => setMenu('main')}>Back</ButtonRetro>
+        </div>
+      </div>
+    );
+  }
+
+  const handleToggleMusic = () => {
+    if (musicEnabled) {
+      setMusicEnabled(false); // turn off
+    } else {
+      setMusicEnabled(true); // turn on
+    }
+  };
 
   return (
     <div>
@@ -100,6 +144,7 @@ export const MainMenu = () => {
       {menu === 'cutscene' && <CutScene />}
       {menu === 'character_unlock' && <CharacterUnlock />}
       {menu === 'game' && <Game />}
+      {menu === 'feedback' && <FeedbackForm />}
       <BackgroundMusic></BackgroundMusic>
     </div>
   );

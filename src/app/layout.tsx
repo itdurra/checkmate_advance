@@ -47,9 +47,9 @@ export default function RootLayout({ children }: PropsWithChildren) {
           montserratAlternates.variable
         )}
       >
-        <div className='relative h-svh flex flex-col font-minecraft bg-white bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]'>
+        <div className='relative min-h-screen flex flex-col font-minecraft'>
           <AppBar />
-          <main className='flex flex-col gap-5 p-4 pt-16'>
+          <main className='flex flex-col gap-5 p-4 flex-1 justify-center'>
             {children}
           </main>
           <Footer />
@@ -62,18 +62,21 @@ export default function RootLayout({ children }: PropsWithChildren) {
 }
 
 async function AppBar() {
-  return (
+  return (<></>
+    /*
     <header className='h-16 backdrop-blur-lg fixed left-0 right-0 top-0 z-50 flex items-center justify-between bg-transparent px-4'>
       <Logo/>
       {//<a href="https://www.flaticon.com/free-icons/retro" title="retro icons">Retro icons created by Freepik - Flaticon</a>
       }
       <Navigation />
     </header>
+    */
   );
 }
 
 function Footer() {
-  return (
+  return (<></>
+  /*
     <footer className='hidden md:flex md:flex-col mt-auto px-4 justify-center'>
       <div className='flex flex-row justify-center text-center space-x-6'>
         <Link href='/pricing'>Pricing</Link>
@@ -88,6 +91,7 @@ function Footer() {
       </div>
 
       </footer>
+  */
 
   );
 }  

@@ -1,13 +1,12 @@
 'use client';
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Howl } from 'howler';
 
 import bosses from '@/config/bosses.json';
 import { useGame } from '@/context/game-context';
 
 export const BackgroundMusic = () => {
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const { menu, level } = useGame();
+  const { menu, level, musicEnabled } = useGame();
   const [sound, setSound] = useState<Howl | null>(null);
   // Define the default song
   let song = '/music/OGG/4. Forward.ogg'; // Default music for most menus
@@ -34,6 +33,14 @@ export const BackgroundMusic = () => {
   }
 
   useEffect(() => {
+    if (!musicEnabled) {
+      // Stop previous music if it's playing
+      if (sound) {
+        sound.stop();
+      }
+      return;
+    }
+
     // Stop previous music if it's playing
     if (sound) {
       sound.stop();
@@ -50,7 +57,7 @@ export const BackgroundMusic = () => {
     return () => {
       newSound.stop(); // Stop playing when menu changes
     };
-  }, [song]); // Runs every time `menu` changes
+  }, [song, musicEnabled]); // Runs every time `menu` changes
 
   return null;
 };

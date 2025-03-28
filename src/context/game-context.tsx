@@ -1,7 +1,6 @@
 'use client';
 import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
 import { Chess } from 'chess.js';
-
 import Engine from '@/components/chessboard/stockfish';
 
 // Define a type for campaign progress
@@ -15,11 +14,12 @@ interface BossProgress {
 interface GameContextType {
   enemyMessage: string;
   playerMessage: string;
-  multiplier: number;
+  //multiplier: number;
   level: number;
   mapping: string[];
   theme: number;
   gameAudio: number;
+  musicEnabled: boolean;
   sfxAudio: number;
   menu:
     | 'main'
@@ -31,21 +31,30 @@ interface GameContextType {
     | 'achievements'
     | 'cutscene'
     | 'character_unlock'
-    | 'game';
+    | 'game'
+    | 'feedback';
   isFreePlay: boolean;
   bossProgression: BossProgress[];
-  game: Chess;
-  gamePosition: string;
-  engine: Engine;
+  //game: Chess;
+  //gamePosition: string;
+  //engine: Engine;
   diverted: boolean;
+  //score: number;
+  //pieceScore: number;
+  //squareScore: number;
+  //materialAdvantage: number;
+  //money: number;
+  //turns: number;
+  isShopOpen: boolean;
   setEnemyMessage: (message: string) => void;
   setPlayerMessage: (message: string) => void;
-  setMultiplier: (multipler: number | ((prev: number) => number)) => void;
+  //setMultiplier: (multipler: number | ((prev: number) => number)) => void;
   setLevel: (multipler: number) => void;
   setMapping: (mapping: string[]) => void;
   setTheme: (theme: number) => void;
   setGameAudio: (gameAudio: number) => void;
   setSfxAudio: (sfxAudio: number) => void;
+  setMusicEnabled: (state: boolean) => void;
   setMenu: (
     menu:
       | 'main'
@@ -58,14 +67,22 @@ interface GameContextType {
       | 'cutscene'
       | 'character_unlock'
       | 'game'
+      | 'feedback'
   ) => void;
   setIsFreePlay: (isFreePlay: boolean) => void;
   updateBossProgress: (
     bossIndex: number,
     result: 'win' | 'loss' | 'draw'
   ) => void;
-  setGamePosition: (fen: string) => void;
+  //setGamePosition: (fen: string) => void;
   setDiverted: (diverted: boolean) => void;
+  //setScore: (score: number | ((prev: number) => number)) => void;
+  //setPieceScore: (score: number) => void;
+ // setSquareScore: (score: number) => void;
+  //setMaterialAdvantage: (score: number) => void;
+  //setMoney: (money: number | ((prev: number) => number)) => void;
+  //setTurns: (turns: number | ((prev: number) => number)) => void;
+  setIsShopOpen: (isShopOpen: boolean) => void;
 }
 
 // Create the context with a default value
@@ -74,7 +91,13 @@ const GameContext = createContext<GameContextType | undefined>(undefined);
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [enemyMessage, setEnemyMessage] = useState<string>('');
   const [playerMessage, setPlayerMessage] = useState<string>('');
-  const [multiplier, setMultiplier] = useState<number>(1);
+  //const [multiplier, setMultiplier] = useState<number>(1);
+  //const [score, setScore] = useState<number>(0);
+  //const [pieceScore, setPieceScore] = useState<number>(0);
+ // const [squareScore, setSquareScore] = useState<number>(0);
+  //const [materialAdvantage, setMaterialAdvantage] = useState<number>(0);
+  //const [money, setMoney] = useState<number>(0);
+  //const [turns, setTurns] = useState<number>(10);
   const [level, setLevel] = useState<number>(1);
   const [mapping, setMapping] = useState<string[]>([
     'SELECT',
@@ -89,6 +112,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<number>(0);
   const [gameAudio, setGameAudio] = useState<number>(50);
   const [sfxAudio, setSfxAudio] = useState<number>(50);
+  const [musicEnabled, setMusicEnabled] = useState<boolean>(false);
   const [menu, setMenu] = useState<
     | 'main'
     | 'settings'
@@ -100,17 +124,20 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     | 'cutscene'
     | 'character_unlock'
     | 'game'
+    | 'feedback'
   >('main');
   const [isFreePlay, setIsFreePlay] = useState<boolean>(true);
-  // Initialize bossProgression with 8 bosses
+  const [isShopOpen, setIsShopOpen] = useState<boolean>(false);
+
+  // Initialize bossProgression with 10 bosses
   const [bossProgression, setBossProgression] = useState<BossProgress[]>(
-    Array(9).fill({ win: 0, loss: 0, draw: 0 })
+    Array(11).fill({ win: 0, loss: 0, draw: 0 })
   );
-  const game = useMemo(() => new Chess(), []);
-  const [gamePosition, setGamePosition] = useState(game.fen());
+  //const game = useMemo(() => new Chess(), []);
+  //const [gamePosition, setGamePosition] = useState(game.fen());
 
   // Initialize the engine
-  const engine = useMemo(() => new Engine(), []);
+  //const engine = useMemo(() => new Engine(), []);
   const [diverted, setDiverted] = useState(false);
 
   // Function to update boss progress
@@ -130,32 +157,48 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       value={{
         enemyMessage,
         playerMessage,
-        multiplier,
+        //multiplier,
         level,
         mapping,
         theme,
         gameAudio,
         sfxAudio,
+        musicEnabled,
         menu,
         isFreePlay,
         bossProgression,
-        game,
-        gamePosition,
-        engine,
+        //game,
+        //gamePosition,
+       // engine,
         diverted,
+        //score,
+        //pieceScore,
+       // squareScore,
+       // materialAdvantage,
+       // money,
+        //turns,
+        isShopOpen,
         setEnemyMessage,
         setPlayerMessage,
-        setMultiplier,
+        //setMultiplier,
         setLevel,
         setMapping,
         setTheme,
         setGameAudio,
         setSfxAudio,
+        setMusicEnabled,
         setMenu,
         setIsFreePlay,
         updateBossProgress,
-        setGamePosition,
+        //setGamePosition,
         setDiverted,
+        //setScore,
+        //setPieceScore,
+       // setSquareScore,
+        //setMaterialAdvantage,
+        //setMoney,
+        //setTurns,
+        setIsShopOpen,
       }}
     >
       {children}

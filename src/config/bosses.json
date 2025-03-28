@@ -2,18 +2,95 @@
   "bosses": [
     {
       "level": 1,
-      "name": "Dr. Blunder",
-      "image": "/img/level1picture.png",
+      "name": "Pawn",
+      "image": "/img/chess/pb.svg",
       "bg": "#ddceb4",
       "baseBg": "#c381b5",
       "textColor": "#30210b",
       "borderColor": "#30210b",
       "shadowColor": "#30210b",
-      "description": "Dr. Blunder is the polite, bumbling alter ego of the horrible Mr Mate. When Dr. Blunder’s circuits overload, Mr. Mate emerges leading to devastating checkmates.",
-      "weakness": "Try out some powerups to gain an extra advantage",
+      "description": "gain $100 for each move played",
+      "weakness": "",
       "depth": 1,
       "elo": 1200,
       "moveTime": 300,
+      "score": 1000,
+      "song": "/music/OGG/16. Conviction.ogg",
+      "taunts": [],
+      "cutscene": [
+        {
+          "title": "A new presence emerges...",
+          "text": "I have waited in the shadows... for my next opponent.",
+          "image": "/img/level3picture.png"
+        },
+        {
+          "title": "Your vision deceives you...",
+          "text": "Not all pieces are seen... but they are always there.",
+          "image": "/img/level3picture.png"
+        },
+        {
+          "title": "The board shifts...",
+          "text": "Do you remember where they are? Ha ha haa...",
+          "image": "/img/level3slide8.png"
+        }
+      ],
+      "attack": "",
+      "undo": "",
+      "engine": ""
+    },
+    {
+      "level": 2,
+      "name": "Knight",
+      "image": "/img/chess/nb.svg",
+      "bg": "#ddceb4",
+      "baseBg": "#c381b5",
+      "textColor": "#30210b",
+      "borderColor": "#30210b",
+      "shadowColor": "#30210b",
+      "description": "unlock uncommon cards in shop",
+      "weakness": "",
+      "depth": 1,
+      "elo": 1200,
+      "moveTime": 300,
+      "score": 2000,
+      "song": "/music/OGG/16. Conviction.ogg",
+      "taunts": [],
+      "cutscene": [
+        {
+          "title": "A new presence emerges...",
+          "text": "I have waited in the shadows... for my next opponent.",
+          "image": "/img/level3picture.png"
+        },
+        {
+          "title": "Your vision deceives you...",
+          "text": "Not all pieces are seen... but they are always there.",
+          "image": "/img/level3picture.png"
+        },
+        {
+          "title": "The board shifts...",
+          "text": "Do you remember where they are? Ha ha haa...",
+          "image": "/img/level3slide8.png"
+        }
+      ],
+      "attack": "",
+      "undo": "",
+      "engine": ""
+    },
+    {
+      "level": 3,
+      "name": "IM Queen",
+      "image": "/img/chess/qb.svg",
+      "bg": "#ddceb4",
+      "baseBg": "#c381b5",
+      "textColor": "#30210b",
+      "borderColor": "#30210b",
+      "shadowColor": "#30210b",
+      "description": "gain an extra card permanently",
+      "weakness": "gain +2 piece value when transformed",
+      "depth": 1,
+      "elo": 1200,
+      "moveTime": 300,
+      "score": 3000,
       "song": "/music/OGG/16. Conviction.ogg",
       "taunts": [
         "Oh dear, did I just hang a piece? Or was that part of my master plan?",
@@ -42,19 +119,20 @@
       "engine": "No fair, I'm the only engine around here!"
     },
     {
-      "level": 2,
+      "level": 4,
       "name": "Mr. Mate",
-      "image": "/img/level2picture.png",
+      "image": "/img/chess/qw.svg",
       "bg": "#ddceb4",
       "baseBg": "#c381b5",
       "textColor": "#30210b",
       "borderColor": "#30210b",
       "shadowColor": "#30210b",
-      "description": "Mr. Mate is the aggressive, chaotic alter ego of Dr. Blunder. Mr. Mate is a tactical genius, just as long as he stays transformed.",
+      "description": "gain an extra card permanently",      
       "weakness": "The attack power-up is effective",
       "depth": 1,
       "elo": 2100,
       "moveTime": 300,
+      "score": 4000,
       "song": "/music/OGG/13. Menace.ogg",
       "taunts": [
         "ME MR. MATE! YOUR KING WILL FALL IN THREE MOVES—OR LESS!",
@@ -83,19 +161,214 @@
       "engine": "THAT IS CHEATING!"
     },
     {
-      "level": 3,
-      "name": "Illusion.exe",
-      "image": "/img/level3picture.png",
+      "level": 5,
+      "name": "Pawn",
+      "image": "/img/chess/pw.svg",
+      "bg": "#ddceb4",
+      "baseBg": "#c381b5",
+      "textColor": "#30210b",
+      "borderColor": "#30210b",
+      "shadowColor": "#30210b",
+      "description": "gain $200 extra cash each turn",
+      "weakness": "",
+      "depth": 1,
+      "elo": 1200,
+      "moveTime": 300,
+      "score": 5000,
+      "song": "/music/OGG/16. Conviction.ogg",
+      "taunts": [],
+      "cutscene": [
+        {
+          "title": "A new presence emerges...",
+          "text": "I have waited in the shadows... for my next opponent.",
+          "image": "/img/level3picture.png"
+        },
+        {
+          "title": "Your vision deceives you...",
+          "text": "Not all pieces are seen... but they are always there.",
+          "image": "/img/level3picture.png"
+        },
+        {
+          "title": "The board shifts...",
+          "text": "Do you remember where they are? Ha ha haa...",
+          "image": "/img/level3slide8.png"
+        }
+      ],
+      "attack": "",
+      "undo": "",
+      "engine": ""
+    },
+    {
+      "level": 6,
+      "name": "Knight",
+      "image": "/img/chess/nw.svg",
+      "bg": "#ddceb4",
+      "baseBg": "#c381b5",
+      "textColor": "#30210b",
+      "borderColor": "#30210b",
+      "shadowColor": "#30210b",
+      "description": "unlock rare cards in shop",
+      "weakness": "",
+      "depth": 1,
+      "elo": 1200,
+      "moveTime": 300,
+      "score": 6000,
+      "song": "/music/OGG/16. Conviction.ogg",
+      "taunts": [],
+      "cutscene": [
+        {
+          "title": "A new presence emerges...",
+          "text": "I have waited in the shadows... for my next opponent.",
+          "image": "/img/level3picture.png"
+        },
+        {
+          "title": "Your vision deceives you...",
+          "text": "Not all pieces are seen... but they are always there.",
+          "image": "/img/level3picture.png"
+        },
+        {
+          "title": "The board shifts...",
+          "text": "Do you remember where they are? Ha ha haa...",
+          "image": "/img/level3slide8.png"
+        }
+      ],
+      "attack": "",
+      "undo": "",
+      "engine": ""
+    },
+    {
+      "level": 7,
+      "name": "NM Queen",
+      "image": "/img/chess/qw.svg",
       "bg": "#fefcd0",
       "baseBg": "#c381b5",
       "textColor": "black",
       "borderColor": "black",
       "shadowColor": "#c381b5",
-      "description": "A cursed chess engine, corrupted by unseen forces. Illusion.exe manipulates perception, making pieces appear and disappear at will. Can you trust your memory, or will you fall victim to its tricks?",
+      "description": "gain an extra card permanently",
+      "weakness": "square value cards are debuffed",
+      "depth": 1,
+      "elo": 1200,
+      "moveTime": 300,
+      "score": 7000,
+      "song": "/music/OGG/16. Conviction.ogg",
+      "taunts": [
+        "Are you sure that piece was there?",
+        "Your reality is... unstable.",
+        "Perhaps you were seeing things."
+      ],
+      "cutscene": [
+        {
+          "title": "A new presence emerges...",
+          "text": "I have waited in the shadows... for my next opponent.",
+          "image": "/img/level3picture.png"
+        },
+        {
+          "title": "Your vision deceives you...",
+          "text": "Not all pieces are seen... but they are always there.",
+          "image": "/img/level3picture.png"
+        },
+        {
+          "title": "The board shifts...",
+          "text": "Do you remember where they are? Ha ha haa...",
+          "image": "/img/level3slide8.png"
+        }
+      ],
+      "attack": "I... I cannot see...",
+      "undo": "Your frail mind clings to the past...",
+      "engine": "You cannot compute the unknowable!"
+    },
+    {
+      "level": 8,
+      "name": "Pawn",
+      "image": "/img/chess/pb.svg",
+      "bg": "#ddceb4",
+      "baseBg": "#c381b5",
+      "textColor": "#30210b",
+      "borderColor": "#30210b",
+      "shadowColor": "#30210b",
+      "description": "gain $500 extra cash each turn",
+      "weakness": "",
+      "depth": 1,
+      "elo": 1200,
+      "moveTime": 300,
+      "score": 8000,
+      "song": "/music/OGG/16. Conviction.ogg",
+      "taunts": [],
+      "cutscene": [
+        {
+          "title": "A new presence emerges...",
+          "text": "I have waited in the shadows... for my next opponent.",
+          "image": "/img/level3picture.png"
+        },
+        {
+          "title": "Your vision deceives you...",
+          "text": "Not all pieces are seen... but they are always there.",
+          "image": "/img/level3picture.png"
+        },
+        {
+          "title": "The board shifts...",
+          "text": "Do you remember where they are? Ha ha haa...",
+          "image": "/img/level3slide8.png"
+        }
+      ],
+      "attack": "",
+      "undo": "",
+      "engine": ""
+    },
+    {
+      "level": 9,
+      "name": "Knight",
+      "image": "/img/chess/nb.svg",
+      "bg": "#ddceb4",
+      "baseBg": "#c381b5",
+      "textColor": "#30210b",
+      "borderColor": "#30210b",
+      "shadowColor": "#30210b",
+      "description": "unlock legendary cards in shop",
+      "weakness": "",
+      "depth": 1,
+      "elo": 1200,
+      "moveTime": 300,
+      "score": 9000,
+      "song": "/music/OGG/16. Conviction.ogg",
+      "taunts": [],
+      "cutscene": [
+        {
+          "title": "A new presence emerges...",
+          "text": "I have waited in the shadows... for my next opponent.",
+          "image": "/img/level3picture.png"
+        },
+        {
+          "title": "Your vision deceives you...",
+          "text": "Not all pieces are seen... but they are always there.",
+          "image": "/img/level3picture.png"
+        },
+        {
+          "title": "The board shifts...",
+          "text": "Do you remember where they are? Ha ha haa...",
+          "image": "/img/level3slide8.png"
+        }
+      ],
+      "attack": "",
+      "undo": "",
+      "engine": ""
+    },
+    {
+      "level": 10,
+      "name": "GM Queen",
+      "image": "/img/chess/qb.svg",
+      "bg": "#fefcd0",
+      "baseBg": "#c381b5",
+      "textColor": "black",
+      "borderColor": "black",
+      "shadowColor": "#c381b5",
+      "description": "...",
       "weakness": "The undo powerup can undo its powerful spell",
       "depth": 1,
       "elo": 1200,
       "moveTime": 300,
+      "score": 10000,
       "song": "/music/OGG/16. Conviction.ogg",
       "taunts": [
         "Are you sure that piece was there?",

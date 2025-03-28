@@ -5,35 +5,42 @@ import bosses from '@/config/bosses.json';
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
 
+import { BossDisplay } from '../boss-display';
+import { BossLevelSelect } from '../boss-level-select';
+import { BossName } from '../boss-name';
 import { BossSelectBox } from '../boss-select-box';
+import { ChessActionsDisplay } from '../chess-actions-display';
 import { roundedPortrait } from '../portraits';
+import { ScoreDisplay } from '../score-display';
+import { Shop } from '../shop';
 
 export const StoryMode = () => {
-  const { theme, setMenu, setLevel } = useGame();
+  const { theme, setMenu, setLevel, isShopOpen } = useGame();
   const [page, setPage] = useState(0); // Page 0 → first 4 bosses, Page 1 → next 4
   const color =
     themes.themes.find((b) => b.theme === theme) || themes.themes[0];
 
   const bossGroups = [
-    bosses.bosses.slice(0, 4).filter((boss) => boss.level !== 2),
+    bosses.bosses.slice(0, 7).filter((boss) => boss.level !== 4),
   ];
 
   return (
-    <div className='flex w-full flex-col items-center justify-center p-4'>
-      <div className='grid w-full max-w-md grid-cols-2 gap-2 p-4'>
-        {bossGroups[page].map((boss) => (
-          <div key={boss.level} className='flex justify-center'>
-            <CardRetro className='text-center'>
-              {' '}
-              {roundedPortrait(boss.image, setLevel, boss.level)}
-            </CardRetro>
-          </div>
-        ))}
-      </div>
-
-      {/* Boss Select Box */}
+    <div className='mx-auto flex h-full w-full max-w-[465px] flex-col gap-1 md:grid md:max-w-7xl md:gap-4 md:grid-cols-[1fr_2fr_1fr]'>
       <div>
+        <BossName></BossName>
         <BossSelectBox />
+      </div>
+      {isShopOpen ? (
+        <div className='h-[567px]'>
+          <Shop></Shop>
+        </div>
+      ) : (
+        <div className='h-[567px]'>
+          <BossLevelSelect></BossLevelSelect>
+        </div>
+      )}
+      <div className='self-center'>
+        <ChessActionsDisplay></ChessActionsDisplay>
       </div>
     </div>
   );

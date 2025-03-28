@@ -1,105 +1,59 @@
 'use client';
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { Button, Popup, ProgressBar } from 'pixel-retroui';
-import { Card } from 'pixel-retroui';
-
-import { BarRetro } from '@/components/ui-retro/bar-retro';
-import { ButtonPriRetro } from '@/components/ui-retro/button-pri-retro';
+import React from 'react';
 import { CardRetro } from '@/components/ui-retro/card-retro';
+import { ButtonRetro } from '@/components/ui-retro/button-retro';
+import { cardPortrait } from '@/components/portraits';
+import { useGame } from '@/context/game-context';
+import { useScoreStore } from '@/stores/useScoreStore';
 import bosses from '@/config/bosses.json';
 import themes from '@/config/themes.json';
-import { useGame } from '@/context/game-context';
-
-import { ControlMappingMenu } from './control-mapping-menu';
-import { EnemyText } from './enemy-text';
 
 export const ChessActionsDisplay = () => {
-  const {
-    setMultiplier,
-    setDiverted,
-    engine,
-    game,
-    setGamePosition,
-    theme,
-    mapping,
-    setMapping,
-    menu,
-    setMenu,
-    multiplier,
-  } = useGame();
-  const color =
-    themes.themes.find((b) => b.theme === theme) || themes.themes[0];
+  // Zustand store
+  const activeCards = useScoreStore((state) => state.activeCards);
+  const maxCards = useScoreStore((state) => state.maxCards);
+
+  // Game context
+  const { theme } = useGame();
+  const color = themes.themes.find((b) => b.theme === theme) || themes.themes[0];
   const { level } = useGame();
   const boss = bosses.bosses.find((b) => b.level === level) || bosses.bosses[0];
-  const atkCost = 4;
-  const engCost = 3;
-  const undCost = 2;
 
+  function sell() {
+    // Sell functionality implementation
+  }
 
-  return (
-    <CardRetro
-      className='text-center md:p-3'
-    >
-      <div className='flex flex-row items-center justify-center'>
+  // Render individual card component
+  const renderCard = (card: typeof activeCards[0]) => (
+    <CardRetro key={card.id} className='flex w-[95%] flex-row items-stretch justify-between gap-2'>
+      {/* Left Column: Image */}
+      <div className='flex w-1/3 items-center justify-center'>
+        {cardPortrait(card.image)}
+      </div>
+
+      {/* Right Column: Text and Button */}
+      <div className='flex w-2/3 flex-col justify-between'>
         <div>
-          <div className='flex flex-row items-center justify-center p-2'>
-            <p>{multiplier}x</p>
-            <BarRetro
-              size='md'
-              color='pink'
-              progress={multiplier * 20}
-            />
-          </div>
-          <ButtonPriRetro
-            onClick={() => {
-              game.undo();
-              game.undo();
-              setGamePosition(game.fen());
-              setMultiplier((prev) => prev - undCost);
-            }}
-            disabled={multiplier < undCost}
-            className={`${
-              multiplier < undCost
-                ? 'cursor-not-allowed opacity-50'
-                : 'hover:bg-opacity-80'
-            }`}
-          >
-            Undo
-          </ButtonPriRetro>
-          <ButtonPriRetro
-            onClick={() => {
-              engine.setDiverted(true);
-              setDiverted(true);
-              console.log(engine.getCurrentConfig());
-              setMultiplier((prev) => prev - engCost);
-            }}
-            disabled={multiplier < engCost}
-            className={`${
-              multiplier < engCost
-                ? 'cursor-not-allowed opacity-50'
-                : 'hover:bg-opacity-80'
-            }`}
-          >
-            Engine
-          </ButtonPriRetro>
-          <ButtonPriRetro
-            onClick={() => {
-              engine.setAttacked(true);
-              console.log(engine.getCurrentConfig());
-              setMultiplier((prev) => prev - atkCost);
-            }}
-            disabled={multiplier < atkCost}
-            className={`${
-              multiplier < atkCost
-                ? 'cursor-not-allowed opacity-50'
-                : 'hover:bg-opacity-80'
-            }`}
-          >
-            Attack
-          </ButtonPriRetro>
+          <p className='font-minecraft-bold text-sm'>{card.name}</p>
+          <p className='mt-1 text-xs'>{card.description}</p>
+        </div>
+        <div className='mt-2'>
+          <ButtonRetro onClick={() => sell()}>Sell</ButtonRetro>
         </div>
       </div>
+    </CardRetro>
+  );
+
+  return (
+    <CardRetro className='mx-auto h-[350px] w-full space-y-4 overflow-y-auto px-2'>
+      <div>{activeCards.length} / {maxCards}</div>
+      {/* Render cards individually */}
+      {activeCards[0] && renderCard(activeCards[0])}
+      {activeCards[1] && renderCard(activeCards[1])}
+      {activeCards[2] && renderCard(activeCards[2])}
+      {activeCards[3] && renderCard(activeCards[3])}
+      {activeCards[4] && renderCard(activeCards[4])}
+      {/* Add more lines if you expect more than 5 active cards */}
     </CardRetro>
   );
 };

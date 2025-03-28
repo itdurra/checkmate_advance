@@ -94,3 +94,35 @@ export function smallPortrait(
     </div>
   );
 }
+
+export function cardPortrait(
+  image: string,
+) {
+  return (
+    <Image
+      src={image}
+      width={200}
+      height={200}
+      priority
+      quality={100}
+      alt='Enemy Profile Picture'
+      className='w-full rounded-md'
+    />
+  );
+}
+
+export function shopPortrait(
+  image: string,
+) {
+  return (
+    <Image
+      src={image}
+      width={100}
+      height={100}
+      priority
+      quality={100}
+      alt='Enemy Profile Picture'
+      className='rounded-md'
+    />
+  );
+}
