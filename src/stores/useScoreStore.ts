@@ -2,108 +2,8 @@ import { create } from 'zustand';
 import { Chess, PieceSymbol, Square } from 'chess.js';
 import Engine from '@/components/chessboard/stockfish';
 import pieces from '@/config/pieces.json';
-
-type BossState = 0 | 1 | 2; // 0 = locked, 1 = skipped, 2 = won
-
-
-export interface Card {
-  id: string;
-  type: string;
-  name: string;
-  description: string;
-  image: string;
-  effect: string;
-  rarity: string;
-}
-
-type ScoreStore = {
-  game: Chess;
-  to: string;
-  from: string;
-  piece: string;
-  gamePosition: string;
-  engine: Engine;
-  setGamePosition: (fen: string) => void;
-  resetGame: () => void;
-  pieces: Record<string, number>;
-  buffedPieces: string[];
-  board: Map<string, number>;
-  turns: number;
-  money: number;
-  setMoney: (amount: number) => void;
-  score: number;
-  pieceScore: number;
-  squareScore: number;
-  playerMaterial: number;
-  enemyMaterial: number;
-  playerPieceCounts: Record<string, number>;
-  enemyPieceCounts: Record<string, number>;
-  multiplier: number;
-  materialMultiplier: number;
-  negativeMultiplier: number;
-
-  showBuffs: boolean;
-
-  consecutiveChecks: number;
-
-  activeCards: Card[]; // Player’s active hand
-  shopCards: Card[]; // Cards currently in the shop
-  setShopCards: (cards: Card[]) => void;
-  seenShopCards: Set<string>; // Track seen shop cards
-  allCards: Card[]; // Full card pool
-  maxCards: number;
-  maxShopCards: number;
-
-  //animation:
-  animatePieceTrigger: boolean,
-  animateSquareTrigger: boolean,
-  animateMaterialTrigger: boolean,
-
-  //boss progression
-  bossProgress: BossState[]; // length 9
-  setBossResult: (index: number, result: BossState) => void;
-  resetBossProgress: () => void;
-  getNextThreeBosses: () => number[]; // indexes to display
-
-
-  //initialize: (game: Chess) => void;
-  getScore: () => number;
-  //getPlayerMaterial: () => number;
-  //getEnemyMaterial: () => number;
-  getMaterialAdvantage: () => number;
-  setMaterialAdvantage: () => void;
-
-  setPieceValue: (piece: string, value: number) => void;
-  setEnemyPieceValue: (piece: string, value: number) => void;
-
-  getPieceValue: (piece: string) => number;
-  getEnemyPieceValue: (piece: string) => number;
-  getSquareScore: (square: string) => number;
-  updateScore: (destinationSquare: string, piece: string) => void;
-  updateSquareScore: (destinationSquare: string) => void;
-  updatePieceScore: (piece: string) => void;
-  setBoardScore: (squares: string[], score: number) => void;
-  resetBoard: () => void;
-  resetPieces: () => void;
-
-  newGame: () => void;
-  gameOver: () => void;
-  resetRun: () => void;
-
-  // Actions
-  initializeCards: (
-    allCards: Card[],
-    initialActiveCards?: Card[],
-    initialShopCards?: Card[]
-  ) => void;
-  addCard: (cardId: string) => boolean;
-  removeCard: (cardId: string) => boolean;
-  clearActiveCards: () => void;
-  addCardToShop: () => boolean;
-  removeCardFromShop: (cardId: string) => boolean;
-  clearShop: () => void;
-  refreshShop: () => void;
-};
+import type { Card } from '@/types/card';
+import type { ScoreStore } from '@/types/score-store';
 
 //helper to create an empty board
 function createEmptyBoard(): Map<string, number> {
@@ -120,12 +20,13 @@ function createEmptyBoard(): Map<string, number> {
 // Initialize allCards from the pieces JSON
 const allCards: Card[] = pieces.pieces.map((piece) => ({
   id: piece.id,
-  type: piece.type,
-  name: piece.name,
-  description: piece.description,
   image: piece.image,
   effect: piece.effect,
+  name: piece.name,
+  description: piece.description,
+  type: piece.type,
   rarity: piece.rarity,
+  cost: piece.cost,
 }));
 
 export const useScoreStore = create<ScoreStore>((set, get) => ({
@@ -162,6 +63,7 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
   animatePieceTrigger: false,
   animateSquareTrigger: false,
   animateMaterialTrigger: false,
+  isPlayerTurn: true,
 
   bossProgress: Array(9).fill(0), // all bosses locked by default
   buffedPieces: [] as string[],
@@ -479,7 +381,12 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
 
   getMaterialAdvantage: () => {
     const { enemyMaterial, playerMaterial, materialMultiplier } = get();
-    return materialMultiplier * (playerMaterial - enemyMaterial);
+    const materialAdvantage = materialMultiplier * (playerMaterial - enemyMaterial);
+    if(materialAdvantage <= 0) {
+      return .5;
+    } else {
+      return materialAdvantage;
+    }
   },
 
   /** 🔹 Initialize the store with cards */
@@ -673,79 +580,4 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
     return mustBeat.every((i) => progress[i] === 2);
   },
   
-
-  /*
-  initialize: (game) => {
-    set({ game }, false);
-    const store = get();
-    set({
-      playerMaterial: store.getPlayerMaterial(),
-      enemyMaterial: store.getEnemyMaterial(),
-    });
-  },
-
-  initializeGame: () => {
-    const game = new Chess();
-    set({ game });
-    get().resetBoard();
-    set({
-      playerMaterial: get().getPlayerMaterial(),
-      enemyMaterial: get().getEnemyMaterial(),
-    });
-  },*/
-
-  /*
-  getPlayerMaterial: () => {
-    const { game, pieces } = get();
-    if (!game) return 0;
-
-    let score = 0;
-    const board = game.board();
-    const playerColor = 'w';
-
-    for (const row of board) {
-      for (const piece of row) {
-        if (piece && piece.color === playerColor) {
-          const val = pieces[piece.type] ?? 0;
-          score += val;
-        }
-      }
-    }
-
-    return score;
-  },
-
-  getEnemyMaterial: () => {
-    const { game, pieces } = get();
-    if (!game) return 0;
-
-    let score = 0;
-    const board = game.board();
-    const playerColor = 'w';
-
-    for (const row of board) {
-      for (const piece of row) {
-        if (piece && piece.color !== playerColor) {
-          const val = pieces[`enemy${piece.type}`] ?? 0;
-          score += val;
-        }
-      }
-    }
-
-    return score;
-  },*/
-
-  /*
-  resetBoard: () =>
-    set(() => ({
-      board: new Map<string, number>(
-        Array.from({ length: 8 }, (_, fileIdx) =>
-          Array.from({ length: 8 }, (_, rankIdx) => {
-            const square = `${'abcdefgh'[fileIdx]}${rankIdx + 1}`;
-            return [square, 0] as [string, number];
-          })
-        ).flat()
-      ),
-    })),
-    */
 }));

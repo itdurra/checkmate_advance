@@ -2,10 +2,8 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 
-import { EnemyText } from '@/components/enemy-text';
 import { gamePortrait } from '@/components/portraits';
-import { GameOverPopup } from '@/components/game-over-popup';
-import { BarRetro } from '@/components/ui-retro/bar-retro';
+import { GameOverPopup } from '@/components/popups/game-over-popup';
 import { CardRetro } from '@/components/ui-retro/card-retro';
 import { PopupRetro } from '@/components/ui-retro/popup-retro';
 import bosses from '@/config/bosses.json';
@@ -13,8 +11,6 @@ import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
 
 import { ButtonRetro } from './ui-retro/button-retro';
-import { ChessUIControls } from './chess-ui-controls';
-import { ControlMappingMenu } from './control-mapping-menu';
 
 export const BossDisplay = () => {
   const { level, theme, menu } = useGame();

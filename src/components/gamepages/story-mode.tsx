@@ -1,17 +1,12 @@
 import { useState } from 'react';
 
-import { CardRetro } from '@/components/ui-retro/card-retro';
 import bosses from '@/config/bosses.json';
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
-
-import { BossDisplay } from '../boss-display';
 import { BossLevelSelect } from '../boss-level-select';
 import { BossName } from '../boss-name';
 import { BossSelectBox } from '../boss-select-box';
 import { ChessActionsDisplay } from '../chess-actions-display';
-import { roundedPortrait } from '../portraits';
-import { ScoreDisplay } from '../score-display';
 import { Shop } from '../shop';
 
 export const StoryMode = () => {

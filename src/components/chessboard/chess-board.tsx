@@ -1,11 +1,8 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { Chessboard } from 'react-chessboard';
-
 import CustomSquareRenderer from './custom-square-renderer';
 import { applyCardEffects } from '@/utils/apply-card-effects';
-import { CardRetro } from '@/components/ui-retro/card-retro';
 import { CardRetroNoMotion } from '@/components/ui-retro/card-retro-no-motion';
 import bosses from '@/config/bosses.json';
 import positions from '@/config/filtered_positions.json';
@@ -13,12 +10,10 @@ import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
 import * as ChessUtils from '@/utils/chess-utils';
 import { CustomPieceRenderer } from '@/components/chessboard/custom-piece-renderer';
-
-import { uscf, uscf_board_theme, custom, custom_board_theme } from './theme';
-
+import { custom_board_theme } from './theme';
 import { useScoreStore } from '@/stores/useScoreStore';
-import { GameOverPopup } from '../game-over-popup';
-import { ButtonRetro } from '../ui-retro/button-retro';
+import { GameOverPopup } from '@/components/popups/game-over-popup';
+import { GameWinnerPopup } from '@/components/popups/game-winner-popup';
 
 export const ChessBoard = () => {
   const turns = useScoreStore((state) => state.turns);
@@ -31,20 +26,19 @@ export const ChessBoard = () => {
   const updatePieceScore = useScoreStore((state) => state.updatePieceScore);
   const updateSquareScore = useScoreStore((state) => state.updateSquareScore);
   const boardState: Record<string, number> = Object.fromEntries(board);
-
   const game = useScoreStore((state) => state.game);
   const engine = useScoreStore((state) => state.engine);
   const gamePosition = useScoreStore((state) => state.gamePosition);
+  const isPlayerTurn = useScoreStore((state) => state.isPlayerTurn);
   const setGamePosition = useScoreStore((state) => state.setGamePosition);
-
   const [turnComplete, setTurnComplete] = useState(false);
-
   const { theme, setLevel, level } = useGame();
   const color =
     themes.themes.find((b) => b.theme === theme) || themes.themes[0];
-
   const boss = bosses.bosses.find((b) => b.level === level) || bosses.bosses[0];
   const [isShaking, setIsShaking] = useState(false);
+  const [gameOverPopup, setGameOverPopup] = useState(false);
+  const [gameWinnerPopup, setGameWinnerPopup] = useState(false);
 
   engine.onMessage(({ bestMove }) => {
     if (bestMove) {
@@ -64,14 +58,25 @@ export const ChessBoard = () => {
           return;
         }
 
-        // Update the board position
         setGamePosition(game.fen());
+        //change turn
+        setPlayerTurn(true);
+
+        // Update the board position
+        checkGameEnd();
         setMaterialAdvantage();
       } catch (error) {
         //console.error('Illegal move from Stockfish:', error);
       }
     }
   });
+
+  function checkGameEnd() {
+    if (game.isCheckmate()) {
+      const isWhite = game.turn() === 'b';
+      isWhite ? setGameWinnerPopup(true) : setGameOverPopup(true);
+    }
+  }
 
   const startShake = () => {
     setIsShaking(true);
@@ -95,45 +100,6 @@ export const ChessBoard = () => {
       setTurnComplete(false); // reset the flag
     }
   }, [turnComplete]);
-
-  function runAnimationSequence(destinationSquare: string, piece: string) {
-    const animation_duration = 800;
-    const buffer = 100;
-
-    // Step 1: Animate moved piece
-    useScoreStore.setState({ animatePieceTrigger: true });
-    console.log('➡️ Moved Piece Animation START');
-    
-    updatePieceScore(piece);
-  
-    setTimeout(() => {
-      useScoreStore.setState({ animatePieceTrigger: false });
-      console.log('✅ Moved Piece Animation END');
-  
-      // Step 2: Animate player pieces
-      useScoreStore.setState({ animateSquareTrigger: true });
-      console.log('➡️ Player Square Animation START');
-
-      updateSquareScore(destinationSquare);
-  
-      setTimeout(() => {
-        useScoreStore.setState({ animateSquareTrigger: false });
-        console.log('✅ Player Square Animation END');
-  
-        // Step 3: Animate enemy pieces
-        useScoreStore.setState({ animateMaterialTrigger: true });
-        console.log('➡️ Material Animation START');
-
-        setMaterialAdvantage();
-  
-        setTimeout(() => {
-          useScoreStore.setState({ animateMaterialTrigger: false });
-          console.log('✅ Material Animation END');
-        }, (animation_duration + buffer)); // Enemy animation duration
-      }, (animation_duration + buffer)); // Player animation duration
-    }, (animation_duration + buffer)); // Moved animation duration
-  }
-  
 
   useEffect(() => {
     //sets FEN to position from games.json
@@ -206,9 +172,9 @@ export const ChessBoard = () => {
     //triggers card effect hook
     setTurnComplete(true);
 
-    runAnimationSequence(targetSquare, piece);
-    //setMaterialAdvantage();
-    //updateScore(targetSquare, piece);
+    //runAnimationSequence(targetSquare, piece);
+    setMaterialAdvantage();
+    updateScore(targetSquare, piece);
 
     //decrement turns
     decrementTurns();
@@ -220,6 +186,12 @@ export const ChessBoard = () => {
     }));
   }
 
+  function setPlayerTurn(value: boolean) {
+    useScoreStore.setState((state) => ({
+      isPlayerTurn: value,
+    }));
+  }
+
   function onDrop(sourceSquare: string, targetSquare: string, piece: string) {
     try {
       const move = game.move({
@@ -227,27 +199,32 @@ export const ChessBoard = () => {
         to: targetSquare,
         promotion: piece[1].toLowerCase() ?? 'q',
       });
-      setGamePosition(game.fen());
-
-      scoreManagement(sourceSquare, targetSquare, piece);
-      
-      //animation triggers
-      //runAnimationSequence();
-
       // If the move is invalid, return false
       if (move === null) {
         return false;
       }
+      setGamePosition(game.fen());
 
-      // exit if the game is over
-      if (game.isGameOver()) return false;
+      scoreManagement(sourceSquare, targetSquare, piece);
+
+      //animation triggers
+      //runAnimationSequence();
+
+      // check for checkmate
+      checkGameEnd();
 
       //adds attack button logic
       bossLogicCheck(game.moveNumber());
 
-      if (engine.getAttacked()) {
-        makeRandomMove();
-        engine.setAttacked(false);
+      //change turn
+      setPlayerTurn(false);
+
+      if (boss.elo === 0) {
+        setTimeout(() => {
+          setPlayerTurn(true);
+          makeRandomMove();
+          checkGameEnd();
+        }, 1000);
       } else {
         engine.evaluatePosition(game.fen(), boss.depth);
       }
@@ -260,6 +237,14 @@ export const ChessBoard = () => {
 
   return (
     <div className={`${isShaking ? 'animate-short-earthquake' : ''}`}>
+      <GameOverPopup
+        isOpen={gameOverPopup}
+        closeGameOverPopup={() => setGameOverPopup(false)}
+      />
+      <GameWinnerPopup
+        isOpen={gameWinnerPopup}
+        closeGameWinnerPopup={() => setGameWinnerPopup(false)}
+      />
       <CardRetroNoMotion className='p-1 text-center'>
         <Chessboard
           id='PlayVsStockfish'
@@ -269,32 +254,8 @@ export const ChessBoard = () => {
           showBoardNotation={true}
           customDarkSquareStyle={{ backgroundColor: custom_board_theme[1] }}
           customLightSquareStyle={{ backgroundColor: custom_board_theme[0] }}
-          //customPieces={customPiecesBuffed}
           customPieces={CustomPieceRenderer({ boardState })}
-          customSquare={(props) => (
-            <CustomSquareRenderer {...props} />
-          )}
-          // customSquare={({ square, squareColor, children }) => (
-          //<CustomSquare square={square} squareColor={squareColor}>
-          //{children}
-          //</CustomSquare>
-          //)}
-          //customArrows={customArrows}
-          //arePremovesAllowed={true}
-          //boardOrientation={'white'} //need to dynamically update this to random
-          //showPromotionDialog={true}
-          //customArrowColor={'rgb(255,170,0)'} //dynamically update this based on theme
-          //customBoardStyle={e.g. { borderRadius: '5px', boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)'}.} //
-          //customDropSquareStyle	object: { boxShadow: 'inset 0 0 1px 6px rgba(255,255,255,0.75)' }
-          //customPremoveDarkSquareStyle	object: { backgroundColor: '#A42323' }
-          //customPremoveLightSquareStyle	object: { backgroundColor: '#BD2828' }
-          //customSquareStyles	object: {}
-          //animationDuration={200}
-          //onSquareClick={onSquareClick}
-          //onSquareRightClick={onSquareClick}
-          //onPromotionPieceSelect={onPromotionPieceSelect}
-          //promotionToSquare={moveTo}
-          //showPromotionDialog={showPromotionDialog}
+          customSquare={(props) => <CustomSquareRenderer {...props} />}
         />
       </CardRetroNoMotion>
     </div>

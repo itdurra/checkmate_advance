@@ -7,7 +7,8 @@
       "name": "Center Control",
       "description": "Gain +1 Square Value for occupying center squares.",
       "type": "Board",
-      "rarity": "Uncommon"
+      "rarity": "Uncommon",
+      "cost": 100
     },
     {
       "id": "2",
@@ -16,7 +17,8 @@
       "name": "Visionary",
       "description": "Gain +1 Square Value for attacking center squares.",
       "type": "Board",
-      "rarity": "Uncommon"
+      "rarity": "Uncommon",
+      "cost": 100
     },
     {
       "id": "3",
@@ -25,7 +27,8 @@
       "name": "X Marks the Spot (1)",
       "description": "Gain +1 Square Value on the long diagonal a1-h8.",
       "type": "Board",
-      "rarity": "Uncommon"
+      "rarity": "Uncommon",
+      "cost": 100
     },
     {
       "id": "4",
@@ -34,7 +37,8 @@
       "name": "X Marks the Spot (2)",
       "description": "Gain +1 Square Value on the long diagonal a8-h1.",
       "type": "Board",
-      "rarity": "Uncommon"
+      "rarity": "Uncommon",
+      "cost": 100
     },
     {
       "id": "5",
@@ -43,7 +47,8 @@
       "name": "Enemy Lines",
       "description": "Gain +2 Square Value on opponents back ranks (7, 8)",
       "type": "Board",
-      "rarity": "Uncommon"
+      "rarity": "Uncommon",
+      "cost": 100
     },
     {
       "id": "6",
@@ -52,7 +57,8 @@
       "name": "Railing (1)",
       "description": "Gain +1 Square Value for rank 4",
       "type": "Board",
-      "rarity": "Uncommon"
+      "rarity": "Uncommon",
+      "cost": 100
     },
     {
       "id": "7",
@@ -61,7 +67,8 @@
       "name": "Railing (2)",
       "description": "Gain +1 Square Value for rank 5",
       "type": "Board",
-      "rarity": "Uncommon"
+      "rarity": "Uncommon",
+      "cost": 100
     },
     {
       "id": "8",
@@ -70,7 +77,8 @@
       "name": "Ladders (1)",
       "description": "Gain +1 Square Value for file D",
       "type": "Board",
-      "rarity": "Uncommon"
+      "rarity": "Uncommon",
+      "cost": 100
     },
     {
       "id": "9",
@@ -79,7 +87,8 @@
       "name": "Ladders (2)",
       "description": "Gain +1 Square Value for file E",
       "type": "Board",
-      "rarity": "Uncommon"
+      "rarity": "Uncommon",
+      "cost": 100
     },
     {
       "id": "10",
@@ -88,7 +97,8 @@
       "name": "Foresight Knight",
       "description": "Movable Squares visible to a Knight gain +1",
       "type": "Board",
-      "rarity": "Common"
+      "rarity": "Common",
+      "cost": 50
     },
     {
       "id": "11",
@@ -97,7 +107,8 @@
       "name": "Foresight Rook",
       "description": "Movable Squares visible to a Rook gain +1",
       "type": "Board",
-      "rarity": "Common"
+      "rarity": "Common",
+      "cost": 50
     },
     {
       "id": "12",
@@ -106,7 +117,8 @@
       "name": "Foresight Squares",
       "description": "Movable Squares visible to a Bishop gain +1",
       "type": "Board",
-      "rarity": "Common"
+      "rarity": "Common",
+      "cost": 50
     },
     {
       "id": "13",
@@ -115,7 +127,8 @@
       "name": "Foresight Queen",
       "description": "Movable Squares visible to a Queen gain +1",
       "type": "Board",
-      "rarity": "Common"
+      "rarity": "Common",
+      "cost": 50
     },
     {
       "id": "14",
@@ -124,7 +137,8 @@
       "name": "Knights +1",
       "description": "Knight(s) gain +1 Piece value",
       "type": "Piece",
-      "rarity": "Common"
+      "rarity": "Common",
+      "cost": 50
     },
     {
       "id": "15",
@@ -133,7 +147,8 @@
       "name": "Bishops +1",
       "description": "Bishop(s) gain +1 Piece value",
       "type": "Piece",
-      "rarity": "Common"
+      "rarity": "Common",
+      "cost": 50
     },
     {
       "id": "16",
@@ -142,7 +157,8 @@
       "name": "Rooks +1",
       "description": "Rook(s) gain +1 Piece value",
       "type": "Piece",
-      "rarity": "Common"
+      "rarity": "Common",
+      "cost": 50
     },
     {
       "id": "17",
@@ -151,7 +167,8 @@
       "name": "Queens +1",
       "description": "Queen(s) gain +1 Piece value",
       "type": "Piece",
-      "rarity": "Common"
+      "rarity": "Common",
+      "cost": 50
     },
     {
       "id": "18",
@@ -160,7 +177,8 @@
       "name": "Pawns +1",
       "description": "Pawn(s) gain +1 Piece value",
       "type": "Piece",
-      "rarity": "Common"
+      "rarity": "Common",
+      "cost": 50
     },
     {
       "id": "19",
@@ -169,7 +187,8 @@
       "name": "Pawn Storm",
       "description": "All Pawns gain +1 Piece Value for each Pawn in a chain.",
       "type": "Piece",
-      "rarity": "Common"
+      "rarity": "Common",
+      "cost": 50
     },
     {
       "id": "20",
@@ -178,7 +197,8 @@
       "name": "Knight’s Gambit",
       "description": "Knights gain +1 Piece Value when placed on outpost squares.",
       "type": "Piece",
-      "rarity": "Uncommon"
+      "rarity": "Uncommon",
+      "cost": 50
     },
     {
       "id": "21",
@@ -187,7 +207,8 @@
       "name": "Bishop’s Blessing",
       "description": "Bishops gain +1 Piece Value for each piece they attack diagonally.",
       "type": "Piece",
-      "rarity": "Rare"
+      "rarity": "Common",
+      "cost": 50
     },
     {
       "id": "22",
@@ -196,7 +217,8 @@
       "name": "Rook’s Rampage",
       "description": "Rooks gain +1 Piece Value for each open file they control.",
       "type": "Piece",
-      "rarity": "Uncommon"
+      "rarity": "Uncommon",
+      "cost": 100
     },
     {
       "id": "23",
@@ -205,7 +227,8 @@
       "name": "Queen’s Gambit",
       "description": "The Queen gains +3 Piece Value when moved to a center square.",
       "type": "Piece",
-      "rarity": "Rare"
+      "rarity": "Uncommon",
+      "cost": 100
     },
     {
       "id": "24",
@@ -214,7 +237,8 @@
       "name": "King’s Shield",
       "description": "The King grants +1 Piece Value to all adjacent pieces.",
       "type": "Piece",
-      "rarity": "Rare"
+      "rarity": "Uncommon",
+      "cost": 100
     },
     {
       "id": "25",
@@ -223,7 +247,8 @@
       "name": "Battle Cry",
       "description": "The Knight grants +1 Square Value to all adjacent squares",
       "type": "Piece",
-      "rarity": "Uncommon"
+      "rarity": "Uncommon",
+      "cost": 100
     },
     {
       "id": "26",
@@ -232,7 +257,8 @@
       "name": "Sacrificial",
       "description": "Captures improve +2 Square Value",
       "type": "Event",
-      "rarity": "Common"
+      "rarity": "Common",
+      "cost": 50
     },
     {
       "id": "27",
@@ -241,7 +267,8 @@
       "name": "Forked Lightning",
       "description": "Knights gain +1 Piece Value for each fork they create (attacking 2+ pieces).",
       "type": "Piece",
-      "rarity": "Uncommon"
+      "rarity": "Uncommon",
+      "cost": 100
     },
     {
       "id": "28",
@@ -250,7 +277,8 @@
       "name": "Pinpoint Accuracy",
       "description": "Bishops gain +2 Piece Value when pinning an opponent’s piece.",
       "type": "Piece",
-      "rarity": "Rare"
+      "rarity": "Common",
+      "cost": 100
     },
     {
       "id": "29",
@@ -259,7 +287,8 @@
       "name": "Skewer Strike",
       "description": "Bishops gain +2 Piece Value when skewering an opponent’s pieces.",
       "type": "Piece",
-      "rarity": "Rare"
+      "rarity": "Common",
+      "cost": 100
     },
     {
       "id": "30",
@@ -268,7 +297,8 @@
       "name": "Promotion Power",
       "description": "Promoting a piece gains +3 Piece Value",
       "type": "Piece",
-      "rarity": "Rare"
+      "rarity": "Rare",
+      "cost": 100
     },
     {
       "id": "31",
@@ -277,7 +307,8 @@
       "name": "Material Thief",
       "description": "Steal 1 Piece Value from your opponents knight(s).",
       "type": "Consumable",
-      "rarity": "Rare"
+      "rarity": "Rare",
+      "cost": 100
     },
     {
       "id": "32",
@@ -286,7 +317,8 @@
       "name": "Tempo Boost",
       "description": "Destination gains +1 Square Value for each square travelled.",
       "type": "Consumable",
-      "rarity": "Uncommon"
+      "rarity": "Rare",
+      "cost": 100
     },
     {
       "id": "33",
@@ -295,7 +327,8 @@
       "name": "Checkmate Threat",
       "description": "Gain +5 Square Value if your move puts the opponent in check.",
       "type": "Event",
-      "rarity": "Rare"
+      "rarity": "Rare",
+      "cost": 100
     },
     {
       "id": "34",
@@ -304,7 +337,8 @@
       "name": "Brilliant",
       "description": "If you deliver checkmate, double your final score for this turn.",
       "type": "Event",
-      "rarity": "Uncommon"
+      "rarity": "Rare",
+      "cost": 100
     },
     {
       "id": "35",
@@ -313,7 +347,8 @@
       "name": "Perpetual",
       "description": "Gain +2 Square Value for each consecutive check.",
       "type": "Event",
-      "rarity": "Rare"
+      "rarity": "Rare",
+      "cost": 100
     },
     {
       "id": "36",
@@ -322,7 +357,8 @@
       "name": "Surge",
       "description": "Gain +1 Piece Value for putting opponent in check.",
       "type": "Event",
-      "rarity": "Common"
+      "rarity": "Rare",
+      "cost": 100
     },
     {
       "id": "37",
@@ -331,7 +367,8 @@
       "name": "Square Overload",
       "description": "Multiply Square Value by the number of pieces on the board.",
       "type": "Formula",
-      "rarity": "Legendary"
+      "rarity": "Legendary",
+      "cost": 500
     },
     {
       "id": "38",
@@ -340,7 +377,8 @@
       "name": "Switch Material Advantage",
       "description": "Swap Player Material and Opponent Material values for this turn.",
       "type": "Formula",
-      "rarity": "Legendary"
+      "rarity": "Legendary",
+      "cost": 500
     },
     {
       "id": "39",
@@ -349,7 +387,8 @@
       "name": "Infinite Loop",
       "description": "Repeat the scoring calculation for each pawn on the board",
       "type": "Formula",
-      "rarity": "Legendary"
+      "rarity": "Legendary",
+      "cost": 500
     },
     {
       "id": "40",
@@ -358,7 +397,8 @@
       "name": "Zero Sum",
       "description": "Set Material Advantage to 0 and multiply Square Value by 10.",
       "type": "Formula",
-      "rarity": "Legendary"
+      "rarity": "Legendary",
+      "cost": 500
     },
     {
       "id": "41",
@@ -367,7 +407,8 @@
       "name": "Paradox Engine",
       "description": "Score everything normally, then add negatives and score again",
       "type": "Formula",
-      "rarity": "Legendary"
+      "rarity": "Legendary",
+      "cost": 500
     }
   ]
 }

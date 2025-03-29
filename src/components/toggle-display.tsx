@@ -1,4 +1,3 @@
-import { CardRetro } from '@/components/ui-retro/card-retro';
 import bosses from '@/config/bosses.json';
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';

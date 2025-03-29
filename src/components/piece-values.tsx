@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import { useScoreStore } from '@/stores/useScoreStore';
-import { uscf, uscf_board_theme } from '@/components/chessboard/theme';
+import { custom } from '@/components/chessboard/theme';
 import { ToggleDisplay } from './toggle-display';
 
 const PIECE_LABELS: Record<string, string> = {
@@ -28,7 +28,7 @@ const formatModifier = (current: number, base: number) => {
 };
 
 function getPieceImage(
-  theme: typeof uscf,
+  theme: typeof custom,
   color: 'w' | 'b',
   piece: string
 ): string {
@@ -87,7 +87,7 @@ export const PieceValues = () => {
                       {Array.from({ length: count }).map((_, i) => (
                         <Image
                           key={i}
-                          src={getPieceImage(uscf, color, key)}
+                          src={getPieceImage(custom, color, key)}
                           alt={label}
                           width={16}
                           height={16}

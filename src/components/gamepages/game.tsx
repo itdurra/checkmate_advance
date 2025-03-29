@@ -1,17 +1,14 @@
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
-
-import { BossDisplay } from '@/components/boss-display';
 import { BossName } from '@/components//boss-name';
 import { ChessActionsDisplay } from '@/components//chess-actions-display';
 import { ChessBoard } from '@/components//chessboard/chess-board';
 import { ScoreDisplay } from '@/components/score-display';
-import { ToggleDisplay } from '@/components/toggle-display';
 import { AccordionRetro } from '@/components/ui-retro/accordion-retro';
 import { PieceValues } from '@/components/piece-values';
 
 export const Game = () => {
-  const { theme, mapping, setMapping, menu, setMenu } = useGame();
+  const { theme } = useGame();
   const color =
     themes.themes.find((b) => b.theme === theme) || themes.themes[0];
 
@@ -25,7 +22,7 @@ export const Game = () => {
       </div>
       <ChessBoard></ChessBoard>
       <div className='self-center'>
-        <AccordionRetro className='md:p-4' title='Piece Values'>
+        <AccordionRetro className='w-full ml-2' title='Piece Values'>
           <PieceValues />
         </AccordionRetro>
         <ChessActionsDisplay></ChessActionsDisplay>

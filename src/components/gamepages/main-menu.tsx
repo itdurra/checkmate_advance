@@ -1,18 +1,12 @@
 'use client';
-import { Button } from 'pixel-retroui';
 
 import { ButtonAltRetro } from '@/components/ui-retro/button-alt-retro';
 import { ButtonRetro } from '@/components/ui-retro/button-retro';
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
-
 import { BackgroundMusic } from '../background-music';
 import { ControlMappingMenu } from '../control-mapping-menu';
-
-import { Achievements } from './achievements';
-import { CharacterUnlock } from './character-unlock';
 import { CutScene } from './cutscene';
-import { FreePlay } from './freeplay';
 import { Game } from './game';
 import { StoryMode } from './story-mode';
 
@@ -139,10 +133,7 @@ export const MainMenu = () => {
       {menu === 'controls' && <Controls />}
       {menu === 'volume' && <Volume />}
       {menu === 'storymode' && <StoryMode />}
-      {menu === 'freeplay' && <FreePlay />}
-      {menu === 'achievements' && <Achievements />}
       {menu === 'cutscene' && <CutScene />}
-      {menu === 'character_unlock' && <CharacterUnlock />}
       {menu === 'game' && <Game />}
       {menu === 'feedback' && <FeedbackForm />}
       <BackgroundMusic></BackgroundMusic>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import Image from 'next/image';
 
 import { CardRetro } from '@/components/ui-retro/card-retro';
 import { ButtonRetro } from '@/components/ui-retro/button-retro';
@@ -86,9 +86,11 @@ export const BossLevelSelect = () => {
                   </div>
 
                   <div className='mt-4 flex justify-center'>
-                    <img
+                    <Image
                       src={custom[pieceCode][0]}
                       alt='boss piece'
+                      width={32}
+                      height={32}
                       className='h-8 w-8'
                     />
                   </div>

@@ -3,22 +3,27 @@
     {
       "title": "How to Play CheckMate Advance",
       "text": "Welcome to the Blunder Dojo! Before you hit the boards, let’s cover the basics...",
-      "image": "/img/storyslide1.png"
+      "image": "/img/tutorial/image0.png"
     },
     {
-      "title": "Your Goal",
-      "text": "Score as many points as possible. You gain points and shop credits by completing games of chess",
-      "image": "/img/storyslide2.png"
+      "title": "How to Play CheckMate Advance",
+      "text": "Start a run and challenge each of the Boss Pieces to a game of chess.",
+      "image": "/img/tutorial/image1.png"
     },
     {
-      "title": "Buffed Pieces",
-      "text": "Purchase upgrades in the shop to improve your scoring potential.",
-      "image": "/img/storyslide3.png"
+      "title": "The Game",
+      "text": "To win you must score as many points as possible. You'll be rewarded for each victory.",
+      "image": "/img/tutorial/image2.png"
     },
     {
-      "title": "And do remember",
-      "text": "Only one way out… Win. Or stay forever.",
-      "image": "/img/storyslide4.png"
+      "title": "Offense is the best defense",
+      "text": "Capture your opponents pieces to seriously multiply your score. But don't lose your own!",
+      "image": "/img/tutorial/image3.png"
+    },
+    {
+      "title": "The Shop",
+      "text": "Hit the shop to spend your hard earned rewards. And don't forget to have fun out there!",
+      "image": "/img/tutorial/image4.png"
     }
   ]
 }

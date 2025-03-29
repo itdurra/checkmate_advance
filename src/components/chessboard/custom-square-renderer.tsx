@@ -12,7 +12,6 @@ interface CustomSquareProps {
 const CustomSquareRenderer = forwardRef<HTMLDivElement, CustomSquareProps>(
   (props, ref) => {
     const { children, square, squareColor, style } = props;
-
     const board = useScoreStore((state) => state.board);
     const boardState: Record<string, number> = Object.fromEntries(board);
     const animatePieceTrigger = useScoreStore(
@@ -21,16 +20,9 @@ const CustomSquareRenderer = forwardRef<HTMLDivElement, CustomSquareProps>(
     const animateSquareTrigger = useScoreStore(
       (state) => state.animateSquareTrigger
     );
-
     const { showBuffs } = useScoreStore();
     const squareValue = boardState[square] || 0;
-
     const to = useScoreStore((state) => state.to);
-
-    const squareClass =
-      squareColor === 'white'
-        ? 'bg-[#fefcd0] text-black'
-        : 'bg-[#c381b5] text-white';
 
     // Choose contrasting text color for the buff number
     const buffTextColor =
@@ -41,8 +33,6 @@ const CustomSquareRenderer = forwardRef<HTMLDivElement, CustomSquareProps>(
     const showSquareAnim = animateSquareTrigger && square === to;
     const showPieceAnim = animatePieceTrigger && square === to;
 
-    const show = false;
-
     return (
       <div
         ref={ref}
@@ -52,24 +42,6 @@ const CustomSquareRenderer = forwardRef<HTMLDivElement, CustomSquareProps>(
         }}
       >
         {children}
-
-        {/* 🌀 Floating animation: Square value */}
-        {showSquareAnim && show && (
-          <div className='pointer-events-none absolute inset-0 z-20 flex items-center justify-center'>
-            <span className='animate-float-up font-minecraft-bold select-none text-sm text-blue-300'>
-              +{squareValue}
-            </span>
-          </div>
-        )}
-
-        {/* 🌀 Floating animation: Piece value (we'll default to +1 for now) */}
-        {showPieceAnim && show && (
-          <div className='pointer-events-none absolute inset-0 z-20 flex items-center justify-center'>
-            <span className='animate-float-up font-minecraft-bold select-none text-sm text-green-300'>
-              +1
-            </span>
-          </div>
-        )}
 
         {squareValue > 0 && showBuffs && (
           <div className='pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-sm'>

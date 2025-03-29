@@ -1,15 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
-import { GameOverPopup } from '@/components/game-over-popup';
-import { GameWinnerPopup } from '@/components/game-winner-popup';
+import { GameOverPopup } from '@/components/popups/game-over-popup';
+import { GameWinnerPopup } from '@/components/popups/game-winner-popup';
 import { CardRetro } from '@/components/ui-retro/card-retro';
-
-import { BarRetro } from '@/components/ui-retro/bar-retro';
-import { AccordionRetro } from '@/components/ui-retro/accordion-retro';
-import { PieceValues } from '@/components/piece-values';
 
 import bosses from '@/config/bosses.json';
 import themes from '@/config/themes.json';
@@ -21,11 +17,12 @@ const AnimatedNumber = ({ value }: { value: number }) => {
   return (
     <motion.span
       key={value}
-      initial={{ scale: 1, opacity: 0.5 }}
-      animate={{ scale: 1.2, opacity: 1 }}
-      exit={{ scale: 1, opacity: 0 }}
-      transition={{ duration: 0.3 }}
-      className='font-bold'
+      initial={{ y: -10, opacity: 0, textShadow: '0 0 8px #fff'
+      }}
+      animate={{ y: 0, opacity: 1, textShadow: '0 0 0px transparent' }}
+      exit={{ y: 10, opacity: 0, textShadow: '0 0 8px #fff' }}
+      transition={{ duration: 0.5, ease: [0.6, -0.05, 0.01, 0.99],       scale: { duration: 0.3, times: [0, 0.5, 1] } }}
+      className='font-bold inline-block px-[2px]'
     >
       {value}
     </motion.span>
@@ -60,14 +57,14 @@ export const ScoreDisplay = () => {
 
   return (
     <>
-      <CardRetro className='mt-4 text-left text-lg md:p-4'>
+      <CardRetro className='mt-6 text-left text-lg md:p-4'>
         <div className='flex flex-col place-items-center gap-2 font-minecraft'>
           {/* Final Score */}
           <div className='ml-2 text-3xl md:text-4xl'>
             <AnimatedNumber value={score} />
           </div>
           <div>Game Score</div>
-          <div className='text-sm'>Score 2000 points to win</div>
+          <div className='text-sm'>Score {boss.score} points to win</div>
         </div>
       </CardRetro>
 
@@ -101,7 +98,7 @@ export const ScoreDisplay = () => {
         </div>
       </CardRetro>
 
-      <CardRetro className='mt-4 text-left text-lg md:p-4'>
+      <CardRetro className='mt-6 text-left text-lg md:p-4'>
         <div className='grid grid-cols-2 place-items-center gap-2 font-minecraft'>
           <div className=''>
             Turns: <AnimatedNumber value={turns} />

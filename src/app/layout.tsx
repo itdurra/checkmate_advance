@@ -1,36 +1,9 @@
 import { PropsWithChildren } from 'react';
 import type { Metadata } from 'next';
-import { Montserrat, Montserrat_Alternates } from 'next/font/google';
-import Link from 'next/link';
-import {
-  IoClose,
-  IoLogoFacebook,
-  IoLogoInstagram,
-  IoLogoTwitter,
-  IoMenu, 
-} from 'react-icons/io5';
-
-import { Logo } from '@/components/logo';
-import { Toaster } from '@/components/ui/toaster';
-import { cn } from '@/utils/cn';
-import { Analytics } from '@vercel/analytics/react';
-
-import { Navigation } from './navigation';
 
 import '@/styles/globals.css';
 
 export const dynamic = 'force-dynamic';
-
-const montserrat = Montserrat({
-  variable: '--font-montserrat',
-  subsets: ['latin'],
-});
-
-const montserratAlternates = Montserrat_Alternates({
-  variable: '--font-montserrat-alternates',
-  weight: ['500', '600', '700'],
-  subsets: ['latin'],
-});
 
 export const metadata: Metadata = {
   title: 'Checkmate Advance',
@@ -41,11 +14,6 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang='en'>
       <body
-        className={cn(
-          'font-sans antialiased',
-          montserrat.variable,
-          montserratAlternates.variable
-        )}
       >
         <div className='relative min-h-screen flex flex-col font-minecraft'>
           <AppBar />
@@ -54,8 +22,6 @@ export default function RootLayout({ children }: PropsWithChildren) {
           </main>
           <Footer />
         </div>
-        <Toaster />
-        <Analytics />
       </body>
     </html>
   );

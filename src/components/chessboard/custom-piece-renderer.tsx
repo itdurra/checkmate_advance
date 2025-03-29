@@ -11,9 +11,6 @@ type CustomPieceRendererProps = {
 export const CustomPieceRenderer = ({
   boardState,
 }: CustomPieceRendererProps) => {
-  const animateMaterialTrigger = useScoreStore(
-    (state) => state.animateMaterialTrigger
-  );
 
   const pieces = useScoreStore((state) => state.pieces);
 
@@ -47,16 +44,6 @@ export const CustomPieceRenderer = ({
               alt={pieceKey}
               draggable={false}
             />
-
-            {/* Always rendered; animation is triggered by key change */}
-            <span
-              key={animateMaterialTrigger && show ? Date.now() : 'static'}
-              className={`float-up-text ${
-                animateMaterialTrigger ? floatColor : 'opacity-0'
-              }`}
-            >
-              {floatText}
-            </span>
           </div>
         );
       },

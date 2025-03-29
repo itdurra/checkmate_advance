@@ -1,7 +1,5 @@
 'use client';
 import React, { useState } from 'react';
-import Image from 'next/image';
-
 import { ButtonAltRetro } from '@/components/ui-retro/button-alt-retro';
 import { ButtonRetro } from '@/components/ui-retro/button-retro';
 import { CardRetro } from '@/components/ui-retro/card-retro';
@@ -9,7 +7,7 @@ import bosses from '@/config/bosses.json';
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
 import { useScoreStore } from '@/stores/useScoreStore';
-import { GameStatsPopup } from '@/components/game-stats-popup';
+import { GameStatsPopup } from '@/components/popups/game-stats-popup';
 
 export const BossSelectBox = () => {
   const money = useScoreStore((state) => state.money);
@@ -38,7 +36,14 @@ export const BossSelectBox = () => {
         <ButtonAltRetro onClick={() => setGameStatsPopup(true)}>
           Information
         </ButtonAltRetro>
-        <ButtonRetro onClick={() => resetRun()}>Restart Run</ButtonRetro>
+        <ButtonRetro
+          onClick={() => {
+            resetRun();
+            setIsShopOpen(false);
+          }}
+        >
+          Restart Run
+        </ButtonRetro>
         <ButtonRetro onClick={() => setMenu('main')}>Quit</ButtonRetro>
         {isShopOpen ? (
           <ButtonAltRetro onClick={() => setIsShopOpen(false)}>

@@ -7,8 +7,9 @@ import bosses from '@/config/bosses.json';
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
 import { useScoreStore } from '@/stores/useScoreStore';
-import { NotEnoughMoneyPopup } from '@/components/not-enough-money-popup';
+import { NotEnoughMoneyPopup } from '@/components/popups/not-enough-money-popup';
 import { ShopCard } from '@/components/shop-card';
+import { NotEnoughRoomPopup } from './popups/not-enough-room-popup';
 
 export const Shop: React.FC = () => {
   // Zustand store with TypeScript types
@@ -18,8 +19,11 @@ export const Shop: React.FC = () => {
   const setMoney = useScoreStore((state) => state.setMoney);
   const shopCards = useScoreStore((state) => state.shopCards);
   const refreshShop = useScoreStore((state) => state.refreshShop);
+  const activeCards = useScoreStore((state) => state.activeCards);
+  const maxCards = useScoreStore((state) => state.maxCards);
 
   const [notEnoughMoneyPopup, setNotEnoughMoneyPopup] = useState(false);
+  const [notEnoughRoomPopup, setNotEnoughRoomPopup] = useState(false);
 
   const { level, setIsShopOpen } = useGame();
   const boss = bosses.bosses.find((b) => b.level === level) || bosses.bosses[0];
@@ -31,6 +35,10 @@ export const Shop: React.FC = () => {
     const price = getPrice(rarity);
     if (money < price) {
       setNotEnoughMoneyPopup(true);
+      return;
+    }
+    if (activeCards.length >= maxCards) {
+      setNotEnoughRoomPopup(true);
       return;
     }
 
@@ -125,6 +133,10 @@ export const Shop: React.FC = () => {
       <NotEnoughMoneyPopup
         isOpen={notEnoughMoneyPopup}
         closeNotEnoughMoneyPopup={() => setNotEnoughMoneyPopup(false)}
+      />
+      <NotEnoughRoomPopup
+        isOpen={notEnoughRoomPopup}
+        closeNotEnoughRoomPopup={() => setNotEnoughRoomPopup(false)}
       />
     </>
   );

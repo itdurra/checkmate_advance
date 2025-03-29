@@ -1,6 +1,5 @@
 'use client';
 import { PropsWithChildren } from 'react';
-import { motion } from 'framer-motion';
 import { Card } from 'pixel-retroui';
 
 import themes from '@/config/themes.json';

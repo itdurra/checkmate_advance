@@ -4,12 +4,13 @@ import { CardRetro } from '@/components/ui-retro/card-retro';
 import bosses from '@/config/bosses.json';
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
-import Image from 'next/image';
-import { gamePortrait } from '@/components/portraits';
 import { ButtonRetro } from './ui-retro/button-retro';
-import { GameOverPopup } from '@/components/game-over-popup';
+import { GameOverPopup } from '@/components/popups/game-over-popup';
+import { useScoreStore } from '@/stores/useScoreStore';
 
 export const BossName = () => {
+  const isPlayerTurn = useScoreStore((state) => state.isPlayerTurn);
+
   const { theme, isShopOpen, menu } = useGame();
   const color =
     themes.themes.find((b) => b.theme === theme) || themes.themes[0];
@@ -43,7 +44,19 @@ export const BossName = () => {
           <div className='font-minecraft-bold flex-grow text-center text-3xl'>
             {title}
           </div>
+          {menu === 'game' && (
+            <>
+              <div>{isPlayerTurn ? 'Your Turn' : 'Enemy Turn'}</div>
+              <ButtonRetro onClick={() => setGameOverPopup(true)}>
+                Quit
+              </ButtonRetro>
+            </>
+          )}
         </CardRetro>
+        <GameOverPopup
+          isOpen={gameOverPopup}
+          closeGameOverPopup={() => setGameOverPopup(false)}
+        />
       </div>
     </>
   );

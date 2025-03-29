@@ -385,6 +385,7 @@ export function applyCardEffects() {
     return false;
   }
 
+  //determine if last move a piece was promoted
   function promotionPower(): void {
     const lastMove = game.history({ verbose: true }).slice(-1)[0];
     if (lastMove && lastMove.isPromotion()) {
@@ -392,6 +393,7 @@ export function applyCardEffects() {
     }
   }
 
+  // is piece threatening check
   function checkmateThreat(): void {
     const lastMove = game.history({ verbose: true }).slice(-1)[0];
     if (game.isCheck()) {
@@ -498,6 +500,7 @@ export function applyCardEffects() {
         break;
 
       case 'rook_squares':
+        console.log(game.moves({piece: 'r', verbose: true}));
         for (const move of game.moves({ piece: 'r', verbose: true })) {
           setBoardScore([move.to], 1);
         }
