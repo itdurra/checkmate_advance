@@ -1,8 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import { custom } from './theme';
+
 import { useScoreStore } from '@/stores/useScoreStore';
+
+import { custom } from './theme';
 
 type CustomPieceRendererProps = {
   boardState: Record<string, number>;

@@ -3,7 +3,6 @@ import { PopupRetro } from '@/components/ui-retro/popup-retro';
 import bosses from '@/config/bosses.json';
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
-
 import { useScoreStore } from '@/stores/useScoreStore';
 
 interface GameOverPopupProps {

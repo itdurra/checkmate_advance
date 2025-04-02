@@ -1,14 +1,16 @@
 'use client';
 
 import React, { useState } from 'react';
+
+import { SellConfirmationPopup } from '@/components/popups/sell-confirmation-popup';
 import { CardRetro } from '@/components/ui-retro/card-retro';
-import { useScoreStore } from '@/stores/useScoreStore';
-import { useGame } from '@/context/game-context';
 import bosses from '@/config/bosses.json';
 import themes from '@/config/themes.json';
-import { ActiveCardDisplay } from './active-card-display';
-import { SellConfirmationPopup } from '@/components/popups/sell-confirmation-popup';
+import { useGame } from '@/context/game-context';
+import { useScoreStore } from '@/stores/useScoreStore';
 import type { Card } from '@/types/card';
+
+import { ActiveCardDisplay } from './active-card-display';
 
 export const ChessActionsDisplay = () => {
   const activeCards = useScoreStore((state) => state.activeCards);

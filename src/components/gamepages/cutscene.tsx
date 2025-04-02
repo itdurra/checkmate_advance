@@ -33,7 +33,7 @@ export const CutScene = () => {
         textColor={color.textColor}
         borderColor={color.borderColor}
         shadowColor={color.shadowColor}
-        className='mt-4 max-w-sm p-5 text-center'
+        className='mt-4 max-w-xl p-5 text-center'
       >
         {cutScenePicture(slide.image)}
         <div className='py-4 text-center'>

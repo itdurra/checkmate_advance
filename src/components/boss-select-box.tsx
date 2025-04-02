@@ -1,5 +1,8 @@
 'use client';
 import React, { useState } from 'react';
+
+import { GameStatsPopup } from '@/components/popups/game-stats-popup';
+import { RestartConfirmationPopup } from '@/components/popups/restart-confirmation-popup';
 import { ButtonAltRetro } from '@/components/ui-retro/button-alt-retro';
 import { ButtonRetro } from '@/components/ui-retro/button-retro';
 import { CardRetro } from '@/components/ui-retro/card-retro';
@@ -7,7 +10,6 @@ import bosses from '@/config/bosses.json';
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
 import { useScoreStore } from '@/stores/useScoreStore';
-import { GameStatsPopup } from '@/components/popups/game-stats-popup';
 
 export const BossSelectBox = () => {
   const money = useScoreStore((state) => state.money);
@@ -28,6 +30,7 @@ export const BossSelectBox = () => {
   const boss = bosses.bosses.find((b) => b.level === level) || bosses.bosses[0];
 
   const [gameStatsPopup, setGameStatsPopup] = useState(false);
+  const [restartPopup, setRestartPopup] = useState(false);
 
   return (
     <>
@@ -36,29 +39,19 @@ export const BossSelectBox = () => {
         <ButtonAltRetro onClick={() => setGameStatsPopup(true)}>
           Information
         </ButtonAltRetro>
-        <ButtonRetro
-          onClick={() => {
-            resetRun();
-            setIsShopOpen(false);
-          }}
-        >
+        <ButtonRetro onClick={() => setRestartPopup(true)}>
           Restart Run
         </ButtonRetro>
         <ButtonRetro onClick={() => setMenu('main')}>Quit</ButtonRetro>
-        {isShopOpen ? (
-          <ButtonAltRetro onClick={() => setIsShopOpen(false)}>
-            Level Select
-          </ButtonAltRetro>
-        ) : (
-          <ButtonAltRetro onClick={() => setIsShopOpen(true)}>
-            TESTING Shop
-          </ButtonAltRetro>
-        )}
       </CardRetro>
       <GameStatsPopup
         isOpen={gameStatsPopup}
         closeGameStatsPopup={() => setGameStatsPopup(false)}
       ></GameStatsPopup>
+      <RestartConfirmationPopup
+        isOpen={restartPopup}
+        closeRestartConfirmationPopup={() => setRestartPopup(false)}
+      ></RestartConfirmationPopup>
     </>
   );
 };

@@ -1,14 +1,14 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 
+import { Stats } from '@/components/popups/stats';
 import { ButtonRetro } from '@/components/ui-retro/button-retro';
 import { PopupRetro } from '@/components/ui-retro/popup-retro';
 import bosses from '@/config/bosses.json';
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
-import { Stats } from '@/components/popups/stats';
-
 import { useScoreStore } from '@/stores/useScoreStore';
+import { applyBossRewards } from '@/utils/apply-boss-rewards';
 
 interface GameWinnerPopupProps {
   isOpen: boolean;
@@ -31,15 +31,15 @@ export const GameWinnerPopup = ({
     themes.themes.find((b) => b.theme === theme) || themes.themes[0];
   const [isFlagPopupOpen, setIsFlagPopupOpen] = useState(false);
 
-  const resignGame = () => {
+  const winnerGame = () => {
     gameOver();
-    //console.log('Player resigned. Updating loss count.');
-    updateBossProgress(level, 'loss'); // Register loss in boss progression
     game.reset();
     setIsShopOpen(true);
     setGamePosition(game.fen());
-    closeGameWinnerPopup(); // Close popup after resigning
+    closeGameWinnerPopup(); // Close popup
     setMenu('storymode');
+    //reward player for beating boss
+    applyBossRewards(level);
   };
 
   return (
@@ -61,7 +61,7 @@ export const GameWinnerPopup = ({
         <div className='w-full max-w-md mt-2'>
           <Stats></Stats>
         </div>
-        <ButtonRetro className='mt-4' onClick={resignGame}>
+        <ButtonRetro className='mt-4' onClick={winnerGame}>
           Main Menu
         </ButtonRetro>
       </div>

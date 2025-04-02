@@ -1,7 +1,7 @@
 'use client';
 import { PropsWithChildren } from 'react';
 import { motion } from 'framer-motion';
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from 'pixel-retroui';
+import { Accordion, AccordionContent,AccordionItem, AccordionTrigger } from 'pixel-retroui';
 
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';

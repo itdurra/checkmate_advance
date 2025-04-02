@@ -1,5 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
+
+import { NotEnoughMoneyPopup } from '@/components/popups/not-enough-money-popup';
+import { ShopCard } from '@/components/shop-card';
 import { ButtonAltRetro } from '@/components/ui-retro/button-alt-retro';
 import { ButtonRetro } from '@/components/ui-retro/button-retro';
 import { CardRetroNoMotion } from '@/components/ui-retro/card-retro-no-motion';
@@ -7,8 +10,7 @@ import bosses from '@/config/bosses.json';
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
 import { useScoreStore } from '@/stores/useScoreStore';
-import { NotEnoughMoneyPopup } from '@/components/popups/not-enough-money-popup';
-import { ShopCard } from '@/components/shop-card';
+
 import { NotEnoughRoomPopup } from './popups/not-enough-room-popup';
 
 export const Shop: React.FC = () => {

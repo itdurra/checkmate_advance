@@ -1,108 +1,124 @@
-
 /*!
  * Stockfish.js (http://github.com/nmrugg/stockfish.js)
  * License: GPL
  */
 
-/*
- * Description of the universal chess interface (UCI)  https://gist.github.com/aliostad/f4470274f39d29b788c1b09519e67372/
- */
-
-const stockfish = new Worker('/stockfish-nnue-16-single.js');
-
 type EngineMessage = {
-  /** stockfish engine message in UCI format*/
   uciMessage: string;
-  /** found best move for current position in format `e2e4`*/
   bestMove?: string;
-  /** found best move for opponent in format `e7e5` */
   ponder?: string;
-  /**  material balance's difference in centipawns(IMPORTANT! stockfish gives the cp score in terms of whose turn it is)*/
   positionEvaluation?: string;
-  /** count of moves until mate */
   possibleMate?: string;
-  /** the best line found */
   pv?: string;
-  /** number of halfmoves the engine looks ahead */
   depth?: number;
 };
 
 export default class Engine {
-  stockfish: Worker;
-  onMessage: (callback: (messageData: EngineMessage) => void) => void;
-  isReady: boolean;
-  currentSkillLevel: number;
-  currentLimitStrength: boolean;
-  currentElo: number;
-  attacked: boolean;
-  diverted: boolean;
-
+  private stockfish: Worker | null;
+  private messageCallbacks: ((messageData: EngineMessage) => void)[];
+  public isReady: boolean;
+  public currentSkillLevel: number;
+  public currentLimitStrength: boolean;
+  public currentElo: number;
+  public attacked: boolean;
+  public diverted: boolean;
 
   constructor() {
-    this.stockfish = stockfish;
+    this.stockfish = null;
+    this.messageCallbacks = [];
     this.isReady = false;
-    this.onMessage = (callback) => {
-      this.stockfish.addEventListener("message", (e) => {
-        callback(this.transformSFMessageData(e));
-      });
-    };
-    this.currentSkillLevel = 20; //stockfish default
-    this.currentLimitStrength = false; //stockfish default
-    this.currentElo = 2850; //stockfish default
-    this.attacked = false; //flag for engine being attacked
-    this.diverted = false; //engine arrow for player move
+    this.currentSkillLevel = 20;
+    this.currentLimitStrength = false;
+    this.currentElo = 2850;
+    this.attacked = false;
+    this.diverted = false;
 
-
-    this.init();
+    if (typeof window !== 'undefined') {
+      this.initializeEngine();
+    }
   }
 
-  private transformSFMessageData(e: MessageEvent<any>) {
-    const uciMessage = e?.data ?? e;
+  private initializeEngine(): void {
+    try {
+      this.stockfish = new Worker('/stockfish-nnue-16-single.js');
+      
+      this.stockfish.onmessage = (e: MessageEvent) => {
+        const messageData = this.transformSFMessageData(e);
+        this.messageCallbacks.forEach(callback => callback(messageData));
+        
+        if (e.data === 'readyok') {
+          this.isReady = true;
+        }
+      };
 
+      this.stockfish.onerror = (error) => {
+        console.error('Stockfish error:', error);
+      };
+
+      this.sendCommand('uci');
+      this.sendCommand('isready');
+    } catch (error) {
+      console.error('Failed to initialize Stockfish:', error);
+    }
+  }
+
+  private sendCommand(command: string): void {
+    if (this.stockfish) {
+      this.stockfish.postMessage(command);
+    } else {
+      console.warn('Stockfish not initialized - command not sent:', command);
+    }
+  }
+
+  private transformSFMessageData(e: MessageEvent): EngineMessage {
+    const uciMessage = e.data;
     return {
       uciMessage,
       bestMove: uciMessage.match(/bestmove\s+(\S+)/)?.[1],
       ponder: uciMessage.match(/ponder\s+(\S+)/)?.[1],
       positionEvaluation: uciMessage.match(/score cp\s+(-?\d+)/)?.[1],
       possibleMate: uciMessage.match(/score mate\s+(-?\d+)/)?.[1],
-      pv: uciMessage.match(/ pv\s+(.*)/)?.[1], 
-      depth: Number(uciMessage.match(/ depth\s+(\S+)/)?.[1]) ?? 0,
+      pv: uciMessage.match(/ pv\s+(.*)/)?.[1],
+      depth: Number(uciMessage.match(/ depth\s+(\S+)/)?.[1]) || 0,
     };
   }
 
-  init() {
-    this.stockfish.postMessage("uci");
-    this.stockfish.postMessage("isready");
-    this.onMessage(({ uciMessage }) => {
-      if (uciMessage === "readyok") {
-        this.isReady = true;
-      }
-    });
+  public onMessage(callback: (messageData: EngineMessage) => void): void {
+    this.messageCallbacks.push(callback);
   }
 
-  onReady(callback: () => void) {
-    this.onMessage(({ uciMessage }) => {
-      if (uciMessage === "readyok") {
+  public onReady(callback: () => void): void {
+    const readyCheck = (messageData: EngineMessage) => {
+      if (messageData.uciMessage === 'readyok') {
         callback();
+        // Remove this listener after it's triggered
+        this.messageCallbacks = this.messageCallbacks.filter(cb => cb !== readyCheck);
       }
-    });
+    };
+    this.onMessage(readyCheck);
   }
 
-  evaluatePosition(fen: string, depth: number) {
+  public evaluatePosition(fen: string, depth: number = 18): void {
     if (depth > 24) depth = 24;
-
-    this.stockfish.postMessage(`position fen ${fen}`);
-    this.stockfish.postMessage(`go depth ${depth}`);
+    this.sendCommand(`position fen ${fen}`);
+    this.sendCommand(`go depth ${depth}`);
   }
 
-  stop() {
-    this.stockfish.postMessage("stop"); // Run when searching takes too long time and stockfish will return you the bestmove of the deep it has reached
+  public stop(): void {
+    this.sendCommand('stop');
   }
 
-  terminate() {
+  public terminate(): void {
     this.isReady = false;
-    this.stockfish.postMessage("quit"); // Run this before chessboard unmounting.
+    this.sendCommand('quit');
+    if (this.stockfish) {
+      this.stockfish.terminate();
+      this.stockfish = null;
+    }
   }
+
+  // ... (rest of your methods remain the same)
+
 
   setAttacked(value: boolean) {
     this.attacked = value;
@@ -124,12 +140,12 @@ export default class Engine {
     if (level < 0 || level > 20) {
       throw new Error("Skill level must be between 0 and 20.");
     }
-    this.stockfish.postMessage(`setoption name Skill Level value ${level}`);
+    this.stockfish?.postMessage(`setoption name Skill Level value ${level}`);
     this.currentSkillLevel = level;
   };
 
   enableLimitStrength(enable: boolean) {
-    this.stockfish.postMessage(`setoption name UCI_LimitStrength value ${enable}`);
+    this.stockfish?.postMessage(`setoption name UCI_LimitStrength value ${enable}`);
     this.currentLimitStrength = enable;
   };
 
@@ -137,7 +153,7 @@ export default class Engine {
     if (elo < 1350 || elo > 2850) {
       throw new Error("Elo rating must be between 1350 and 2850.");
     }
-    this.stockfish.postMessage(`setoption name UCI_Elo value ${elo}`);
+    this.stockfish?.postMessage(`setoption name UCI_Elo value ${elo}`);
     this.currentElo = elo;
   };
 

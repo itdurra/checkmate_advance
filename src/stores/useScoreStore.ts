@@ -1,5 +1,6 @@
+import { Chess } from 'chess.js';
 import { create } from 'zustand';
-import { Chess, PieceSymbol, Square } from 'chess.js';
+
 import Engine from '@/components/chessboard/stockfish';
 import pieces from '@/config/pieces.json';
 import type { Card } from '@/types/card';
@@ -36,9 +37,19 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
   from: '',
   piece: '',
   gamePosition: new Chess().fen(),
-  setGamePosition: (fen) => {
-    get().game.load(fen);
-    set({ gamePosition: fen });
+  setGamePosition: (position) => {
+    const { game } = get();
+    console.log('test valid fen');
+    game.load(position); //loads FEN w/o move history
+    set({ gamePosition: position });
+
+  },
+  setGamePositionPGN: (position) => {
+    const { game } = get();
+    console.log(position,'must be pgn');
+    game.loadPgn(position);
+    console.log(game.fen(),'game.fen()');
+    set({ gamePosition: game.fen() });
   },
   resetGame: () => {
     const game = new Chess();
@@ -64,6 +75,7 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
   animateSquareTrigger: false,
   animateMaterialTrigger: false,
   isPlayerTurn: true,
+  isGameOver: false,
 
   bossProgress: Array(9).fill(0), // all bosses locked by default
   buffedPieces: [] as string[],
@@ -75,6 +87,7 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
   resetBoard: () => set(() => ({ board: createEmptyBoard() })),
   turns: 10,
   money: 0,
+  moneyMultiplier: 1,
   setMoney: (amount: number) => set({ money: amount }),
   score: 0,
   pieceScore: 0,
@@ -100,7 +113,7 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
       return {
         // Boss progression reset
         bossProgress: Array(9).fill(0),
-  
+
         // Gameplay counters
         turns: 10,
         money: 0,
@@ -113,25 +126,25 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
         materialMultiplier: 1,
         negativeMultiplier: 1,
         consecutiveChecks: 0,
-  
+        moneyMultiplier: 1,
+
         // Board and pieces
         board: createEmptyBoard(),
         buffedPieces: [],
         playerPieceCounts: { p: 0, n: 0, b: 0, r: 0, q: 0, k: 0 },
         enemyPieceCounts: { p: 0, n: 0, b: 0, r: 0, q: 0, k: 0 },
-  
+
         // Cards
         activeCards: [],
         shopCards: [],
         seenShopCards: new Set(),
-  
+
         // Limits
         maxCards: 3,
         maxShopCards: 3,
       } as Partial<ScoreStore>;
     });
   },
-  
 
   gameOver: () => {
     //update boss state here?
@@ -160,6 +173,26 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
         materialMultiplier: materialMultiplier,
         negativeMultiplier: negativeMultiplier,
         consecutiveChecks: consecutiveChecks,
+
+        // Board and pieces
+        board: createEmptyBoard(),
+        buffedPieces: [],
+        playerPieceCounts: { p: 0, n: 0, b: 0, r: 0, q: 0, k: 0 },
+        enemyPieceCounts: { p: 0, n: 0, b: 0, r: 0, q: 0, k: 0 },
+        pieces: {
+          p: 1,
+          n: 3,
+          b: 3,
+          r: 5,
+          q: 9,
+          k: 0,
+          enemyp: 1,
+          enemyn: 3,
+          enemyb: 3,
+          enemyr: 5,
+          enemyq: 9,
+          enemyk: 0,
+        },
       };
     });
   },
@@ -188,6 +221,26 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
         materialMultiplier: materialMultiplier,
         negativeMultiplier: negativeMultiplier,
         consecutiveChecks: consecutiveChecks,
+
+        // Board and pieces
+        board: createEmptyBoard(),
+        buffedPieces: [],
+        playerPieceCounts: { p: 0, n: 0, b: 0, r: 0, q: 0, k: 0 },
+        enemyPieceCounts: { p: 0, n: 0, b: 0, r: 0, q: 0, k: 0 },
+        pieces: {
+          p: 1,
+          n: 3,
+          b: 3,
+          r: 5,
+          q: 9,
+          k: 0,
+          enemyp: 1,
+          enemyn: 3,
+          enemyb: 3,
+          enemyr: 5,
+          enemyq: 9,
+          enemyk: 0,
+        },
       };
     });
   },
@@ -381,9 +434,10 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
 
   getMaterialAdvantage: () => {
     const { enemyMaterial, playerMaterial, materialMultiplier } = get();
-    const materialAdvantage = materialMultiplier * (playerMaterial - enemyMaterial);
-    if(materialAdvantage <= 0) {
-      return .5;
+    const materialAdvantage =
+      materialMultiplier * (playerMaterial - enemyMaterial);
+    if (materialAdvantage <= 0) {
+      return 0.5;
     } else {
       return materialAdvantage;
     }
@@ -481,56 +535,51 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
   },
 
   refreshShop: () => {
-    const {
-      allCards,
-      activeCards,
-      seenShopCards,
-      bossProgress,
-    } = get();
-  
+    const { allCards, activeCards, seenShopCards, bossProgress } = get();
+
     const usedIds = new Set([...activeCards.map((c) => c.id)]);
-  
+
     // Helper to filter by rarity
     const availableCardsByRarity = (rarity: string) =>
       allCards.filter(
-        (card) =>
-          card.rarity === rarity &&
-          !usedIds.has(card.id)
+        (card) => card.rarity === rarity && !usedIds.has(card.id)
       );
-  
+
     // Determine unlocks
     const hasUncommon = bossProgress[1] === 2; // level 2 completed
-    const hasRare = bossProgress[5] === 2;     // level 6 completed
+    const hasRare = bossProgress[5] === 2; // level 6 completed
     const hasLegendary = bossProgress[7] === 2; // level 8 completed
-  
+
     // Get pools per rarity
     const commonPool = availableCardsByRarity('Common');
     const uncommonPool = hasUncommon ? availableCardsByRarity('Uncommon') : [];
     const rarePool = hasRare ? availableCardsByRarity('Rare') : [];
-    const legendaryPool = hasLegendary ? availableCardsByRarity('Legendary') : [];
-  
+    const legendaryPool = hasLegendary
+      ? availableCardsByRarity('Legendary')
+      : [];
+
     // Shuffle helpers
     const getRandomCard = (pool: Card[]) =>
       pool.length > 0 ? pool[Math.floor(Math.random() * pool.length)] : null;
-  
+
     // Select one card per rarity
     const selectedCards: Card[] = [];
-  
+
     const common = getRandomCard(commonPool);
     if (common) selectedCards.push(common);
-  
+
     const uncommon = getRandomCard(uncommonPool);
     if (uncommon) selectedCards.push(uncommon);
-  
+
     const rare = getRandomCard(rarePool);
     if (rare) selectedCards.push(rare);
-  
+
     const legendary = getRandomCard(legendaryPool);
     if (legendary) selectedCards.push(legendary);
-  
+
     // Trim to 3 max if somehow over (e.g. common + rare + legendary but no uncommon)
     const finalShop = selectedCards.slice(0, 3);
-  
+
     set((state) => ({
       shopCards: finalShop,
       seenShopCards: new Set([
@@ -539,11 +588,9 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
       ]),
     }));
   },
-  
 
   /** 🔹 Clear the shop */
   clearShop: () => set(() => ({ shopCards: [] })),
-
 
   //boss progression methods
 
@@ -553,31 +600,36 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
       newProgress[index] = result;
       return { bossProgress: newProgress };
     }),
-  
+
   resetBossProgress: () => set({ bossProgress: Array(9).fill(0) }),
-  
+
   getNextThreeBosses: () => {
-    const validBossLevels = [1, 2, 3, 5, 6, 7, 8, 9, 10]; // length = 9
     const progress = get().bossProgress;
 
+    // Check each group of 3 bosses in order
     for (let phase = 0; phase < 3; phase++) {
-      const group = progress.slice(phase * 3, phase * 3 + 3);
+      const groupStart = phase * 3;
+      const group = progress.slice(groupStart, groupStart + 3);
+
       if (group.includes(0)) {
-        // Return the LEVELS, not the indexes!
-        return [validBossLevels[phase * 3], validBossLevels[phase * 3 + 1], validBossLevels[phase * 3 + 2]];
+        // Return levels (1-9) for the first incomplete group
+        return [
+          groupStart + 1, // Levels are 1-based
+          groupStart + 2,
+          groupStart + 3,
+        ];
       }
     }
-  
-    // Fallback: final group
-    return [8, 9, 10];
+
+    // If all bosses are completed, return the last group (7,8,9)
+    return [7, 8, 9];
   },
-  
+
   isRunComplete: () => {
     const progress = get().bossProgress;
-  
+
     // Must beat 3rd boss in each group (index 2, 5, 8)
     const mustBeat = [2, 5, 8];
     return mustBeat.every((i) => progress[i] === 2);
   },
-  
 }));

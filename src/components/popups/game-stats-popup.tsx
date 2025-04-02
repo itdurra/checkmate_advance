@@ -1,8 +1,8 @@
 import React from 'react';
-import { PopupRetro } from '@/components/ui-retro/popup-retro';
-import { ButtonRetro } from '@/components/ui-retro/button-retro';
-import { useScoreStore } from '@/stores/useScoreStore';
+
 import { Stats } from '@/components/popups/stats';
+import { ButtonRetro } from '@/components/ui-retro/button-retro';
+import { PopupRetro } from '@/components/ui-retro/popup-retro';
 
 interface GameStatsPopupProps {
   isOpen: boolean;

@@ -1,7 +1,8 @@
 import { Chess } from 'chess.js';
+
 import Engine from '@/components/chessboard/stockfish';
-import type { Card } from '@/types/card';
 import type { BossState } from '@/types/boss-state';
+import type { Card } from '@/types/card';
 
 export type ScoreStore = {
     game: Chess;
@@ -11,12 +12,14 @@ export type ScoreStore = {
     gamePosition: string;
     engine: Engine;
     setGamePosition: (fen: string) => void;
+    setGamePositionPGN: (fen: string) => void;
     resetGame: () => void;
     pieces: Record<string, number>;
     buffedPieces: string[];
     board: Map<string, number>;
     turns: number;
     money: number;
+    moneyMultiplier: number;
     setMoney: (amount: number) => void;
     score: number;
     pieceScore: number;
@@ -46,6 +49,7 @@ export type ScoreStore = {
     animateSquareTrigger: boolean,
     animateMaterialTrigger: boolean,
     isPlayerTurn: boolean,
+    isGameOver: boolean,
   
     //boss progression
     bossProgress: BossState[]; // length 9

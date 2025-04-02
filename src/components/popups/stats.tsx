@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { useScoreStore } from '@/stores/useScoreStore';
 
 export const Stats = () => {

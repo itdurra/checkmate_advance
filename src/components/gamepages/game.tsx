@@ -1,11 +1,11 @@
-import themes from '@/config/themes.json';
-import { useGame } from '@/context/game-context';
 import { BossName } from '@/components//boss-name';
 import { ChessActionsDisplay } from '@/components//chess-actions-display';
 import { ChessBoard } from '@/components//chessboard/chess-board';
+import { PieceValues } from '@/components/piece-values';
 import { ScoreDisplay } from '@/components/score-display';
 import { AccordionRetro } from '@/components/ui-retro/accordion-retro';
-import { PieceValues } from '@/components/piece-values';
+import themes from '@/config/themes.json';
+import { useGame } from '@/context/game-context';
 
 export const Game = () => {
   const { theme } = useGame();

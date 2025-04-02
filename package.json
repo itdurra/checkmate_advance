@@ -2,6 +2,7 @@
   "name": "checkmate_advance_99",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -15,7 +16,10 @@
     "supabase:link": "env-cmd -f ./.env.local supabase link --project-ref qhddaxndvqhiqdeazatg",
     "migration:new": "supabase migration new",
     "migration:up": "supabase migration up --linked --debug && npm run generate-types",
-    "migration:squash": "supabase migration squash --linked"
+    "migration:squash": "supabase migration squash --linked",
+    "generate:licenses": "license-checker --production --json > public/third-party-licenses.json",
+    "generate:licensespage": "npx oss-attribution-generator --format=html --output=public/attributions.html"
+
   },
   "dependencies": {
     "chess.js": "^1.0.0",
@@ -46,6 +50,7 @@
     "eslint-plugin-react": "^7.37.3",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-tailwindcss": "^3.17.5",
+    "license-checker": "^25.0.1",
     "postcss": "^8.4.49",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0",

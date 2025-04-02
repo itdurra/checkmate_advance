@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+
 import { shopPortrait } from '@/components/portraits';
 import { ButtonRetro } from '@/components/ui-retro/button-retro';
 import { CardRetro } from '@/components/ui-retro/card-retro';

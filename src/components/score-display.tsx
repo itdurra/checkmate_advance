@@ -1,12 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
-import { GameOverPopup } from '@/components/popups/game-over-popup';
-import { GameWinnerPopup } from '@/components/popups/game-winner-popup';
 import { CardRetro } from '@/components/ui-retro/card-retro';
-
 import bosses from '@/config/bosses.json';
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
@@ -17,12 +13,15 @@ const AnimatedNumber = ({ value }: { value: number }) => {
   return (
     <motion.span
       key={value}
-      initial={{ y: -10, opacity: 0, textShadow: '0 0 8px #fff'
-      }}
+      initial={{ y: -10, opacity: 0, textShadow: '0 0 8px #fff' }}
       animate={{ y: 0, opacity: 1, textShadow: '0 0 0px transparent' }}
       exit={{ y: 10, opacity: 0, textShadow: '0 0 8px #fff' }}
-      transition={{ duration: 0.5, ease: [0.6, -0.05, 0.01, 0.99],       scale: { duration: 0.3, times: [0, 0.5, 1] } }}
-      className='font-bold inline-block px-[2px]'
+      transition={{
+        duration: 0.5,
+        ease: [0.6, -0.05, 0.01, 0.99],
+        scale: { duration: 0.3, times: [0, 0.5, 1] },
+      }}
+      className='inline-block px-[2px] font-bold'
     >
       {value}
     </motion.span>
@@ -44,16 +43,7 @@ export const ScoreDisplay = () => {
     themes.themes.find((b) => b.theme === theme) || themes.themes[0];
   const boss = bosses.bosses.find((b) => b.level === level) || bosses.bosses[0];
 
-  const [gameOverPopup, setGameOverPopup] = useState(false);
-  const [gameWinnerPopup, setGameWinnerPopup] = useState(false);
 
-  useEffect(() => {
-    if (turns === 0) setGameOverPopup(true);
-  }, [turns]);
-
-  useEffect(() => {
-    if (score >= boss.score) setGameWinnerPopup(true);
-  }, [score, boss.score]);
 
   return (
     <>
@@ -108,15 +98,6 @@ export const ScoreDisplay = () => {
           </div>
         </div>
       </CardRetro>
-
-      <GameOverPopup
-        isOpen={gameOverPopup}
-        closeGameOverPopup={() => setGameOverPopup(false)}
-      />
-      <GameWinnerPopup
-        isOpen={gameWinnerPopup}
-        closeGameWinnerPopup={() => setGameWinnerPopup(false)}
-      />
     </>
   );
 };

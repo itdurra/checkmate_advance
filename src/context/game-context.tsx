@@ -1,6 +1,8 @@
 'use client';
 import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
 
+import Engine from '@/components/chessboard/stockfish';
+
 // Define a type for campaign progress
 interface BossProgress {
   win: number;
@@ -33,6 +35,10 @@ interface GameContextType {
   isFreePlay: boolean;
   bossProgression: BossProgress[];
   isShopOpen: boolean;
+  //engine, game, gameposition
+  //game: Chess;
+  //gamePosition: string;
+  engine: Engine;
   setEnemyMessage: (message: string) => void;
   setPlayerMessage: (message: string) => void;
   setLevel: (multipler: number) => void;
@@ -100,6 +106,11 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [isFreePlay, setIsFreePlay] = useState<boolean>(true);
   const [isShopOpen, setIsShopOpen] = useState<boolean>(false);
 
+  //engine, game, gameposition
+  const engine = useMemo(() => new Engine(), []);
+  //const game = useMemo(() => new Chess(), []);
+  //const [gamePosition, setGamePosition] = useState(game.fen());
+
   // Initialize bossProgression with 10 bosses
   const [bossProgression, setBossProgression] = useState<BossProgress[]>(
     Array(11).fill({ win: 0, loss: 0, draw: 0 })
@@ -132,6 +143,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         isFreePlay,
         bossProgression,
         isShopOpen,
+        engine,
         setEnemyMessage,
         setPlayerMessage,
         setLevel,

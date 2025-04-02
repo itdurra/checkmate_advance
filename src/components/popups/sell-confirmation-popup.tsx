@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 
-import { ButtonRetro } from '@/components/ui-retro/button-retro';
 import { ButtonAltRetro } from '@/components/ui-retro/button-alt-retro';
+import { ButtonRetro } from '@/components/ui-retro/button-retro';
 import { PopupRetro } from '@/components/ui-retro/popup-retro';
 import bosses from '@/config/bosses.json';
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
-import type { Card } from '@/types/card';
-
 import { useScoreStore } from '@/stores/useScoreStore';
+import type { Card } from '@/types/card';
 
 interface SellConfirmationPopupProps {
   isOpen: boolean;

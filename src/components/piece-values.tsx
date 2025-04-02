@@ -1,7 +1,9 @@
 'use client';
 import Image from 'next/image';
-import { useScoreStore } from '@/stores/useScoreStore';
+
 import { custom } from '@/components/chessboard/theme';
+import { useScoreStore } from '@/stores/useScoreStore';
+
 import { ToggleDisplay } from './toggle-display';
 
 const PIECE_LABELS: Record<string, string> = {

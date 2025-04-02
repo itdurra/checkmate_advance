@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
-import { useScoreStore } from '@/stores/useScoreStore';
+
 import { custom_board_theme } from '@/components/chessboard/theme';
+import { useScoreStore } from '@/stores/useScoreStore';
 
 interface CustomSquareProps {
   children: React.ReactNode;
@@ -14,15 +15,17 @@ const CustomSquareRenderer = forwardRef<HTMLDivElement, CustomSquareProps>(
     const { children, square, squareColor, style } = props;
     const board = useScoreStore((state) => state.board);
     const boardState: Record<string, number> = Object.fromEntries(board);
+    /*
     const animatePieceTrigger = useScoreStore(
       (state) => state.animatePieceTrigger
     );
     const animateSquareTrigger = useScoreStore(
       (state) => state.animateSquareTrigger
     );
+    */
     const { showBuffs } = useScoreStore();
     const squareValue = boardState[square] || 0;
-    const to = useScoreStore((state) => state.to);
+    //const to = useScoreStore((state) => state.to);
 
     // Choose contrasting text color for the buff number
     const buffTextColor =
@@ -30,8 +33,8 @@ const CustomSquareRenderer = forwardRef<HTMLDivElement, CustomSquareProps>(
         ? custom_board_theme[1] // dark square color
         : custom_board_theme[0]; // light square color
 
-    const showSquareAnim = animateSquareTrigger && square === to;
-    const showPieceAnim = animatePieceTrigger && square === to;
+    //const showSquareAnim = animateSquareTrigger && square === to;
+    //const showPieceAnim = animatePieceTrigger && square === to;
 
     return (
       <div
@@ -57,5 +60,8 @@ const CustomSquareRenderer = forwardRef<HTMLDivElement, CustomSquareProps>(
     );
   }
 );
+
+// ✅ Fix ESLint warning by assigning a display name
+CustomSquareRenderer.displayName = 'CustomSquareRenderer';
 
 export default CustomSquareRenderer;

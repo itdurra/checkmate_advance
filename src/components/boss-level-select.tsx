@@ -1,31 +1,28 @@
 import Image from 'next/image';
 
-import { CardRetro } from '@/components/ui-retro/card-retro';
-import { ButtonRetro } from '@/components/ui-retro/button-retro';
+import { custom } from '@/components/chessboard/theme';
 import { ButtonAltRetro } from '@/components/ui-retro/button-alt-retro';
+import { ButtonRetro } from '@/components/ui-retro/button-retro';
+import { CardRetro } from '@/components/ui-retro/card-retro';
 import { CardRetroNoMotion } from '@/components/ui-retro/card-retro-no-motion';
 import bosses from '@/config/bosses.json';
 import themes from '@/config/themes.json';
-import { custom } from '@/components/chessboard/theme';
 import { useGame } from '@/context/game-context';
+import { useScoreStore } from '@/stores/useScoreStore';
 
 import { roundedPortrait } from './portraits';
-import { useScoreStore } from '@/stores/useScoreStore';
 
 export const BossLevelSelect = () => {
   const bossProgress = useScoreStore((state) => state.bossProgress);
   const setBossResult = useScoreStore((state) => state.setBossResult);
   const getNextThreeBosses = useScoreStore((state) => state.getNextThreeBosses);
 
-  const { theme, setMenu, level, setLevel, isShopOpen, setIsShopOpen } =
-    useGame();
+  const { theme, setMenu, level, setLevel } = useGame();
 
   const color =
     themes.themes.find((b) => b.theme === theme) || themes.themes[0];
-
-  const bossLevels = getNextThreeBosses(); // [5, 6, 7] for example
-  const validBossLevels = [1, 2, 3, 5, 6, 7, 8, 9, 10]; // boss 4 is skipped
-  const unskippableBosses = [3, 7, 10];
+  const bossLevels = getNextThreeBosses();
+  const unskippableBosses = [3, 6, 9];
 
   const selectedBosses = bosses.bosses.filter((b) =>
     bossLevels.includes(b.level)
@@ -55,6 +52,7 @@ export const BossLevelSelect = () => {
     'bP',
     'bN',
     'bQ',
+    'bP',
   ];
 
   return (
@@ -63,9 +61,8 @@ export const BossLevelSelect = () => {
       <div className='mx-auto w-[95%] p-3'>
         <div className='grid grid-cols-3 gap-4'>
           {selectedBosses.map((boss, index) => {
-            const pieceCode = pieceMap[index] || 'wP';
-            const bossIndex = validBossLevels.indexOf(boss.level);
-            const bossState = bossProgress[bossIndex]; // 0 = not played, 1 = skipped, 2 = won
+            const pieceCode = pieceMap[boss.level - 1] || 'wP'; // Now using boss.level directly
+            const bossState = bossProgress[boss.level - 1]; // Direct array access using level - 1
 
             let difficulty = '';
             if (boss.level <= 3) difficulty = 'Easy';
@@ -99,13 +96,11 @@ export const BossLevelSelect = () => {
                     {difficulty}
                   </div>
 
-                  {/* Conditional buttons or overlay */}
                   {bossState === 0 ? (
                     <>
                       <ButtonAltRetro
                         onClick={() => {
                           setLevel(boss.level);
-                          setBossResult(bossIndex, 2); // win
                           setMenu('game');
                         }}
                       >
@@ -116,7 +111,7 @@ export const BossLevelSelect = () => {
                           <div className='font-minecraft text-sm'>or</div>
                           <ButtonRetro
                             onClick={() => {
-                              setBossResult(bossIndex, 1); // skip
+                              setBossResult(boss.level - 1, 1); // skip
                             }}
                           >
                             Skip

@@ -1,8 +1,8 @@
+import { ButtonRetro } from '@/components/ui-retro/button-retro';
 import bosses from '@/config/bosses.json';
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
 import { useScoreStore } from '@/stores/useScoreStore';
-import { ButtonRetro } from '@/components/ui-retro/button-retro';
 
 export const ToggleDisplay = () => {
   const showBuffs = useScoreStore((state) => state.showBuffs);

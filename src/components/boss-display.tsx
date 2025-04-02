@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 
-import { gamePortrait } from '@/components/portraits';
 import { GameOverPopup } from '@/components/popups/game-over-popup';
+import { gamePortrait } from '@/components/portraits';
 import { CardRetro } from '@/components/ui-retro/card-retro';
 import { PopupRetro } from '@/components/ui-retro/popup-retro';
 import bosses from '@/config/bosses.json';

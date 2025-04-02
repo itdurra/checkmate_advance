@@ -1,19 +1,22 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { Chessboard } from 'react-chessboard';
-import CustomSquareRenderer from './custom-square-renderer';
-import { applyCardEffects } from '@/utils/apply-card-effects';
+
+import { CustomPieceRenderer } from '@/components/chessboard/custom-piece-renderer';
+import { GameOverPopup } from '@/components/popups/game-over-popup';
+import { GameWinnerPopup } from '@/components/popups/game-winner-popup';
 import { CardRetroNoMotion } from '@/components/ui-retro/card-retro-no-motion';
 import bosses from '@/config/bosses.json';
 import positions from '@/config/filtered_positions.json';
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
-import * as ChessUtils from '@/utils/chess-utils';
-import { CustomPieceRenderer } from '@/components/chessboard/custom-piece-renderer';
-import { custom_board_theme } from './theme';
 import { useScoreStore } from '@/stores/useScoreStore';
-import { GameOverPopup } from '@/components/popups/game-over-popup';
-import { GameWinnerPopup } from '@/components/popups/game-winner-popup';
+import { applyCardEffects } from '@/utils/apply-card-effects';
+import { applyMoney } from '@/utils/apply-money';
+import * as ChessUtils from '@/utils/chess-utils';
+
+import CustomSquareRenderer from './custom-square-renderer';
+import { custom_board_theme } from './theme';
 
 export const ChessBoard = () => {
   const turns = useScoreStore((state) => state.turns);
@@ -25,12 +28,18 @@ export const ChessBoard = () => {
   const updateScore = useScoreStore((state) => state.updateScore);
   const updatePieceScore = useScoreStore((state) => state.updatePieceScore);
   const updateSquareScore = useScoreStore((state) => state.updateSquareScore);
+  const setBossResult = useScoreStore((state) => state.setBossResult);
+  const score = useScoreStore((state) => state.score);
   const boardState: Record<string, number> = Object.fromEntries(board);
   const game = useScoreStore((state) => state.game);
+  //const { engine } = useGame();
   const engine = useScoreStore((state) => state.engine);
   const gamePosition = useScoreStore((state) => state.gamePosition);
   const isPlayerTurn = useScoreStore((state) => state.isPlayerTurn);
+  const isGameOver = useScoreStore((state) => state.isGameOver);
+  const newGame = useScoreStore((state) => state.newGame);
   const setGamePosition = useScoreStore((state) => state.setGamePosition);
+  const setGamePositionPGN = useScoreStore((state) => state.setGamePositionPGN);
   const [turnComplete, setTurnComplete] = useState(false);
   const { theme, setLevel, level } = useGame();
   const color =
@@ -40,6 +49,68 @@ export const ChessBoard = () => {
   const [gameOverPopup, setGameOverPopup] = useState(false);
   const [gameWinnerPopup, setGameWinnerPopup] = useState(false);
 
+  //check if game is won/lost
+  useEffect(() => {
+      if (score >= boss.score) {
+        setGameWinnerPopup(true);
+        setBossResult(level - 1, 2); // win
+        useScoreStore.setState({ isGameOver: true });
+      }
+      if (turns === 0) {
+        //less than score so game over
+        if(score <= boss.score){
+          setGameOverPopup(true);
+          useScoreStore.setState({ isGameOver: true });
+        }
+      }
+  }, [score, boss.score, turns]);
+
+  //runs after each player move
+  useEffect(() => {
+    if (turnComplete) {
+      applyCardEffects(); // apply all active card effects
+
+      //set cumulative score
+      const state = useScoreStore.getState();
+      const newScore = state.score + state.getScore();
+      useScoreStore.setState({ score: newScore });
+
+      //apply the money formula
+      applyMoney();
+
+      setTurnComplete(false); // reset the flag
+    }
+  }, [turnComplete]);
+
+  //initial setup
+  useEffect(() => {
+    //make board movable
+    useScoreStore.setState((state) => ({
+      isGameOver: false,
+    }));
+
+    //reset scoring values
+    newGame();
+
+    //update boss and game position
+    engine.enableLimitStrength(true);
+    engine.setSkillLevel(boss.level);
+    game.reset();
+    const randomGame =
+      positions.positions[
+        Math.floor(Math.random() * positions.positions.length)
+      ].fen;
+    game.load(randomGame);
+    setGamePosition(randomGame);
+
+    // apply board square effects turn 1
+    applyCardEffects();
+
+    //update material advantage score
+    setMaterialAdvantage();
+  }, []);
+
+  //on message event handler used by Stockfish
   engine.onMessage(({ bestMove }) => {
     if (bestMove) {
       try {
@@ -48,21 +119,22 @@ export const ChessBoard = () => {
         const to = bestMove.substring(2, 4);
         const promotion = bestMove.substring(4, 5); // Promotion piece (e.g., "q")
 
+        //make move and update FEN
         const move = game.move({
           from,
           to,
           promotion: promotion || undefined, // Only include promotion if it exists
         });
         if (move === null) {
-          //console.error('Invalid move from Stockfish:', bestMove);
           return;
         }
+        applyForesight(from, to, promotion); //store state for card effect
+        setGamePositionPGN(game.pgn());
 
-        setGamePosition(game.fen());
-        //change turn
+        //update UI
         setPlayerTurn(true);
 
-        // Update the board position
+        //check game isn't over
         checkGameEnd();
         setMaterialAdvantage();
       } catch (error) {
@@ -71,61 +143,54 @@ export const ChessBoard = () => {
     }
   });
 
+  //store move in state to power foresight cards
+  function applyForesight(targetSquare: string, sourceSquare: string, piece: string) {
+    //used for foresight squares apply card effects
+    useScoreStore.setState((state) => ({
+      to: targetSquare,
+      from: sourceSquare,
+      piece: piece,
+    }));
+  }
+
+  //check if game has ended via checkmate
   function checkGameEnd() {
     if (game.isCheckmate()) {
       const isWhite = game.turn() === 'b';
       isWhite ? setGameWinnerPopup(true) : setGameOverPopup(true);
+      //make board movable
+      useScoreStore.setState((state) => ({
+        isGameOver: true,
+      }));
     }
   }
 
+  //earthquake animation helper function
   const startShake = () => {
     setIsShaking(true);
     setTimeout(() => setIsShaking(false), 500); // Stops after 0.5s
   };
 
-  useEffect(() => {
-    if (turnComplete) {
-      applyCardEffects(); //apply effects at end of turn
+  //Decrement turn counter in zustand store
+  function decrementTurns() {
+    useScoreStore.setState((state) => ({
+      turns: state.turns - 1,
+    }));
+  }
 
-      //set cumulative score (not sure if working)
-      const state = useScoreStore.getState();
-      const newScore = state.score + state.getScore();
-      useScoreStore.setState({ score: newScore });
-      console.log('scoring effect', newScore, state.score, state.getScore());
+  //UI Element
+  function setPlayerTurn(value: boolean) {
+    useScoreStore.setState((state) => ({
+      isPlayerTurn: value,
+    }));
+  }
 
-      //set money
-      const money = state.money;
-      state.setMoney(money + 20);
-
-      setTurnComplete(false); // reset the flag
-    }
-  }, [turnComplete]);
-
-  useEffect(() => {
-    //sets FEN to position from games.json
-    if (turns === 10) {
-      engine.enableLimitStrength(true);
-      engine.setSkillLevel(boss.level);
-      game.reset();
-      const randomGame =
-        positions.positions[
-          Math.floor(Math.random() * positions.positions.length)
-        ].fen;
-      game.load(randomGame);
-      setGamePosition(randomGame);
-      applyCardEffects(); // apply board square effects turn 1
-      setMaterialAdvantage();
-    } else {
-      engine.enableLimitStrength(true);
-      engine.setSkillLevel(boss.level);
-    }
-  }, [level]);
-
+  //gets a random move and updates FEN
   function makeRandomMove() {
     const randomMove = ChessUtils.getRandomMove(game);
     if (randomMove) {
       if (ChessUtils.makeMove(game, randomMove)) {
-        setGamePosition(game.fen());
+        setGamePositionPGN(game.pgn());
       }
       return true;
     } else {
@@ -133,44 +198,25 @@ export const ChessBoard = () => {
     }
   }
 
-  function bossLogicCheck(turnNumber: number) {
-    if (level == 3) {
-      if (turns === 8 || turns === 3) {
-        setLevel(4);
-      }
-    } else if (level === 4) {
-      if (turns === 6 || turns === 1) {
-        setLevel(3);
-      }
-    } else if (level === 7) {
-      const pieces = Array.from(
-        document.querySelectorAll<HTMLElement>('[data-piece]')
-      );
-      if (pieces.length === 0) return;
-      if (turnNumber % 3 === 0) {
-        const randomPiece = pieces[Math.floor(Math.random() * pieces.length)];
-        randomPiece.style.opacity = '0';
-      } else {
-        pieces.forEach((piece) => (piece.style.opacity = '1'));
-      }
-    } else {
-      console.log('else');
-    }
-  }
-
+  //handles updating score
   function scoreManagement(
     sourceSquare: string,
     targetSquare: string,
     piece: string
   ) {
-    //needed for render animations
-    useScoreStore.setState((state) => ({
-      to: targetSquare,
-      from: sourceSquare,
-      piece: piece,
-    }));
+    //store state for card effect
+    applyForesight(sourceSquare, targetSquare, piece);
     //triggers card effect hook
     setTurnComplete(true);
+    //applyCardEffects(); //apply effects at end of turn
+
+    //set cumulative score (not sure if working)
+    const state = useScoreStore.getState();
+    const newScore = state.score + state.getScore();
+    useScoreStore.setState({ score: newScore });
+
+    //apply the money formula
+    applyMoney();
 
     //runAnimationSequence(targetSquare, piece);
     setMaterialAdvantage();
@@ -178,18 +224,6 @@ export const ChessBoard = () => {
 
     //decrement turns
     decrementTurns();
-  }
-
-  function decrementTurns() {
-    useScoreStore.setState((state) => ({
-      turns: state.turns - 1,
-    }));
-  }
-
-  function setPlayerTurn(value: boolean) {
-    useScoreStore.setState((state) => ({
-      isPlayerTurn: value,
-    }));
   }
 
   function onDrop(sourceSquare: string, targetSquare: string, piece: string) {
@@ -203,30 +237,26 @@ export const ChessBoard = () => {
       if (move === null) {
         return false;
       }
-      setGamePosition(game.fen());
-
       scoreManagement(sourceSquare, targetSquare, piece);
-
-      //animation triggers
-      //runAnimationSequence();
+      setGamePositionPGN(game.pgn());
 
       // check for checkmate
       checkGameEnd();
 
-      //adds attack button logic
-      bossLogicCheck(game.moveNumber());
-
       //change turn
       setPlayerTurn(false);
 
+      //boss 1 has 0 elo, so makes random moves
       if (boss.elo === 0) {
         setTimeout(() => {
           setPlayerTurn(true);
           makeRandomMove();
           checkGameEnd();
-        }, 1000);
+        }, boss.moveTime);
       } else {
-        engine.evaluatePosition(game.fen(), boss.depth);
+        setTimeout(() => {
+          engine.evaluatePosition(game.fen(), boss.depth);
+        }, boss.moveTime);
       }
 
       return true;
@@ -249,6 +279,7 @@ export const ChessBoard = () => {
         <Chessboard
           id='PlayVsStockfish'
           position={gamePosition}
+          arePiecesDraggable={!isGameOver}
           onPieceDrop={onDrop}
           boardOrientation='white'
           showBoardNotation={true}
