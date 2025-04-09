@@ -1,8 +1,6 @@
 # ♟️ Checkmate Advance
 
-![Chess Game Screenshot](public/img/tutorial/image12.png")
-
-A Balatro-inspired chess experiment built with React, TypeScript, and open-source libraries. This was the developers first project in React and was built solely to learn. It has many bugs to improve but I am moving onto other projects! Try the game here at [CheckmateAdvance.com](checkmateadvance.com)
+A Balatro-inspired chess experiment built with React, TypeScript, and open-source libraries. This was my first project in React and was built solely to learn. It has many bugs to improve but I am moving onto other projects! Try the demo here at [CheckmateAdvance.com](checkmateadvance.com)
 
 ## Features
 - Roguelike deck building game
@@ -10,10 +8,10 @@ A Balatro-inspired chess experiment built with React, TypeScript, and open-sourc
 - Retro pixel art
 
 ## Unfinished/Skipped Features
--Legendary cards
--animations
--sound effects
--Boss effects
+- Legendary cards
+- Animations
+- Sound effects
+- Boss effects, and many more... 
 
 ## Dependencies
 ### Core Libraries
