@@ -9,7 +9,7 @@ export const BackgroundMusic = () => {
   const { menu, level, musicEnabled } = useGame();
   const [sound, setSound] = useState<Howl | null>(null);
   // Define the default song
-  let song = '/music/OGG/4. Forward.ogg'; // Default music for most menus
+  let song = '/music/Ogg/4. Forward.ogg'; // Default music for most menus
   const boss = bosses.bosses.find((b) => b.level === level) || bosses.bosses[0];
 
   if (
@@ -19,15 +19,15 @@ export const BackgroundMusic = () => {
     menu === 'controls' ||
     menu === 'achievements'
   ) {
-    song = '/music/OGG/4. Forward.ogg';
+    song = '/music/Ogg/4. Forward.ogg';
   } else if (menu === 'storymode') {
-    song = '/music/OGG/12. Fight or Flight.ogg';
+    song = '/music/Ogg/12. Fight or Flight.ogg';
   } else if (menu === 'freeplay') {
-    song = '/music/OGG/2. Get Ready!.ogg';
+    song = '/music/Ogg/2. Get Ready!.ogg';
   } else if (menu === 'cutscene') {
-    song = '/music/OGG/2. Get Ready!.ogg';
+    song = '/music/Ogg/2. Get Ready!.ogg';
   } else if (menu === 'character_unlock') {
-    song = '/music/OGG/6. Flametongue.ogg';
+    song = '/music/Ogg/6. Flametongue.ogg';
   } else if (menu === 'game') {
     song = boss.song;
   }
