@@ -285,7 +285,7 @@
       "image": "/img/chess/nb.svg",
       "effect": "knights_enemy",
       "name": "Knight's Enemy",
-      "description": "Knights gain +1 Piece Value when adjacent to an enemy piece",
+      "description": "Knights nerf adjacent enemy pieces by -1 Piece Value",
       "type": "Piece",
       "rarity": "Rare",
       "cost": 500
@@ -295,7 +295,7 @@
       "image": "/img/chess/bb.svg",
       "effect": "bishops_enemy",
       "name": "Bishop's Enemy",
-      "description": "Bishops gain +1 Piece Value when adjacent to an enemy piece",
+      "description": "Bishops nerf adjacent enemy pieces by -1 Piece Value",
       "type": "Piece",
       "rarity": "Rare",
       "cost": 500
@@ -305,7 +305,7 @@
       "image": "/img/chess/rb.svg",
       "effect": "rooks_enemy",
       "name": "Rook's Enemy",
-      "description": "Rooks gain +1 Piece Value when adjacent to an enemy piece",
+      "description": "Rooks nerf adjacent enemy pieces by -1 Piece Value",
       "type": "Piece",
       "rarity": "Rare",
       "cost": 500
@@ -315,7 +315,7 @@
       "image": "/img/chess/qb.svg",
       "effect": "queens_enemy",
       "name": "Queen's Enemy",
-      "description": "Queens gain +1 Piece Value when adjacent to an enemy piece",
+      "description": "Queens nerf adjacent enemy pieces by -1 Piece Value",
       "type": "Piece",
       "rarity": "Rare",
       "cost": 500
