@@ -11,7 +11,14 @@ A Balatro-inspired chess experiment built with React, TypeScript, and open-sourc
 - Legendary cards
 - Animations
 - Sound effects
-- Boss effects, and many more... 
+- Boss effects, 
+- and many more...
+
+## Bugs/Known Issues
+- many re-renders to accomplish game loop
+- some cards appear twice in shop
+- codebase has significant tech debt / complexity due to architecture choices 
+- and many more...
 
 ## Dependencies
 ### Core Libraries
