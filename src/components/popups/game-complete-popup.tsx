@@ -19,7 +19,7 @@ export const GameCompletePopup = ({
   return (
     <PopupRetro isOpen={isOpen} onClose={closeGameCompletePopup}>
       <div className='text-center font-minecraft text-sm'>
-        Thank you for playing Checkmate Advance! The secret password is 'fries', tell that to the Queen de la Meme via a DM and he will send you a handwritten letter thanking you for playing the game!
+        Thank you for playing Checkmate Advance! The secret password is <strong>fries</strong>, tell that to the Queen de la Meme via a DM and he will send you a handwritten letter thanking you for playing the game!
         <div>
           <ButtonRetro
             onClick={() =>
