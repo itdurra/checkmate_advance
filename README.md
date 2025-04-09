@@ -15,8 +15,8 @@ A Balatro-inspired chess experiment built with React, TypeScript, and open-sourc
 
 ## Dependencies
 ### Core Libraries
-| Library | Purpose | License |
-|---------|---------|---------|
+| Library | Purpose |
+|---------|---------|
 | [chess.js](https://github.com/jhlywa/chess.js) | Chess logic |
 | [react-chessboard](https://github.com/Clariity/react-chessboard) | Board rendering |
 | [Stockfish.js](https://github.com/official-stockfish/Stockfish) | Chess AI |
