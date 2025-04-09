@@ -4,13 +4,13 @@ import Image from 'next/image';
 import { Stats } from '@/components/popups/stats';
 import { ButtonRetro } from '@/components/ui-retro/button-retro';
 import { PopupRetro } from '@/components/ui-retro/popup-retro';
+import bosses from '@/config/bosses.json';
+import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
 import { useScoreStore } from '@/stores/useScoreStore';
 import { applyBossRewards } from '@/utils/apply-boss-rewards';
-import { ButtonFlashRetro } from '../ui-retro/button-flash-retro';
 
-import bosses from '@/config/bosses.json';
-import themes from '@/config/themes.json';
+import { ButtonFlashRetro } from '../ui-retro/button-flash-retro';
 
 interface GameWinnerPopupProps {
   isOpen: boolean;
