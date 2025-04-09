@@ -14,7 +14,6 @@ import { roundedPortrait } from './portraits';
 
 export const BossLevelSelect = () => {
   const bossProgress = useScoreStore((state) => state.bossProgress);
-  const setBossResult = useScoreStore((state) => state.setBossResult);
   const getNextThreeBosses = useScoreStore((state) => state.getNextThreeBosses);
 
   const { theme, setMenu, level, setLevel } = useGame();
@@ -63,6 +62,16 @@ export const BossLevelSelect = () => {
           {selectedBosses.map((boss, index) => {
             const pieceCode = pieceMap[boss.level - 1] || 'wP'; // Now using boss.level directly
             const bossState = bossProgress[boss.level - 1]; // Direct array access using level - 1
+            const currentLevelIndex = bossProgress.findIndex((status) => status === 0);
+            const currentLevel = currentLevelIndex + 1; // because levels are 1-indexed
+
+            //hardcoding because lazy
+            if(bossProgress[0] === 2){
+              level == 1;
+            }else if(bossProgress[1]){
+              
+            }
+            const nextBossState = bossProgress[boss.level]; // used to tell which level we are on
 
             let difficulty = '';
             if (boss.level <= 3) difficulty = 'Easy';
@@ -75,14 +84,21 @@ export const BossLevelSelect = () => {
                   {roundedPortrait(boss.image, setLevel, boss.level)}
 
                   <div className='font-minecraft-bold text-lg'>{boss.name}</div>
-                  <div className='font-minecraft text-sm'>
-                    Win Condition: Score at least {boss.score}
+
+                  <div className='text-center font-minecraft text-sm text-gray-400'>
+                    Score at least:
+                    <div className='font-minecraft-bold text-4xl leading-none text-black rounded py-2 bg-[#c381b5]'>
+                      {boss.score}
+                    </div>
                   </div>
-                  <div className='font-minecraft text-sm'>
-                    Reward: {boss.description}
+                  <div className='mt-2 text-center font-minecraft text-sm text-gray-400'>
+                    Reward: 
+                    <div className='text-black'>
+                    {boss.description}
+                    </div>
                   </div>
 
-                  <div className='mt-4 flex justify-center'>
+                  <div className='mt-2 flex justify-center'>
                     <Image
                       src={custom[pieceCode][0]}
                       alt='boss piece'
@@ -96,7 +112,7 @@ export const BossLevelSelect = () => {
                     {difficulty}
                   </div>
 
-                  {bossState === 0 ? (
+                  {bossState === 0 && boss.level === currentLevel ? (
                     <>
                       <ButtonAltRetro
                         onClick={() => {
@@ -106,22 +122,10 @@ export const BossLevelSelect = () => {
                       >
                         Start
                       </ButtonAltRetro>
-                      {!unskippableBosses.includes(boss.level) && (
-                        <>
-                          <div className='font-minecraft text-sm'>or</div>
-                          <ButtonRetro
-                            onClick={() => {
-                              setBossResult(boss.level - 1, 1); // skip
-                            }}
-                          >
-                            Skip
-                          </ButtonRetro>
-                        </>
-                      )}
                     </>
                   ) : (
                     <div className='font-minecraft-bold absolute inset-0 z-10 flex items-center justify-center rounded bg-black/70 text-xl text-white'>
-                      {bossState === 2 ? 'COMPLETED' : 'SKIPPED'}
+                      {bossState === 2 ? 'COMPLETED' : 'LOCKED'}
                     </div>
                   )}
                 </CardRetro>

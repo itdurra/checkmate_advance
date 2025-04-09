@@ -3,6 +3,7 @@ import { Chess } from 'chess.js';
 import Engine from '@/components/chessboard/stockfish';
 import type { BossState } from '@/types/boss-state';
 import type { Card } from '@/types/card';
+import type { Difficulty } from '@/types/difficulty';
 
 export type ScoreStore = {
     game: Chess;
@@ -33,6 +34,8 @@ export type ScoreStore = {
     negativeMultiplier: number;
   
     showBuffs: boolean;
+    difficulty: Difficulty;
+    setDifficulty: (difficulty: Difficulty) => void;
   
     consecutiveChecks: number;
   
@@ -50,6 +53,7 @@ export type ScoreStore = {
     animateMaterialTrigger: boolean,
     isPlayerTurn: boolean,
     isGameOver: boolean,
+    showTooltips: boolean,
   
     //boss progression
     bossProgress: BossState[]; // length 9

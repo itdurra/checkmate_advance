@@ -4,28 +4,18 @@ import { motion } from 'framer-motion';
 import { shopPortrait } from '@/components/portraits';
 import { ButtonRetro } from '@/components/ui-retro/button-retro';
 import { CardRetro } from '@/components/ui-retro/card-retro';
-
-// Types
-type Card = {
-  id: string;
-  name: string;
-  description: string;
-  image: string;
-  rarity: string;
-};
+import type { Card } from '@/types/card';
 
 type ShopCardProps = {
   card: Card;
-  removePieceFromShop: (id: string, rarity: string) => void;
+  removePieceFromShop: (id: string, cost: number) => void;
   setIsShopOpen: (isOpen: boolean) => void;
-  displayText: (rarity: string) => string;
 };
 
 export const ShopCard: React.FC<ShopCardProps> = ({
   card,
   removePieceFromShop,
   setIsShopOpen,
-  displayText,
 }) => (
   <motion.div
     className='h-full w-full'
@@ -35,7 +25,6 @@ export const ShopCard: React.FC<ShopCardProps> = ({
     transition={{ duration: 0.3 }}
   >
     <div
-      onClick={() => removePieceFromShop(card.id, card.rarity)}
       className='h-full w-full'
     >
       <CardRetro className='h-72 w-full flex flex-col items-center justify-between text-center'>
@@ -55,8 +44,8 @@ export const ShopCard: React.FC<ShopCardProps> = ({
 
         {/* Price Button */}
         <div className='mt-2'>
-          <ButtonRetro onClick={() => setIsShopOpen(true)}>
-            {displayText(card.rarity)}
+          <ButtonRetro onClick={() => removePieceFromShop(card.id, card.cost)}>
+            ${card.cost}
           </ButtonRetro>
         </div>
       </CardRetro>

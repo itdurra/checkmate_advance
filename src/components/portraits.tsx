@@ -4,12 +4,12 @@ export function cutScenePicture(image: string) {
   return (
     <Image
       src={image}
-      width={400}
-      height={400}
+      width={200}
+      height={200}
       priority
       quality={100}
       alt='Story Picture'
-      className='w-full rounded-md'
+      className='w-72 mx-auto rounded-md'
     />
   );
 }

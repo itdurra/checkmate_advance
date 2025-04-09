@@ -16,13 +16,12 @@ export const Stats = () => {
         <p>
           🏆 Bosses Defeated: {bossesDefeated} / {bossesTotal}
         </p>
-        <p>🎭 Bosses Skipped: {bossesSkipped}</p>
         <p>🧠 Cards Seen in Shop: {seenShopCards.size}</p>
         <p>🃏 Cards Added to Hand: {activeCards.length}</p>
 
         <hr className='my-2 border-white/20' />
 
-        <p>💰 Money Remaining: ${money}</p>
+        <p>💰 Money ${money}</p>
       </div>
     </>
   );

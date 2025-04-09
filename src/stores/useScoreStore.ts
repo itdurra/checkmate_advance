@@ -76,11 +76,14 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
   animateMaterialTrigger: false,
   isPlayerTurn: true,
   isGameOver: false,
+  showTooltips: true,
+  difficulty: 'medium', // 'easy' | 'medium' | 'expert'
+  setDifficulty: (level) => set({ difficulty: level }),
 
   bossProgress: Array(9).fill(0), // all bosses locked by default
   buffedPieces: [] as string[],
   setBuffedPieces: (squares: string[]) => set({ buffedPieces: squares }),
-  showBuffs: false,
+  showBuffs: true,
   playerPieceCounts: { p: 0, n: 0, b: 0, r: 0, q: 0, k: 0 },
   enemyPieceCounts: { p: 0, n: 0, b: 0, r: 0, q: 0, k: 0 },
   board: createEmptyBoard(),
@@ -536,55 +539,69 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
 
   refreshShop: () => {
     const { allCards, activeCards, seenShopCards, bossProgress } = get();
-
+  
     const usedIds = new Set([...activeCards.map((c) => c.id)]);
-
+  
     // Helper to filter by rarity
     const availableCardsByRarity = (rarity: string) =>
       allCards.filter(
         (card) => card.rarity === rarity && !usedIds.has(card.id)
       );
-
+  
     // Determine unlocks
     const hasUncommon = bossProgress[1] === 2; // level 2 completed
-    const hasRare = bossProgress[5] === 2; // level 6 completed
+    const hasRare = bossProgress[4] === 2; // level 5 completed
     const hasLegendary = bossProgress[7] === 2; // level 8 completed
-
+  
     // Get pools per rarity
     const commonPool = availableCardsByRarity('Common');
     const uncommonPool = hasUncommon ? availableCardsByRarity('Uncommon') : [];
     const rarePool = hasRare ? availableCardsByRarity('Rare') : [];
-    const legendaryPool = hasLegendary
-      ? availableCardsByRarity('Legendary')
-      : [];
-
-    // Shuffle helpers
+    const legendaryPool = hasLegendary ? availableCardsByRarity('Legendary') : [];
+  
+    // Shuffle helper
     const getRandomCard = (pool: Card[]) =>
       pool.length > 0 ? pool[Math.floor(Math.random() * pool.length)] : null;
-
-    // Select one card per rarity
+  
+    // Determine pools for each slot based on progression
+    let slot1Pool = commonPool;
+    let slot2Pool = commonPool;
+    let slot3Pool = commonPool;
+  
+    if (hasLegendary) {
+      slot1Pool = rarePool.length > 0 ? rarePool : uncommonPool.length > 0 ? uncommonPool : commonPool;
+      slot2Pool = legendaryPool.length > 0 ? legendaryPool : rarePool.length > 0 ? rarePool : uncommonPool.length > 0 ? uncommonPool : commonPool;
+      slot3Pool = legendaryPool.length > 0 ? legendaryPool : rarePool.length > 0 ? rarePool : uncommonPool.length > 0 ? uncommonPool : commonPool;
+    } else if (hasRare) {
+      slot1Pool = uncommonPool.length > 0 ? uncommonPool : commonPool;
+      slot2Pool = rarePool.length > 0 ? rarePool : uncommonPool.length > 0 ? uncommonPool : commonPool;
+      slot3Pool = rarePool.length > 0 ? rarePool : uncommonPool.length > 0 ? uncommonPool : commonPool;
+    } else if (hasUncommon) {
+      slot2Pool = uncommonPool.length > 0 ? uncommonPool : commonPool;
+      slot3Pool = uncommonPool.length > 0 ? uncommonPool : commonPool;
+    }
+  
+    // Select one card from each slot's pool
     const selectedCards: Card[] = [];
-
-    const common = getRandomCard(commonPool);
-    if (common) selectedCards.push(common);
-
-    const uncommon = getRandomCard(uncommonPool);
-    if (uncommon) selectedCards.push(uncommon);
-
-    const rare = getRandomCard(rarePool);
-    if (rare) selectedCards.push(rare);
-
-    const legendary = getRandomCard(legendaryPool);
-    if (legendary) selectedCards.push(legendary);
-
-    // Trim to 3 max if somehow over (e.g. common + rare + legendary but no uncommon)
-    const finalShop = selectedCards.slice(0, 3);
-
+    const card1 = getRandomCard(slot1Pool);
+    const card2 = getRandomCard(slot2Pool);
+    const card3 = getRandomCard(slot3Pool);
+  
+    if (card1) selectedCards.push(card1);
+    if (card2) selectedCards.push(card2);
+    if (card3) selectedCards.push(card3);
+  
+    // Fallback to common cards if any slot didn't get a card
+    while (selectedCards.length < 3) {
+      const fallbackCard = getRandomCard(commonPool);
+      if (fallbackCard) selectedCards.push(fallbackCard);
+    }
+  
     set((state) => ({
-      shopCards: finalShop,
+      shopCards: selectedCards.slice(0, 3),
       seenShopCards: new Set([
         ...state.seenShopCards,
-        ...finalShop.map((c) => c.id),
+        ...selectedCards.map((c) => c.id),
       ]),
     }));
   },

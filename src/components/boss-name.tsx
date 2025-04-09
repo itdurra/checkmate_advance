@@ -1,19 +1,9 @@
-import React, { useState } from 'react';
-
-import { GameOverPopup } from '@/components/popups/game-over-popup';
-import { GameWinnerPopup } from '@/components/popups/game-winner-popup';
 import { CardRetro } from '@/components/ui-retro/card-retro';
 import bosses from '@/config/bosses.json';
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
-import { useScoreStore } from '@/stores/useScoreStore';
-
-import { ButtonRetro } from './ui-retro/button-retro';
 
 export const BossName = () => {
-  const isPlayerTurn = useScoreStore((state) => state.isPlayerTurn);
-  const bossProgress = useScoreStore((state) => state.bossProgress);
-  const game = useScoreStore((state) => state.game);
 
   const { theme, isShopOpen, menu } = useGame();
   const color =
@@ -21,8 +11,6 @@ export const BossName = () => {
   const { level } = useGame();
   const boss = bosses.bosses.find((b) => b.level === level) || bosses.bosses[0];
 
-  const [gameOverPopup, setGameOverPopup] = useState(false);
-  const [gameWinnerPopup, setGameWinnerPopup] = useState(false);
 
   // Determine what to display based on the current menu state
   let title = '';
@@ -44,39 +32,13 @@ export const BossName = () => {
   return (
     <>
       <div>
-        <CardRetro className='flex items-center gap-4 md:p-3'>
+        <CardRetro className='items-center text-center gap-4 md:p-3'>
           {/* Center: Title */}
           <div className='font-minecraft-bold flex-grow text-center text-3xl'>
             {title}
           </div>
-          {menu === 'game' && (
-            <>
-              {bossProgress[level - 1] !== 2 ? (
-                <>
-                  <div>{isPlayerTurn ? 'Your Turn' : 'Enemy Turn'}</div>
-                  <ButtonRetro onClick={() => setGameOverPopup(true)}>
-                    Quit
-                  </ButtonRetro>
-                </>
-              ) : (
-                <>
-                  <div>You Win</div>
-                  <ButtonRetro onClick={() => setGameWinnerPopup(true)}>
-                    Next
-                  </ButtonRetro>
-                </>
-              )}
-            </>
-          )}
+          {menu === 'game' && (<div>Score <strong>{boss.score}</strong> or more to win</div>)}
         </CardRetro>
-        <GameOverPopup
-          isOpen={gameOverPopup}
-          closeGameOverPopup={() => setGameOverPopup(false)}
-        />
-        <GameWinnerPopup
-          isOpen={gameWinnerPopup}
-          closeGameWinnerPopup={() => setGameWinnerPopup(false)}
-        />
       </div>
     </>
   );

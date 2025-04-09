@@ -32,9 +32,9 @@ export const Shop: React.FC = () => {
   const { theme } = useGame();
   const color =
     themes.themes.find((b) => b.theme === theme) || themes.themes[0];
+  const [hasRefreshed, setHasRefreshed] = useState(false);
 
-  const removePieceFromShop = (id: string, rarity: string) => {
-    const price = getPrice(rarity);
+  const removePieceFromShop = (id: string, price: number) => {
     if (money < price) {
       setNotEnoughMoneyPopup(true);
       return;
@@ -57,36 +57,7 @@ export const Shop: React.FC = () => {
     }
     setMoney(money - 100);
     refreshShop();
-  };
-
-  const displayText = (rarity: string): string => {
-    switch (rarity) {
-      case 'Common':
-        return '$50';
-      case 'Uncommon':
-        return '$100';
-      case 'Rare':
-        return '$200';
-      case 'Legendary':
-        return '$500';
-      default:
-        return '$???';
-    }
-  };
-
-  const getPrice = (rarity: string): number => {
-    switch (rarity) {
-      case 'Common':
-        return 50;
-      case 'Uncommon':
-        return 100;
-      case 'Rare':
-        return 200;
-      case 'Legendary':
-        return 500;
-      default:
-        return 999;
-    }
+    setHasRefreshed(true);
   };
 
   return (
@@ -94,9 +65,11 @@ export const Shop: React.FC = () => {
       <CardRetroNoMotion className='h-[576px] w-auto text-center'>
         <div>Select your upgrades</div>
         <div>
-          <ButtonRetro onClick={reroll} className='mt-4 w-72'>
-            Refresh Store $100
-          </ButtonRetro>
+          {!hasRefreshed && (
+            <ButtonRetro onClick={reroll} className='mt-4 w-72'>
+              Refresh Store $100
+            </ButtonRetro>
+          )}
           <ButtonAltRetro onClick={() => setIsShopOpen(false)}>
             Continue...
           </ButtonAltRetro>
@@ -109,7 +82,6 @@ export const Shop: React.FC = () => {
               card={shopCards[0]}
               removePieceFromShop={removePieceFromShop}
               setIsShopOpen={setIsShopOpen}
-              displayText={displayText}
             />
           )}
 
@@ -118,7 +90,6 @@ export const Shop: React.FC = () => {
               card={shopCards[1]}
               removePieceFromShop={removePieceFromShop}
               setIsShopOpen={setIsShopOpen}
-              displayText={displayText}
             />
           )}
 
@@ -127,7 +98,6 @@ export const Shop: React.FC = () => {
               card={shopCards[2]}
               removePieceFromShop={removePieceFromShop}
               setIsShopOpen={setIsShopOpen}
-              displayText={displayText}
             />
           )}
         </div>

@@ -4,8 +4,6 @@ import Image from 'next/image';
 import { custom } from '@/components/chessboard/theme';
 import { useScoreStore } from '@/stores/useScoreStore';
 
-import { ToggleDisplay } from './toggle-display';
-
 const PIECE_LABELS: Record<string, string> = {
   p: 'P',
   n: 'N',
@@ -108,7 +106,6 @@ export const PieceValues = () => {
 
   return (
     <>
-      <ToggleDisplay></ToggleDisplay>
       <div className='grid grid-cols-2 gap-4'>
         {renderTable('player')}
         {renderTable('enemy')}

@@ -3,9 +3,7 @@ import { useScoreStore } from '@/stores/useScoreStore';
 export function applyBossRewards(level: number) {
   switch (level) {
     case 1:
-      useScoreStore.setState((state) => ({
-        moneyMultiplier: state.moneyMultiplier + 1,
-      }));
+
       break;
     case 2: // applied implicitly to shop unlocks
       break;
@@ -22,6 +20,9 @@ export function applyBossRewards(level: number) {
     case 5: // applied implicitly to shop unlocks
       break;
     case 6: //
+      useScoreStore.setState((state) => ({
+        maxCards: state.maxCards + 1,
+      }));
       break;
     case 7: //
       useScoreStore.setState((state) => ({

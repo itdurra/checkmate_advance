@@ -2,23 +2,23 @@
   "story": [
     {
       "title": "How to Play CheckMate Advance",
-      "text": "Start a run and challenge each of the Boss Pieces to a game of chess.",
-      "image": "/img/tutorial/image4.png"
+      "text": "Start a run and challenge each of the Boss Pieces to a game of chess. But these are not ordinary games of chess.",
+      "image": "/img/tutorial/image1.png"
     },
     {
       "title": "The Game",
-      "text": "To win you must score as many points as possible. You'll be rewarded for each victory.",
-      "image": "/img/tutorial/image6.png"
+      "text": "Win a game by meeting the required score within 10 turns. Your Score is a product of the Piece you move and your Advantage",
+      "image": "/img/tutorial/image10.png"
     },
     {
       "title": "Offense is the best defense",
-      "text": "Capture your opponents pieces, and use cards to enhance your pieces/squares.",
-      "image": "/img/tutorial/image2.png"
+      "text": "Capture your opponents pieces to improve your Advantage, and use Cards to enhance your Pieces.",
+      "image": "/img/tutorial/image14.png"
     },
     {
       "title": "The Shop",
-      "text": "Hit the shop to spend your hard earned rewards. Or hit reset run to try again!",
-      "image": "/img/tutorial/image3.png"
+      "text": "Hit the shop to buy Cards. Your score can improve drastically with the right deck combo. Good Luck!",
+      "image": "/img/tutorial/image12.png"
     }
   ]
 }

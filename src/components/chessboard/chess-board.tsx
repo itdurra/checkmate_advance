@@ -51,7 +51,7 @@ export const ChessBoard = () => {
 
   //check if game is won/lost
   useEffect(() => {
-      if (score >= boss.score) {
+      if (Math.round(score) >= boss.score) {
         setGameWinnerPopup(true);
         setBossResult(level - 1, 2); // win
         useScoreStore.setState({ isGameOver: true });
@@ -128,6 +128,7 @@ export const ChessBoard = () => {
         if (move === null) {
           return;
         }
+        checkGameEnd();
         applyForesight(from, to, promotion); //store state for card effect
         setGamePositionPGN(game.pgn());
 
@@ -156,6 +157,7 @@ export const ChessBoard = () => {
   //check if game has ended via checkmate
   function checkGameEnd() {
     if (game.isCheckmate()) {
+      console.log('CheckMate Detected');
       const isWhite = game.turn() === 'b';
       isWhite ? setGameWinnerPopup(true) : setGameOverPopup(true);
       //make board movable

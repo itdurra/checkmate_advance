@@ -7,11 +7,11 @@ export function applyCardEffects() {
     game,
     turns,
     activeCards,
-    consecutiveChecks,
     setPieceValue,
     setEnemyPieceValue,
     setBoardScore,
     getPieceValue,
+    getEnemyPieceValue,
   } = useScoreStore.getState();
 
   function isSquareOccupiedByWhite(square: Square): boolean {
@@ -31,16 +31,36 @@ export function applyCardEffects() {
     return false;
   }
 
-  //there's no way this works :(
-  function kingsShield(): void {
-    const adjacentSquaresMap = getAdjacentSquares('k', 'w');
+  //finds adjacent pieces and buffs them
+  function shield(piece: string, value: number): void {
+    const adjacentSquaresMap = getAdjacentSquares(piece, 'w');
     const adjacentSquares = Array.from(adjacentSquaresMap.values()).flat();
-    console.log(adjacentSquares, 'adjacent squares');
     for (const square of adjacentSquares) {
       const piece = game.get(square as Square);
-      console.log(piece, 'adjacent squares piece');
-      if (piece != undefined) {
-        setPieceValue(piece.type, getPieceValue(piece.type) + 1);
+      if (piece != undefined && piece.color == 'w') {
+        setPieceValue(piece.type, getPieceValue(piece.type) + value);
+      }
+    }
+  }
+
+  //increase all white pieces in a given array of squares
+  function flank(squares: string[], value: number): void {
+    for (const square of squares) {
+      const piece = game.get(square as Square);
+      if (piece != undefined && piece.color == 'w') {
+        setPieceValue(piece.type, getPieceValue(piece.type) - value);
+      }
+    }
+  }
+
+  //finds adjacent enemy pieces and nerfs them
+  function enemy(piece: string, value: number): void {
+    const adjacentSquaresMap = getAdjacentSquares(piece, 'w');
+    const adjacentSquares = Array.from(adjacentSquaresMap.values()).flat();
+    for (const square of adjacentSquares) {
+      const piece = game.get(square as Square);
+      if (piece != undefined && piece.color == 'b') {
+        setEnemyPieceValue(piece.type, getEnemyPieceValue(piece.type) - value);
       }
     }
   }
@@ -203,6 +223,10 @@ export function applyCardEffects() {
         foresightSquare('q' as PieceSymbol, 1);
         break;
 
+      case 'pawn_squares':
+        foresightSquare('p' as PieceSymbol, 1);
+        break;
+
       case 'knights_1':
         if (turns !== 1) {
           setPieceValue('n', getPieceValue('n') + 1);
@@ -233,12 +257,85 @@ export function applyCardEffects() {
           (isSquareOccupiedByWhite('e5') && isPieceOnSquare('e5', 'q')) ||
           (isSquareOccupiedByWhite('d5') && isPieceOnSquare('d5', 'q'))
         ) {
-          setPieceValue('q', getPieceValue('q') + 3);
+          setPieceValue('q', getPieceValue('q') + 2);
+        }
+        break;
+
+      case 'knights_gambit':
+        if (
+          (isSquareOccupiedByWhite('e4') && isPieceOnSquare('e4', 'n')) ||
+          (isSquareOccupiedByWhite('d4') && isPieceOnSquare('d4', 'n')) ||
+          (isSquareOccupiedByWhite('e5') && isPieceOnSquare('e5', 'n')) ||
+          (isSquareOccupiedByWhite('d5') && isPieceOnSquare('d5', 'n'))
+        ) {
+          setPieceValue('n', getPieceValue('n') + 2);
+        }
+        break;
+
+      case 'bishops_gambit':
+        if (
+          (isSquareOccupiedByWhite('e4') && isPieceOnSquare('e4', 'b')) ||
+          (isSquareOccupiedByWhite('d4') && isPieceOnSquare('d4', 'b')) ||
+          (isSquareOccupiedByWhite('e5') && isPieceOnSquare('e5', 'b')) ||
+          (isSquareOccupiedByWhite('d5') && isPieceOnSquare('d5', 'b'))
+        ) {
+          setPieceValue('b', getPieceValue('b') + 2);
+        }
+        break;
+
+      case 'rooks_gambit':
+        if (
+          (isSquareOccupiedByWhite('e4') && isPieceOnSquare('e4', 'r')) ||
+          (isSquareOccupiedByWhite('d4') && isPieceOnSquare('d4', 'r')) ||
+          (isSquareOccupiedByWhite('e5') && isPieceOnSquare('e5', 'r')) ||
+          (isSquareOccupiedByWhite('d5') && isPieceOnSquare('d5', 'r'))
+        ) {
+          setPieceValue('r', getPieceValue('r') + 2);
         }
         break;
 
       case 'kings_shield':
-        kingsShield();
+        shield('k', 1);
+        break;
+
+      case 'knights_shield':
+        shield('n', 1);
+        break;
+
+      case 'bishops_shield':
+        shield('b', 1);
+        break;
+
+      case 'rooks_shield':
+        shield('r', 1);
+        break;
+
+      case 'queens_shield':
+        shield('q', 1);
+        break;
+
+      case 'knights_enemy':
+        enemy('n', 1);
+        break;
+
+      case 'bishops_enemy':
+        enemy('b', 1);
+        break;
+
+      case 'rooks_enemy':
+        enemy('r', 1);
+        break;
+
+      case 'queens_enemy':
+        enemy('q', 1);
+        break;
+
+      case 'the_flank_1':
+        flank(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7', 'h8'], 1);
+        break;
+
+      case 'the_flank_2':
+        flank(['a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8'], 1);
         break;
 
       default:

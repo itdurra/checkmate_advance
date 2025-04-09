@@ -305,6 +305,25 @@
   text-shadow: 0 0 4px #00d5ff, 0 0 8px #00d5ff;
 }
 
+/* retro-tooltips.css */
+.tooltip {
+  @apply absolute z-50 text-xs p-2 rounded shadow-md font-minecraft text-white;
+  background: #222;
+  border: 2px solid #c381b5;
+  box-shadow: 0 0 5px #c381b5;
+}
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 10px;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #c381b5 transparent transparent transparent;
+}
+
+
 
 
 

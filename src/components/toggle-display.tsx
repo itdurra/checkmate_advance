@@ -19,7 +19,7 @@ export const ToggleDisplay = () => {
 
   return (
     <ButtonRetro onClick={toggleShowBuffs}>
-      {showBuffs ? 'Hide Buffs' : 'Show Buffs'}
+      {showBuffs ? 'Hide' : 'Show'}
     </ButtonRetro>
   );
 };

@@ -2,7 +2,7 @@
   "pieces": [
     {
       "id": "1",
-      "image": "/img/chess/nb.svg",
+      "image": "/img/chess/board.svg",
       "effect": "center_control",
       "name": "Center Control",
       "description": "Gain +1 Square Value for occupying center squares.",
@@ -12,7 +12,7 @@
     },
     {
       "id": "2",
-      "image": "/img/chess/nb.svg",
+      "image": "/img/chess/board.svg",
       "effect": "visionary",
       "name": "Visionary",
       "description": "Gain +1 Square Value for attacking center squares.",
@@ -22,7 +22,7 @@
     },
     {
       "id": "3",
-      "image": "/img/chess/nb.svg",
+      "image": "/img/chess/board.svg",
       "effect": "x_marks_the_spot_1",
       "name": "X Marks the Spot (1)",
       "description": "Gain +1 Square Value on the long diagonal a1-h8.",
@@ -32,7 +32,7 @@
     },
     {
       "id": "4",
-      "image": "/img/chess/nb.svg",
+      "image": "/img/chess/board.svg",
       "effect": "x_marks_the_spot_2",
       "name": "X Marks the Spot (2)",
       "description": "Gain +1 Square Value on the long diagonal a8-h1.",
@@ -42,7 +42,7 @@
     },
     {
       "id": "5",
-      "image": "/img/chess/nb.svg",
+      "image": "/img/chess/board.svg",
       "effect": "enemy_lines",
       "name": "Enemy Lines",
       "description": "Gain +2 Square Value on opponents back ranks (7, 8)",
@@ -52,7 +52,7 @@
     },
     {
       "id": "6",
-      "image": "/img/chess/nb.svg",
+      "image": "/img/chess/board.svg",
       "effect": "railing_1",
       "name": "Railing (1)",
       "description": "Gain +1 Square Value for rank 4",
@@ -62,7 +62,7 @@
     },
     {
       "id": "7",
-      "image": "/img/chess/nb.svg",
+      "image": "/img/chess/board.svg",
       "effect": "railing_2",
       "name": "Railing (2)",
       "description": "Gain +1 Square Value for rank 5",
@@ -72,7 +72,7 @@
     },
     {
       "id": "8",
-      "image": "/img/chess/nb.svg",
+      "image": "/img/chess/board.svg",
       "effect": "ladders_1",
       "name": "Ladders (1)",
       "description": "Gain +1 Square Value for file D",
@@ -82,7 +82,7 @@
     },
     {
       "id": "9",
-      "image": "/img/chess/nb.svg",
+      "image": "/img/chess/board.svg",
       "effect": "ladders_2",
       "name": "Ladders (2)",
       "description": "Gain +1 Square Value for file E",
@@ -92,113 +92,253 @@
     },
     {
       "id": "10",
-      "image": "/img/chess/pb.svg",
+      "image": "/img/chess/nb.svg",
       "effect": "knight_squares",
       "name": "Foresight Knight",
       "description": "Movable Squares visible to a Knight gain +1",
       "type": "Board",
       "rarity": "Uncommon",
-      "cost": 50
+      "cost": 200
     },
     {
       "id": "11",
-      "image": "/img/chess/pb.svg",
+      "image": "/img/chess/rb.svg",
       "effect": "rook_squares",
       "name": "Foresight Rook",
       "description": "Movable Squares visible to a Rook gain +1",
       "type": "Board",
       "rarity": "Uncommon",
-      "cost": 50
+      "cost": 200
     },
     {
       "id": "12",
-      "image": "/img/chess/pb.svg",
+      "image": "/img/chess/bb.svg",
       "effect": "bishop_squares",
       "name": "Foresight Bishop",
       "description": "Movable Squares visible to a Bishop gain +1",
       "type": "Board",
       "rarity": "Uncommon",
-      "cost": 50
+      "cost": 200
     },
     {
       "id": "13",
-      "image": "/img/chess/pb.svg",
+      "image": "/img/chess/qb.svg",
       "effect": "queen_squares",
       "name": "Foresight Queen",
       "description": "Movable Squares visible to a Queen gain +1",
       "type": "Board",
       "rarity": "Uncommon",
-      "cost": 50
+      "cost": 200
     },
     {
       "id": "14",
       "image": "/img/chess/pb.svg",
+      "effect": "pawn_squares",
+      "name": "Foresight Pawn",
+      "description": "Movable Squares visible to a Pawn gain +1",
+      "type": "Board",
+      "rarity": "Uncommon",
+      "cost": 200
+    },
+    {
+      "id": "15",
+      "image": "/img/chess/nb.svg",
       "effect": "knights_1",
       "name": "Knights +1",
       "description": "Knight(s) gain +1 Piece value",
       "type": "Piece",
       "rarity": "Uncommon",
-      "cost": 50
+      "cost": 200
     },
     {
-      "id": "15",
-      "image": "/img/chess/pb.svg",
+      "id": "16",
+      "image": "/img/chess/bb.svg",
       "effect": "bishops_1",
       "name": "Bishops +1",
       "description": "Bishop(s) gain +1 Piece value",
       "type": "Piece",
       "rarity": "Uncommon",
-      "cost": 50
+      "cost": 200
     },
     {
-      "id": "16",
-      "image": "/img/chess/pb.svg",
+      "id": "17",
+      "image": "/img/chess/rb.svg",
       "effect": "rooks_1",
       "name": "Rooks +1",
       "description": "Rook(s) gain +1 Piece value",
       "type": "Piece",
       "rarity": "Uncommon",
-      "cost": 50
+      "cost": 200
     },
     {
-      "id": "17",
-      "image": "/img/chess/pb.svg",
+      "id": "18",
+      "image": "/img/chess/qb.svg",
       "effect": "queens_1",
       "name": "Queens +1",
       "description": "Queen(s) gain +1 Piece value",
       "type": "Piece",
       "rarity": "Uncommon",
-      "cost": 50
+      "cost": 200
     },
     {
-      "id": "18",
+      "id": "19",
       "image": "/img/chess/pb.svg",
       "effect": "pawns_1",
       "name": "Pawns +1",
       "description": "Pawn(s) gain +1 Piece value",
       "type": "Piece",
       "rarity": "Uncommon",
-      "cost": 50
-    },
-    {
-      "id": "19",
-      "image": "/img/chess/bb.svg",
-      "effect": "queens_gambit",
-      "name": "Queen’s Gambit",
-      "description": "The Queen gains +3 Piece Value when moved to a center square.",
-      "type": "Piece",
-      "rarity": "Uncommon",
-      "cost": 100
+      "cost": 200
     },
     {
       "id": "20",
+      "image": "/img/chess/qb.svg",
+      "effect": "queens_gambit",
+      "name": "Queen’s Gambit",
+      "description": "The Queen gains +2 Piece Value when moved to a center square.",
+      "type": "Piece",
+      "rarity": "Uncommon",
+      "cost": 200
+    },
+    {
+      "id": "21",
+      "image": "/img/chess/nb.svg",
+      "effect": "knights_gambit",
+      "name": "Knight's Gambit",
+      "description": "The Knight gains +2 Piece Value when moved to a center square.",
+      "type": "Piece",
+      "rarity": "Uncommon",
+      "cost": 200
+    },
+    {
+      "id": "22",
       "image": "/img/chess/bb.svg",
+      "effect": "bishops_gambit",
+      "name": "Bishop's Gambit",
+      "description": "The Bishop gains +2 Piece Value when moved to a center square.",
+      "type": "Piece",
+      "rarity": "Uncommon",
+      "cost": 200
+    },
+    {
+      "id": "23",
+      "image": "/img/chess/rb.svg",
+      "effect": "rooks_gambit",
+      "name": "Rook’s Gambit",
+      "description": "The Rook gains +2 Piece Value when moved to a center square.",
+      "type": "Piece",
+      "rarity": "Uncommon",
+      "cost": 200
+    },
+    {
+      "id": "24",
+      "image": "/img/chess/kb.svg",
       "effect": "kings_shield",
       "name": "King’s Shield",
       "description": "The King grants +1 Piece Value to all adjacent pieces.",
       "type": "Piece",
-      "rarity": "Uncommon",
-      "cost": 100
+      "rarity": "Rare",
+      "cost": 500
+    },
+    {
+      "id": "25",
+      "image": "/img/chess/nb.svg",
+      "effect": "knights_shield",
+      "name": "Knight's Shield",
+      "description": "The Knight grants +1 Piece Value to all adjacent pieces.",
+      "type": "Piece",
+      "rarity": "Rare",
+      "cost": 500
+    },
+    {
+      "id": "26",
+      "image": "/img/chess/bb.svg",
+      "effect": "bishops_shield",
+      "name": "Bishop's Shield",
+      "description": "The Bishop grants +1 Piece Value to all adjacent pieces.",
+      "type": "Piece",
+      "rarity": "Rare",
+      "cost": 500
+    },
+    {
+      "id": "27",
+      "image": "/img/chess/rb.svg",
+      "effect": "rooks_shield",
+      "name": "Rook's Shield",
+      "description": "The Rooks grants +1 Piece Value to all adjacent pieces.",
+      "type": "Piece",
+      "rarity": "Rare",
+      "cost": 500
+    },
+    {
+      "id": "28",
+      "image": "/img/chess/qb.svg",
+      "effect": "queens_shield",
+      "name": "Queen's Shield",
+      "description": "The Queen grants +1 Piece Value to all adjacent pieces.",
+      "type": "Piece",
+      "rarity": "Rare",
+      "cost": 500
+    },
+    {
+      "id": "29",
+      "image": "/img/chess/nb.svg",
+      "effect": "knights_enemy",
+      "name": "Knight's Enemy",
+      "description": "Knights gain +1 Piece Value when adjacent to an enemy piece",
+      "type": "Piece",
+      "rarity": "Rare",
+      "cost": 500
+    },
+    {
+      "id": "30",
+      "image": "/img/chess/bb.svg",
+      "effect": "bishops_enemy",
+      "name": "Bishop's Enemy",
+      "description": "Bishops gain +1 Piece Value when adjacent to an enemy piece",
+      "type": "Piece",
+      "rarity": "Rare",
+      "cost": 500
+    },
+    {
+      "id": "31",
+      "image": "/img/chess/rb.svg",
+      "effect": "rooks_enemy",
+      "name": "Rook's Enemy",
+      "description": "Rooks gain +1 Piece Value when adjacent to an enemy piece",
+      "type": "Piece",
+      "rarity": "Rare",
+      "cost": 500
+    },
+    {
+      "id": "32",
+      "image": "/img/chess/qb.svg",
+      "effect": "queens_enemy",
+      "name": "Queen's Enemy",
+      "description": "Queens gain +1 Piece Value when adjacent to an enemy piece",
+      "type": "Piece",
+      "rarity": "Rare",
+      "cost": 500
+    },
+    {
+      "id": "33",
+      "image": "/img/chess/board.svg",
+      "effect": "the_flank_1",
+      "name": "The Flank 1",
+      "description": "Pieces on the H file gain +1 Piece Value",
+      "type": "Piece",
+      "rarity": "Rare",
+      "cost": 500
+    },
+    {
+      "id": "34",
+      "image": "/img/chess/board.svg",
+      "effect": "the_flank_2",
+      "name": "The Flank 2",
+      "description": "Pieces on the A file gain +1 Piece Value",
+      "type": "Piece",
+      "rarity": "Rare",
+      "cost": 500
     }
   ]
 }

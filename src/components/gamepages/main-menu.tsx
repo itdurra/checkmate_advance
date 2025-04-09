@@ -29,7 +29,7 @@ export const MainMenu = () => {
     return (
       <div className='justify-center text-center'>
         <div className='py-8'>
-          <p className='font-minecraft-bold mt-8 mb-3 text-3xl md:text-4xl'>
+          <p className='font-minecraft-bold mb-3 mt-8 text-3xl md:text-4xl'>
             CheckMate Advance
           </p>
           <p className='font-minecraft text-gray-400'>
@@ -38,17 +38,14 @@ export const MainMenu = () => {
           <p className='font-minecraft text-gray-400'>
             Music: <span className='text-black'>Matthew A. Ivic</span>
           </p>
-          <p className='font-minecraft text-gray-400'>
-            Art: <span className='text-black'>Wild Life</span>
-          </p>
           <div className='mt-6 mt-auto text-center'>
-          <button
-            onClick={() => setMenu('settings')}
-            className='text-sm text-gray-600 underline transition-all hover:text-blue-300'
-          >
-            View full licenses and credits →
-          </button>
-        </div>
+            <button
+              onClick={() => setMenu('settings')}
+              className='text-sm text-gray-600 underline transition-all hover:text-blue-300'
+            >
+              View full licenses and credits →
+            </button>
+          </div>
         </div>
         <div>
           <div>

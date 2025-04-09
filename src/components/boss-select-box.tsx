@@ -36,13 +36,15 @@ export const BossSelectBox = () => {
     <>
       <CardRetro className='items center mt-6 flex flex-col gap-2 p-2 text-center'>
         <div className='font-minecraft-bold text-lg'>Credits: {money}</div>
-        <ButtonAltRetro onClick={() => setGameStatsPopup(true)}>
-          Information
-        </ButtonAltRetro>
-        <ButtonRetro onClick={() => setRestartPopup(true)}>
-          Restart Run
-        </ButtonRetro>
-        <ButtonRetro onClick={() => setMenu('main')}>Quit</ButtonRetro>
+        <div className='flex flex-row justify-center gap-2 md:flex-col'>
+          <ButtonAltRetro onClick={() => setGameStatsPopup(true)}>
+            Info
+          </ButtonAltRetro>
+          <ButtonRetro onClick={() => setRestartPopup(true)}>
+            Restart
+          </ButtonRetro>
+          <ButtonRetro onClick={() => setMenu('main')}>Quit</ButtonRetro>
+        </div>
       </CardRetro>
       <GameStatsPopup
         isOpen={gameStatsPopup}

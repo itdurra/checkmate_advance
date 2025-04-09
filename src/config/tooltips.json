@@ -1,0 +1,9 @@
+{
+    "score": "This is your current score. Score higher than the boss score to win!",
+    "turns": "Turns remaining before game ends. Plan wisely!",
+    "piece": "Each piece has a different value used to calculate this turn's score.",
+    "advantage": "Multiplier based on material advantage. Capture your opponents' pieces while keeping your own to improve this number.",
+    "pieceValues": "This table shows how many pieces are on the board and what values they have. Impoving your piece value will directly improve your Advantage Multiplier.",
+    "cardQueue": "When you purchase cards in the shop they will display here."
+}
+  

@@ -4,84 +4,72 @@ import { CardRetro } from '@/components/ui-retro/card-retro';
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
 
+import { ButtonRetro } from '../ui-retro/button-retro';
+
 export const Licensing = () => {
-  const { theme } = useGame();
+  const { theme, setMenu } = useGame();
   const color =
     themes.themes.find((b) => b.theme === theme) || themes.themes[0];
 
   return (
+    <>
     <div className='mx-auto mt-10 max-w-5xl space-y-6 px-4 text-left text-sm text-white'>
+      <div className='w-full'></div>
+    <ButtonRetro className='w-48 mr-auto' onClick={() => setMenu('main')}>Main Menu</ButtonRetro>
       <CardRetro className='p-4'>
-        <h1 className='font-minecraft-bold text-2xl text-center mb-4'>
+        <h1 className='font-minecraft-bold mb-4 text-center text-2xl'>
           🎓 Licensing & Acknowledgements
         </h1>
         <p>
           <strong>Checkmate Advance</strong> is a non-commercial indie game
-          experiment made for fun and personal learning. Huge thanks to the
-          developers, artists, and musicians whose work helped bring it to life.
+          experiment made for fun. Huge thanks to the developers, artists, and
+          musicians whose work helped bring it to life. 
+          A special thanks to indie gems {' '}
+          <a
+            href='https://store.steampowered.com/app/2379780/Balatro/'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='text-blue-400 underline hover:text-blue-300'
+          >
+            <em>Balatro</em>
+          </a>{' '}
+          and{' '}
+          <a
+            href='https://store.steampowered.com/app/1404850/Luck_be_a_Landlord/'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='text-blue-400 underline hover:text-blue-300'
+          >
+            <em>Luck be a Landlord</em>
+          </a>
+          {' '}whose underlying mechanics inspired the creation of this game.
         </p>
       </CardRetro>
 
       <CardRetro className='p-4'>
-        <h2 className='font-minecraft-bold text-xl mb-2'>🧠 Code Libraries</h2>
+        <h2 className='font-minecraft-bold mb-2 text-xl'>🧠 Code Libraries</h2>
         <ul className='list-disc space-y-1 pl-5'>
           <li>
-            <strong>chess.js</strong> – chess logic engine (
-            <a
-              href='https://github.com/jhlywa/chess.js'
-              className='text-blue-400 underline hover:text-blue-300'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              MIT License
-            </a>
-            )
+            <strong>chess.js</strong> – chess logic engine
           </li>
           <li>
-            <strong>react-chessboard</strong> – chessboard renderer (
-            <a
-              href='https://github.com/Clariity/react-chessboard'
-              className='text-blue-400 underline hover:text-blue-300'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              MIT License
-            </a>
-            )
+            <strong>react-chessboard</strong> – chessboard renderer
           </li>
           <li>
-            <strong>stockfish.js</strong> – WebAssembly chess engine (
-            <a
-              href='https://github.com/official-stockfish/Stockfish'
-              className='text-blue-400 underline hover:text-blue-300'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              GPL License
-            </a>
-            )
+            <strong>stockfish.js</strong> – WebAssembly chess engine
           </li>
           <li>
-            <strong>Howler.js</strong> – audio playback (
-            <a
-              href='https://github.com/goldfire/howler.js'
-              className='text-blue-400 underline hover:text-blue-300'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              MIT License
-            </a>
-            )
+            <strong>Howler.js</strong> – audio playback
           </li>
           <li>
             <strong>Zustand</strong>, <strong>Framer Motion</strong>,{' '}
-            <strong>TailwindCSS</strong>, and others – MIT
+            <strong>TailwindCSS</strong>, and others
           </li>
         </ul>
       </CardRetro>
 
       <CardRetro className='p-4'>
-        <h2 className='font-minecraft-bold text-xl mb-2'>🎵 Music</h2>
+        <h2 className='font-minecraft-bold mb-2 text-xl'>🎵 Music</h2>
         <p>
           Songs composed by{' '}
           <a
@@ -96,17 +84,17 @@ export const Licensing = () => {
       </CardRetro>
 
       <CardRetro className='p-4'>
-        <h2 className='font-minecraft-bold text-xl mb-2'>🎨 Art Assets</h2>
-        <ul className='list-disc pl-5 mt-2 space-y-1'>
+        <h2 className='font-minecraft-bold mb-2 text-xl'>🎨 Art Assets</h2>
+        <ul className='mt-2 list-disc space-y-1 pl-5'>
           <li>
-            Chess pieces by{' '}
+            Pixel Neon piece set by{' '}
             <a
-              href='https://wildlifestudios.itch.io/chess-set-pixel-art'
+              href='https://sharechess.github.io'
               target='_blank'
               rel='noopener noreferrer'
               className='text-blue-400 underline hover:text-blue-300'
             >
-              Wild Life
+              therealqtpi & caderek (sharechess.github.io)
             </a>
           </li>
           <li>
@@ -124,7 +112,7 @@ export const Licensing = () => {
       </CardRetro>
 
       <CardRetro className='p-4'>
-        <h2 className='font-minecraft-bold text-xl mb-2'>
+        <h2 className='font-minecraft-bold mb-2 text-xl'>
           📝 Full License Texts
         </h2>
         <a
@@ -142,5 +130,6 @@ export const Licensing = () => {
         </p>
       </CardRetro>
     </div>
+    </>
   );
 };

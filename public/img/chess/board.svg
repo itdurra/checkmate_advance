@@ -1,0 +1,12 @@
+<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" width="80" height="80">
+  <!-- Background -->
+  <rect width="80" height="80" fill="#000000"/>
+
+  <!-- Light Squares -->
+  <rect x="0" y="0" width="40" height="40" fill="#f2d2e9" />
+  <rect x="40" y="40" width="40" height="40" fill="#f2d2e9" />
+
+  <!-- Dark Squares -->
+  <rect x="40" y="0" width="40" height="40" fill="#c381b5" />
+  <rect x="0" y="40" width="40" height="40" fill="#c381b5" />
+</svg>
