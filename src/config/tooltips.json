@@ -1,5 +1,5 @@
 {
-    "score": "This is your current score. Score higher than the boss score to win!",
+    "score": "This is your current score. Score higher than the boss score to win! The formula is (Piece Value + Square Value) * Advantage",
     "turns": "Turns remaining before game ends. Plan wisely!",
     "piece": "Each piece has a different value used to calculate this turn's score.",
     "advantage": "Multiplier based on material advantage. Capture your opponents' pieces while keeping your own to improve this number.",

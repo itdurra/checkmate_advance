@@ -48,7 +48,7 @@ export function applyCardEffects() {
     for (const square of squares) {
       const piece = game.get(square as Square);
       if (piece != undefined && piece.color == 'w') {
-        setPieceValue(piece.type, getPieceValue(piece.type) - value);
+        setPieceValue(piece.type, getPieceValue(piece.type) + value);
       }
     }
   }

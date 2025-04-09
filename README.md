@@ -1,15 +1,21 @@
 # ♟️ Checkmate Advance
 
-![Chess Game Screenshot](public/img/tutorial/image2.png")
+![Chess Game Screenshot](public/img/tutorial/image12.png")
 
-A Balatro-inspired chess experiment built with React, TypeScript, and open-source libraries.
+A Balatro-inspired chess experiment built with React, TypeScript, and open-source libraries. This was the developers first project in React and was built solely to learn. It has many bugs to improve but I am moving onto other projects! Try the game here at [CheckmateAdvance.com](checkmateadvance.com)
 
-## 🚀 Features
+## Features
 - Roguelike deck building game
 - Chess gameplay
 - Retro pixel art
 
-## 📦 Dependencies
+## Unfinished/Skipped Features
+-Legendary cards
+-animations
+-sound effects
+-Boss effects
+
+## Dependencies
 ### Core Libraries
 | Library | Purpose | License |
 |---------|---------|---------|
@@ -23,10 +29,10 @@ A Balatro-inspired chess experiment built with React, TypeScript, and open-sourc
 - Framer Motion
 - Zustand (State management)
 
-## 🎨 Assets
+## Assets
 | Asset Type | Source |
 |------------|--------|
-| Chess Pieces | [Wild Life Studios](https://wildlifestudios.itch.io/chess-set-pixel-art) |
+| Pixel Neon Chess Set | [Sharechess Project: therealqtpi & caderek ](sharechess.github.io) |
 | UI Elements | [RetroUI](https://www.retroui.io/) | 
 | Music | Matthew A. Ivic |
 
