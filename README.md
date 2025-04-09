@@ -1,6 +1,6 @@
 # ♟️ Checkmate Advance
 
-A Balatro-inspired chess experiment built with React, TypeScript, and open-source libraries. This was my first project in React and was built solely to learn. It has many bugs to improve but I am moving onto other projects! Try the demo here at [CheckmateAdvance.com](checkmateadvance.com)
+A Balatro-inspired chess experiment built with React, TypeScript, and open-source libraries. This was my first project in React and was built solely to learn. It has many bugs to improve but I am moving onto other projects! Try the demo here at [CheckmateAdvance.com](https://checkmateadvance.com)
 
 ## Features
 - Roguelike deck building game
@@ -17,10 +17,10 @@ A Balatro-inspired chess experiment built with React, TypeScript, and open-sourc
 ### Core Libraries
 | Library | Purpose | License |
 |---------|---------|---------|
-| [chess.js](https://github.com/jhlywa/chess.js) | Chess logic | MIT |
-| [react-chessboard](https://github.com/Clariity/react-chessboard) | Board rendering | MIT |
-| [Stockfish.js](https://github.com/official-stockfish/Stockfish) | Chess AI | GPL-3.0 |
-| [Howler.js](https://github.com/goldfire/howler.js) | Audio | MIT |
+| [chess.js](https://github.com/jhlywa/chess.js) | Chess logic |
+| [react-chessboard](https://github.com/Clariity/react-chessboard) | Board rendering |
+| [Stockfish.js](https://github.com/official-stockfish/Stockfish) | Chess AI |
+| [Howler.js](https://github.com/goldfire/howler.js) | Audio |
 
 ### UI/Animation
 - TailwindCSS
@@ -30,7 +30,7 @@ A Balatro-inspired chess experiment built with React, TypeScript, and open-sourc
 ## Assets
 | Asset Type | Source |
 |------------|--------|
-| Pixel Neon Chess Set | [Sharechess Project: therealqtpi & caderek ](sharechess.github.io) |
+| Pixel Neon Chess Set | [Sharechess Project: therealqtpi & caderek ](https://sharechess.github.io) |
 | UI Elements | [RetroUI](https://www.retroui.io/) | 
 | Music | Matthew A. Ivic |
 
