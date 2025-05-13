@@ -3,6 +3,8 @@
  * License: GPL
  */
 
+import { Difficulty } from "@/types/difficulty";
+
 type EngineMessage = {
   uciMessage: string;
   bestMove?: string;
@@ -20,8 +22,7 @@ export default class Engine {
   public currentSkillLevel: number;
   public currentLimitStrength: boolean;
   public currentElo: number;
-  public attacked: boolean;
-  public diverted: boolean;
+  public currentDepth: number;
 
   constructor() {
     this.stockfish = null;
@@ -30,8 +31,7 @@ export default class Engine {
     this.currentSkillLevel = 20;
     this.currentLimitStrength = false;
     this.currentElo = 2850;
-    this.attacked = false;
-    this.diverted = false;
+    this.currentDepth = 10;
 
     if (typeof window !== 'undefined') {
       this.initializeEngine();
@@ -98,10 +98,9 @@ export default class Engine {
     this.onMessage(readyCheck);
   }
 
-  public evaluatePosition(fen: string, depth: number = 18): void {
-    if (depth > 24) depth = 24;
+  public evaluatePosition(fen: string): void {
     this.sendCommand(`position fen ${fen}`);
-    this.sendCommand(`go depth ${depth}`);
+    this.sendCommand(`go depth ${this.currentDepth}`);
   }
 
   public stop(): void {
@@ -117,26 +116,50 @@ export default class Engine {
     }
   }
 
-  // ... (rest of your methods remain the same)
+public setBossLevel(
+  level: number, 
+  newGamePlus: number, // NG+ cycles (0 = first playthrough)
+  difficulty: Difficulty
+) {
+  if (level < 1 || level > 9) throw new Error("Boss level must be 1-9.");
 
+  // Base scaling (adjust these arrays to fine-tune balance)
+  const skillLevels = {
+    easy:   [0, 1, 2, 3, 4, 5, 5, 5, 5],
+    medium: [0, 2, 4, 7, 9, 9, 9, 9, 9],
+    hard:   [4, 15, 16, 17, 18, 19, 20, 20, 20]
+  };
 
-  setAttacked(value: boolean) {
-    this.attacked = value;
+  const defaultDepths = {
+    easy:   [1, 2, 3, 4, 6, 8, 10, 10, 10],
+    medium: [1, 3, 5, 8, 10, 10, 10, 10, 10],
+    hard:   [4, 8, 10, 10, 10, 10, 10, 10, 10]
+  };
+
+  let skill = 10;
+  let depth = 10;
+  let levelNG = level;
+  if(newGamePlus > 0){
+    levelNG = 9; //set to max difficulty on difficulty track
+  }
+  if(difficulty === 'easy'){
+    skill = skillLevels.easy[levelNG - 1];
+    depth = defaultDepths.easy[levelNG - 1];
+  } else if(difficulty === 'medium'){
+    skill = skillLevels.medium[levelNG - 1];
+    depth = defaultDepths.medium[levelNG - 1];
+  } else {
+    skill = skillLevels.hard[levelNG - 1];
+    depth = defaultDepths.hard[levelNG - 1];
   }
 
-  getAttacked() {
-    return this.attacked;
-  }
+  // Configure engine
+  this.enableLimitStrength(false); // Disable Elo to use Skill Level
+  this.setSkillLevel(skill);
+  this.currentDepth = depth;
+}
 
-  setDiverted(value: boolean) {
-    this.diverted = value;
-  }
-
-  getDiverted() {
-    return this.diverted;
-  }
-
-  setSkillLevel(level: number) {
+  public setSkillLevel(level: number) {
     if (level < 0 || level > 20) {
       throw new Error("Skill level must be between 0 and 20.");
     }
@@ -144,12 +167,12 @@ export default class Engine {
     this.currentSkillLevel = level;
   };
 
-  enableLimitStrength(enable: boolean) {
+  public enableLimitStrength(enable: boolean) {
     this.stockfish?.postMessage(`setoption name UCI_LimitStrength value ${enable}`);
     this.currentLimitStrength = enable;
   };
 
-  setEloRating(elo: number) {
+  public setEloRating(elo: number) {
     if (elo < 1350 || elo > 2850) {
       throw new Error("Elo rating must be between 1350 and 2850.");
     }
@@ -157,13 +180,20 @@ export default class Engine {
     this.currentElo = elo;
   };
 
-  getCurrentConfig() {
+  public getCurrentConfig() {
     return {
       skillLevel: this.currentSkillLevel,
       limitStrength: this.currentLimitStrength,
       elo: this.currentElo,
-      attacked: this.attacked,
-      diverted: this.diverted,
     };
+  }
+
+  public dumpUCIOptions() {
+    this.sendCommand("uci"); // Logs all available UCI options
+    this.onMessage((msg) => {
+      if (msg.uciMessage.startsWith("option")) {
+        console.log(msg.uciMessage); // Prints all engine options
+      }
+    });
   }
 }

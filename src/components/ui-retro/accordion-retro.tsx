@@ -1,7 +1,12 @@
 'use client';
 import { PropsWithChildren } from 'react';
 import { motion } from 'framer-motion';
-import { Accordion, AccordionContent,AccordionItem, AccordionTrigger } from 'pixel-retroui';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from 'pixel-retroui';
 
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
@@ -11,7 +16,11 @@ interface AccordionRetroProps extends PropsWithChildren<{}> {
   title: string;
 }
 
-export const AccordionRetro = ({ children, className, title }: AccordionRetroProps) => {
+export const AccordionRetro = ({
+  children,
+  className,
+  title,
+}: AccordionRetroProps) => {
   const { theme } = useGame();
   const color =
     themes.themes.find((b) => b.theme === theme) || themes.themes[0];
@@ -23,18 +32,18 @@ export const AccordionRetro = ({ children, className, title }: AccordionRetroPro
       transition={{ type: 'spring', stiffness: 300, damping: 15 }} // ✅ Smooth spring effect
       //className={className}
     >
-        <Accordion
+      <Accordion
         bg={color.bg}
         textColor={color.textColor}
         borderColor={color.borderColor}
         shadowColor={color.shadowColor}
         className={className}
-        >
-        <AccordionItem value="item-1">
-            <AccordionTrigger>{title}</AccordionTrigger>
-            <AccordionContent>{children}</AccordionContent>
+      >
+        <AccordionItem value='item-1'>
+          <AccordionTrigger>{title}</AccordionTrigger>
+          <AccordionContent>{children}</AccordionContent>
         </AccordionItem>
-        </Accordion>
+      </Accordion>
     </motion.div>
   );
 };

@@ -9,13 +9,13 @@
       "textColor": "#30210b",
       "borderColor": "#30210b",
       "shadowColor": "#30210b",
-      "description": "gain access the shop",
+      "description": "gain access to the shop",
       "weakness": "$",
       "depth": 0,
       "elo": 0,
       "moveTime": 300,
       "score": 50,
-      "song": "/music/Ogg/16. Conviction.ogg"
+      "song": "Conviction"
     },
     {
       "level": 2,
@@ -28,11 +28,11 @@
       "shadowColor": "#30210b",
       "description": "unlock uncommon cards in shop",
       "weakness": "$",
-      "depth": 1,
+      "depth": 2,
       "elo": 1000,
       "moveTime": 300,
       "score": 80,
-      "song": "/music/Ogg/16. Conviction.ogg"
+      "song": "Conviction"
     },
     {
       "level": 3,
@@ -43,13 +43,13 @@
       "textColor": "#30210b",
       "borderColor": "#30210b",
       "shadowColor": "#30210b",
-      "description": "gain an extra card permanently",
+      "description": "gain an extra card",
       "weakness": "gain +2 piece value when transformed",
-      "depth": 1,
+      "depth": 3,
       "elo": 1200,
       "moveTime": 300,
       "score": 500,
-      "song": "/music/Ogg/16. Conviction.ogg"
+      "song": "Conviction"
     },
     {
       "level": 4,
@@ -62,11 +62,11 @@
       "shadowColor": "#30210b",
       "description": "triple your cash rewards",
       "weakness": "",
-      "depth": 1,
+      "depth": 4,
       "elo": 1600,
       "moveTime": 300,
       "score": 900,
-      "song": "/music/Ogg/16. Conviction.ogg"
+      "song": "Conviction"
     },
     {
       "level": 5,
@@ -79,11 +79,11 @@
       "shadowColor": "#30210b",
       "description": "unlock rare cards in shop",
       "weakness": "",
-      "depth": 1,
+      "depth": 5,
       "elo": 1600,
       "moveTime": 300,
       "score": 1200,
-      "song": "/music/Ogg/16. Conviction.ogg"
+      "song": "Conviction"
     },
     {
       "level": 6,
@@ -94,13 +94,13 @@
       "textColor": "black",
       "borderColor": "black",
       "shadowColor": "#c381b5",
-      "description": "gain an extra card permanently",
+      "description": "gain an extra card",
       "weakness": "square value cards are debuffed",
-      "depth": 1,
-      "elo": 1600,
+      "depth": 7,
+      "elo": 1800,
       "moveTime": 300,
       "score": 2000,
-      "song": "/music/Ogg/16. Conviction.ogg"
+      "song": "Conviction"
     },
     {
       "level": 7,
@@ -113,11 +113,11 @@
       "shadowColor": "#30210b",
       "description": "quadruple your cash rewards",
       "weakness": "",
-      "depth": 1,
+      "depth": 7,
       "elo": 2000,
       "moveTime": 300,
       "score": 2200,
-      "song": "/music/Ogg/16. Conviction.ogg"
+      "song": "Conviction"
     },
     {
       "level": 8,
@@ -130,11 +130,11 @@
       "shadowColor": "#30210b",
       "description": "unlock legendary cards in shop",
       "weakness": "",
-      "depth": 1,
-      "elo": 2000,
+      "depth": 7,
+      "elo": 2200,
       "moveTime": 300,
       "score": 2500,
-      "song": "/music/Ogg/16. Conviction.ogg"
+      "song": "Conviction"
     },
     {
       "level": 9,
@@ -145,13 +145,13 @@
       "textColor": "black",
       "borderColor": "black",
       "shadowColor": "#c381b5",
-      "description": "a handwritten thank you note",
+      "description": "unlock endless mode",
       "weakness": "The undo powerup can undo its powerful spell",
-      "depth": 1,
-      "elo": 2000,
+      "depth": 7,
+      "elo": 2400,
       "moveTime": 300,
       "score": 3500,
-      "song": "/music/Ogg/16. Conviction.ogg"
+      "song": "Conviction"
     }
   ]
 }

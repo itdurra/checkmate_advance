@@ -1,9 +1,9 @@
-import { Stats } from '@/components/popups/stats';
-import { ButtonAltRetro } from '@/components/ui-retro/button-alt-retro';
-import { ButtonRetro } from '@/components/ui-retro/button-retro';
 import { PopupRetro } from '@/components/ui-retro/popup-retro';
 import { useGame } from '@/context/game-context';
 import { useScoreStore } from '@/stores/useScoreStore';
+import { useStatsStore } from '@/stores/useStatsStore';
+
+import { StatsAndButtons } from './stats-and-buttons';
 
 interface RestartConfirmationPopupProps {
   isOpen: boolean;
@@ -15,31 +15,25 @@ export const RestartConfirmationPopup = ({
   closeRestartConfirmationPopup,
 }: RestartConfirmationPopupProps) => {
   const resetRun = useScoreStore((state) => state.resetRun);
+  const resetStats = useStatsStore((state) => state.resetStats);
   const { setIsShopOpen } = useGame();
 
   function RestartRun() {
     resetRun();
+    resetStats();
     setIsShopOpen(false);
     closeRestartConfirmationPopup();
   }
 
   return (
     <PopupRetro isOpen={isOpen} onClose={closeRestartConfirmationPopup}>
-      <div className='text-center'>
-        <p className='font-minecraft-bold my-4 text-lg'>
-          Delete progress and restart your run?
+      <div className='popup-body-div'>
+        <p className='popup-title'>Restart Run?</p>
+        <p className='popup-subtitle'>
+          <span className='popup-subtitle-emphasis'>Warning: </span>You will lose all boss progress, and unlocked cards. Each new run
+          randomizes the cards you will see in the shop.
         </p>
-        <div className='mx-auto w-[90%] max-w-72 text-center'>
-          <p className='mb-4'>
-            You will lose all boss progress, and unlocked cards. Each new run randomizes the cards you
-            will see in the shop.
-          </p>
-        </div>
-        <ButtonAltRetro onClick={() => RestartRun()}>Yes</ButtonAltRetro>
-        <ButtonRetro onClick={closeRestartConfirmationPopup}>No</ButtonRetro>
-        <div className='mt-6'>
-          <Stats></Stats>
-        </div>
+        <StatsAndButtons onContinue={RestartRun} text='Restart'></StatsAndButtons>
       </div>
     </PopupRetro>
   );

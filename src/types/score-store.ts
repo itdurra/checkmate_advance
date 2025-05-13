@@ -4,6 +4,10 @@ import Engine from '@/components/chessboard/stockfish';
 import type { BossState } from '@/types/boss-state';
 import type { Card } from '@/types/card';
 import type { Difficulty } from '@/types/difficulty';
+import type { Step } from '@/types/step';
+
+import { BossReward } from './boss-reward';
+import { subtype } from './subtype';
 
 export type ScoreStore = {
     game: Chess;
@@ -11,6 +15,8 @@ export type ScoreStore = {
     from: string;
     piece: string;
     gamePosition: string;
+    historyPointer: number;
+    setHistoryPointer: (move: number) => void;
     engine: Engine;
     setGamePosition: (fen: string) => void;
     setGamePositionPGN: (fen: string) => void;
@@ -23,6 +29,7 @@ export type ScoreStore = {
     moneyMultiplier: number;
     setMoney: (amount: number) => void;
     score: number;
+    bonus: number;
     pieceScore: number;
     squareScore: number;
     playerMaterial: number;
@@ -40,6 +47,7 @@ export type ScoreStore = {
     consecutiveChecks: number;
   
     activeCards: Card[]; // Player’s active hand
+    setActiveCards: (cards: Card[]) => void;
     shopCards: Card[]; // Cards currently in the shop
     setShopCards: (cards: Card[]) => void;
     seenShopCards: Set<string>; // Track seen shop cards
@@ -51,12 +59,29 @@ export type ScoreStore = {
     animatePieceTrigger: boolean,
     animateSquareTrigger: boolean,
     animateMaterialTrigger: boolean,
+    animatePieceMap: Record<string, boolean>;
+    setAnimatePieceMap: (pieceKey: string, value: boolean) => void;
+    animateSquare: boolean,
+    setAnimateSquare: (value: boolean) => void;
+    animatePiece: boolean,
+    setAnimatePiece: (value: boolean) => void;
+    animateFormula: number,
+    setAnimateFormula: (value: number) => void;
+    animateNewGame: boolean,
+    setAnimateNewGame: (value: boolean) => void;
     isPlayerTurn: boolean,
     isGameOver: boolean,
     showTooltips: boolean,
+    pieceDelays: Map<string, number>;
   
     //boss progression
+    newGamePlus: number;
+    setNewGamePlus: () => void;
     bossProgress: BossState[]; // length 9
+    bossEffect: subtype;
+    bossRewards: BossReward[];
+    setBossEffect: () => void;
+    setBossRewards: () => void;
     setBossResult: (index: number, result: BossState) => void;
     resetBossProgress: () => void;
     getNextThreeBosses: () => number[]; // indexes to display
@@ -95,8 +120,17 @@ export type ScoreStore = {
     addCard: (cardId: string) => boolean;
     removeCard: (cardId: string) => boolean;
     clearActiveCards: () => void;
-    addCardToShop: () => boolean;
     removeCardFromShop: (cardId: string) => boolean;
     clearShop: () => void;
     refreshShop: () => void;
+
+
+    //tutorials
+    isActive: boolean;
+    currentStep: number;
+    steps: Step[];
+    start: () => void;
+    next: () => void;
+    back: () => void;
+    exit: () => void;
   };

@@ -4,60 +4,39 @@ import { Howl } from 'howler';
 
 import bosses from '@/config/bosses.json';
 import { useGame } from '@/context/game-context';
+import { useMusicStore } from '@/stores/useMusicStore';
+import type { SongTitle } from '@/types/song-title';
 
 export const BackgroundMusic = () => {
-  const { menu, level, musicEnabled } = useGame();
-  const [sound, setSound] = useState<Howl | null>(null);
-  // Define the default song
-  let song = '/music/Ogg/4. Forward.ogg'; // Default music for most menus
-  const boss = bosses.bosses.find((b) => b.level === level) || bosses.bosses[0];
+  const { menu, level, isShopOpen } = useGame();
+  const boss = bosses.bosses.find(b => b.level === level) || bosses.bosses[0];
+  const playBackground = useMusicStore((s) => s.playBackground);
+  const musicEnabled = useMusicStore((s) => s.musicEnabled);
 
-  if (
-    menu === 'main' ||
-    menu === 'settings' ||
-    menu === 'volume' ||
-    menu === 'controls' ||
-    menu === 'achievements'
-  ) {
-    song = '/music/Ogg/4. Forward.ogg';
-  } else if (menu === 'storymode') {
-    song = '/music/Ogg/12. Fight or Flight.ogg';
-  } else if (menu === 'freeplay') {
-    song = '/music/Ogg/2. Get Ready!.ogg';
-  } else if (menu === 'cutscene') {
-    song = '/music/Ogg/2. Get Ready!.ogg';
-  } else if (menu === 'character_unlock') {
-    song = '/music/Ogg/6. Flametongue.ogg';
-  } else if (menu === 'game') {
-    song = boss.song;
-  }
+  const menuToSong: Record<string, SongTitle> = {
+    main: 'Forward',
+    cutscene: 'Get Ready!',
+    storymode: 'Fight or Flight',
+    game: 'Conviction',
+    settings: 'Forward',
+    practice: 'Epilogue'
+  };
 
   useEffect(() => {
-    if (!musicEnabled) {
-      // Stop previous music if it's playing
-      if (sound) {
-        sound.stop();
-      }
-      return;
+    if (!musicEnabled) return;
+
+    let songTitle: SongTitle;
+
+    if (menu === 'game') {
+      songTitle = (boss.song as SongTitle) ?? 'Conviction'; // fallback to generic game song
+    } else {
+      songTitle = menuToSong[menu];
     }
 
-    // Stop previous music if it's playing
-    if (sound) {
-      sound.stop();
+    if (songTitle) {
+      playBackground(songTitle);
     }
-    // Create a new Howl instance
-    const newSound = new Howl({
-      src: [song],
-      volume: 0.5,
-      loop: true,
-      preload: true,
-    });
-    newSound.play(); // Play the new music
-    setSound(newSound); // Update state
-    return () => {
-      newSound.stop(); // Stop playing when menu changes
-    };
-  }, [song, musicEnabled]); // Runs every time `menu` changes
+  }, [menu, musicEnabled]);
 
   return null;
 };

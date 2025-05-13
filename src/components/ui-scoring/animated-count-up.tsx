@@ -2,6 +2,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+import { abbreviateNumber } from '@/utils/abbreviate-number';
+
 interface AnimatedCountUpProps {
   value: number;
 }
@@ -29,7 +31,7 @@ export const AnimatedCountUp = ({ value }: AnimatedCountUpProps) => {
       }}
       className='inline-block px-[2px] font-bold'
     >
-      {value}
+      {abbreviateNumber(value)}
     </motion.span>
   );
 };

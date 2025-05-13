@@ -9,7 +9,7 @@ export function cutScenePicture(image: string) {
       priority
       quality={100}
       alt='Story Picture'
-      className='w-72 mx-auto rounded-md'
+      className='h-64 w-72 mx-auto rounded-md'
     />
   );
 }
@@ -108,6 +108,7 @@ export function shopPortrait(
       height={100}
       priority
       quality={100}
+      style={{ imageRendering: 'pixelated' }}
       alt='Enemy Profile Picture'
       className='rounded-md'
     />

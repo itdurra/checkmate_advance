@@ -1,0 +1,25 @@
+{
+    "rewards": [
+      {
+        "name": 1,
+        "description": "gain access to the shop"
+      },
+      {
+        "name": 2,
+        "description": "unlock uncommon cards in shop"
+      },
+      {
+        "name": 3,
+        "description": "gain an extra card permanently"
+      },
+      {
+        "name": 4,
+        "description": "triple your cash rewards"
+      },
+      {
+        "name": 5,
+        "description": "Queen cards are disabled"
+      }
+    ]
+  }
+  

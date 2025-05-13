@@ -1,0 +1,11 @@
+{
+  "prices": {
+    "refresh": 500,
+    "chance": 700,
+    "upgrade": 800,
+    "common": 100,
+    "uncommon": 200,
+    "rare": 500,
+    "legendary": 1000
+  }
+}

@@ -3,6 +3,7 @@ import Image from 'next/image';
 
 import { custom } from '@/components/chessboard/theme';
 import { useScoreStore } from '@/stores/useScoreStore';
+import { BASE_VALUES } from '@/utils/base-values';
 
 const PIECE_LABELS: Record<string, string> = {
   p: 'P',
@@ -10,14 +11,6 @@ const PIECE_LABELS: Record<string, string> = {
   b: 'B',
   r: 'R',
   q: 'Q',
-};
-
-const BASE_VALUES: Record<string, number> = {
-  p: 1,
-  n: 3,
-  b: 3,
-  r: 5,
-  q: 9,
 };
 
 const formatModifier = (current: number, base: number) => {

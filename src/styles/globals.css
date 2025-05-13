@@ -240,7 +240,7 @@
   pointer-events: none;
 
   background: rgba(255, 183, 148, 0.4); /* Peachy pastel */
-  animation: slowPulse 3s ease-in-out infinite;
+  animation: shimmer 3s ease-in-out infinite;
   mix-blend-mode: color-dodge;
 
   mask-image: inherit;
@@ -323,9 +323,128 @@
   border-color: #c381b5 transparent transparent transparent;
 }
 
+.stats-style {
+  @apply font-bold text-[#c381b5] text-base block sm:inline overflow-x-auto whitespace-nowrap max-w-full;
+}
 
+.value-style {
+  @apply text-[#c381b5] font-bold text-sm;
+}
 
+.keyword-style {
+  @apply text-[#c381b5] font-semibold;
+}
 
+.value-sign-style {
+  @apply text-[#c381b5] font-semibold;
+}
 
+.popup-body-div {
+  @apply text-center font-minecraft text-sm max-w-md;
+}
 
+.popup-title {
+  @apply font-minecraft-bold mb-2 text-2xl sm:text-4xl;
+}
 
+.popup-subtitle {
+  @apply mx-auto mt-2 italic max-w-sm
+}
+
+.popup-subtitle-emphasis {
+  @apply font-bold text-[#c381b5] uppercase
+}
+
+.popup-tutorial-emphasis {
+  @apply font-bold text-[#c381b5] max-w-sm
+}
+
+.popup-tutorial {
+  @apply pl-2 text-sm max-w-xs
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fefcd0; /* match your card background */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #c381b5; /* match your accent color */
+  border-radius: 2px; /* sharper edges to feel more retro */
+  border: 1px solid black; /* black outline for pixel art vibe */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a06995; /* darker pink-purple on hover */
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #c381b5 #fefcd0; /* thumb / track */
+}
+
+.platinum-piece {
+  position: relative;
+  z-index: 10;
+}
+
+/* For the mask approach */
+.masked-overlay {
+  mask-image: url('/img/texture/windowpane.png');
+  mask-mode: alpha;
+  -webkit-mask-image: url('/img/texture/windowpane.png');
+  -webkit-mask-mode: alpha;
+}
+
+.shimmer {
+  will-change: background-position;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0, center;
+  }
+  100% {
+    background-position: -200% 0, center;
+  }
+}
+
+.glowing-piece {
+  -webkit-box-shadow:0px 0px 8px 6px rgba(45,255,196,0.32);
+  -moz-box-shadow: 0px 0px 8px 6px rgba(45,255,196,0.32);
+  box-shadow: 0px 0px 8px 6px rgba(45,255,196,0.32);
+}
+
+.bg-common-texture {
+  background-image: url('/img/texture/bronze.png');
+  background-size: 200% 200%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.bg-uncommon-texture {
+  background-image: url('/img/texture/silver.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.bg-rare-texture {
+  background-image: url('/img/texture/gold.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.bg-legendary-texture {
+  background-image: url('/img/texture/red.png'); /* or a glow texture */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}

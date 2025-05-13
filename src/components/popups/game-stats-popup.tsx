@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { Stats } from '@/components/popups/stats';
-import { ButtonRetro } from '@/components/ui-retro/button-retro';
 import { PopupRetro } from '@/components/ui-retro/popup-retro';
+import hints from '@/config/hints.json';
+
+import { StatsAndButtons } from './stats-and-buttons';
 
 interface GameStatsPopupProps {
   isOpen: boolean;
@@ -13,14 +14,20 @@ export const GameStatsPopup = ({
   isOpen,
   closeGameStatsPopup,
 }: GameStatsPopupProps) => {
+  const randomHint =
+    hints.hints[Math.floor(Math.random() * hints.hints.length)];
 
   return (
     <PopupRetro isOpen={isOpen} onClose={closeGameStatsPopup}>
-      <div className='text-center font-minecraft text-sm'>
-        <Stats></Stats>
-        <div className='mt-4'>
-          <ButtonRetro onClick={closeGameStatsPopup}>Close</ButtonRetro>
-        </div>
+      <div className='popup-body-div'>
+        <p className='popup-title'>Run Summary</p>
+        <p className='popup-subtitle'>
+          <span className='popup-subtitle-emphasis'>Hint:</span> {randomHint}
+        </p>
+        <StatsAndButtons
+          onContinue={closeGameStatsPopup}
+          text='Close'
+        ></StatsAndButtons>
       </div>
     </PopupRetro>
   );

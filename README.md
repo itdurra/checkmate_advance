@@ -1,23 +1,21 @@
 # ♟️ Checkmate Advance
 
-A Balatro-inspired chess experiment built with React, TypeScript, and open-source libraries. This was my first project in React and was built solely to learn. It has many bugs to improve but I am moving onto other projects! Try the demo here at [CheckmateAdvance.com](https://checkmateadvance.com)
+A Balatro-inspired chess experiment built with React, TypeScript, and open-source libraries. This was my first project in React and was built solely to learn. It has many bugs to improve but I am moving onto other projects! Try the game here at [CheckmateAdvance.com](https://checkmateadvance.com)
 
 ## Features
-- Roguelike deck building game
-- Chess gameplay
-- Retro pixel art
+- Chess gameplay + Roguelike deck building game
+- 80 unique upgradeable cards
+- 9 story levels, endless mode, practice mode
+- Retro pixel art, music, and sound effects
 
 ## Unfinished/Skipped Features
-- Legendary cards
-- Animations
-- Sound effects
-- Boss effects, 
+- Animations: the browser has finite animation resources and React Chessboard uses a lot of them. Adding additional animations lags the game, and I wasn't able to optimize it correctly, so removed it.
+- Boss effects. Would be nice to have the boss rewards be random instead of hardcoded.
 - and many more...
 
 ## Bugs/Known Issues
-- many re-renders to accomplish game loop
-- some cards appear twice in shop
-- codebase has significant tech debt / complexity due to architecture choices 
+- codebase has significant tech debt / complexity due to architecture choices
+- drag and drop in practice mode has errors occasionally
 - and many more...
 
 ## Dependencies
@@ -39,7 +37,9 @@ A Balatro-inspired chess experiment built with React, TypeScript, and open-sourc
 |------------|--------|
 | Pixel Neon Chess Set | [Sharechess Project: therealqtpi & caderek ](https://sharechess.github.io) |
 | UI Elements | [RetroUI](https://www.retroui.io/) | 
+| Textures | [Fupi](https://opengameart.org/content/shiny-window-pane) |
 | Music | Matthew A. Ivic |
+| Sound Effects | Kenney.nl |
 
 
 ℹ️ This project is not affiliated with any official chess organization.

@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 
 import { custom_board_theme } from '@/components/chessboard/theme';
 import { useScoreStore } from '@/stores/useScoreStore';
+import { abbreviateNumber } from '@/utils/abbreviate-number';
 
 interface CustomSquareProps {
   children: React.ReactNode;
@@ -47,12 +48,12 @@ const CustomSquareRenderer = forwardRef<HTMLDivElement, CustomSquareProps>(
         {children}
 
         {squareValue > 0 && showBuffs && (
-          <div className='pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-sm'>
+          <div className='pointer-events-none absolute inset-0 flex items-center justify-center rounded-sm'>
             <span
-              className='rounded bg-black/70 px-1 py-[1px] text-sm font-bold backdrop-blur-sm'
+              className='rounded px-1 py-[1px] text-sm font-bold backdrop-blur-sm'
               style={{ color: buffTextColor }}
             >
-              +{squareValue}
+              +{abbreviateNumber(squareValue)}
             </span>
           </div>
         )}

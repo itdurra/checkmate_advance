@@ -5,37 +5,28 @@ import { GameStatsPopup } from '@/components/popups/game-stats-popup';
 import { RestartConfirmationPopup } from '@/components/popups/restart-confirmation-popup';
 import { ButtonAltRetro } from '@/components/ui-retro/button-alt-retro';
 import { ButtonRetro } from '@/components/ui-retro/button-retro';
-import { CardRetro } from '@/components/ui-retro/card-retro';
 import bosses from '@/config/bosses.json';
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
 import { useScoreStore } from '@/stores/useScoreStore';
 
+import { QuitConfirmationPopup } from './popups/quit-confirmation-popup';
+import { CardRetroAlt } from './ui-retro/card-retro-alt';
+
 export const BossSelectBox = () => {
   const money = useScoreStore((state) => state.money);
-  const resetRun = useScoreStore((state) => state.resetRun);
-  const {
-    theme,
-    mapping,
-    setMapping,
-    menu,
-    setMenu,
-    level,
-    bossProgression,
-    setIsShopOpen,
-    isShopOpen,
-  } = useGame();
+  const { theme, level, setMenu } = useGame();
   const color =
     themes.themes.find((b) => b.theme === theme) || themes.themes[0];
   const boss = bosses.bosses.find((b) => b.level === level) || bosses.bosses[0];
 
   const [gameStatsPopup, setGameStatsPopup] = useState(false);
   const [restartPopup, setRestartPopup] = useState(false);
+  const [quitPopup, setQuitPopup] = useState(false);
 
   return (
     <>
-      <CardRetro className='items center mt-6 flex flex-col gap-2 p-2 text-center'>
-        <div className='font-minecraft-bold text-lg'>Credits: {money}</div>
+      <CardRetroAlt className='items center mt-6 flex hidden flex-col gap-2 p-2 text-center md:block'>
         <div className='flex flex-row justify-center gap-2 md:flex-col'>
           <ButtonAltRetro onClick={() => setGameStatsPopup(true)}>
             Info
@@ -43,9 +34,9 @@ export const BossSelectBox = () => {
           <ButtonRetro onClick={() => setRestartPopup(true)}>
             Restart
           </ButtonRetro>
-          <ButtonRetro onClick={() => setMenu('main')}>Quit</ButtonRetro>
+          <ButtonRetro onClick={() => setQuitPopup(true)}>Quit</ButtonRetro>
         </div>
-      </CardRetro>
+      </CardRetroAlt>
       <GameStatsPopup
         isOpen={gameStatsPopup}
         closeGameStatsPopup={() => setGameStatsPopup(false)}
@@ -54,6 +45,10 @@ export const BossSelectBox = () => {
         isOpen={restartPopup}
         closeRestartConfirmationPopup={() => setRestartPopup(false)}
       ></RestartConfirmationPopup>
+      <QuitConfirmationPopup
+        isOpen={quitPopup}
+        closeQuitConfirmationPopup={() => setQuitPopup(false)}
+      ></QuitConfirmationPopup>
     </>
   );
 };

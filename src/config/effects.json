@@ -1,0 +1,30 @@
+{
+    "effects": [
+      {
+        "name": 1,
+        "effect": "Pawn",
+        "description": "Pawn cards are disabled"
+      },
+      {
+        "name": 2,
+        "effect": "Knight",
+        "description": "Knight cards are disabled"
+      },
+      {
+        "name": 3,
+        "effect": "Bishop",
+        "description": "Bishop cards are disabled"
+      },
+      {
+        "name": 4,
+        "effect": "Rook",
+        "description": "Rook cards are disabled"
+      },
+      {
+        "name": 5,
+        "effect": "Queen",
+        "description": "Queen cards are disabled"
+      }
+    ]
+  }
+  

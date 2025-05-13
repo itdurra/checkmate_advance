@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
 
 import { Stats } from '@/components/popups/stats';
 import { ButtonRetro } from '@/components/ui-retro/button-retro';
@@ -7,10 +6,12 @@ import { PopupRetro } from '@/components/ui-retro/popup-retro';
 import bosses from '@/config/bosses.json';
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
+import { useMusicStore } from '@/stores/useMusicStore';
 import { useScoreStore } from '@/stores/useScoreStore';
+import { enableAllCards } from '@/utils/apply-boss-effects';
 import { applyBossRewards } from '@/utils/apply-boss-rewards';
 
-import { ButtonFlashRetro } from '../ui-retro/button-flash-retro';
+import { StatsAndButtons } from './stats-and-buttons';
 
 interface GameWinnerPopupProps {
   isOpen: boolean;
@@ -21,17 +22,32 @@ export const GameWinnerPopup = ({
   isOpen,
   closeGameWinnerPopup,
 }: GameWinnerPopupProps) => {
+  //music
+  const playSting = useMusicStore((state) => state.playSting);
+  //game
   const game = useScoreStore((state) => state.game);
   const bossProgress = useScoreStore((state) => state.bossProgress);
   const setGamePosition = useScoreStore((state) => state.setGamePosition);
   const gameOver = useScoreStore((state) => state.gameOver);
+  const newGamePlus = useScoreStore((state) => state.newGamePlus);
+  const setNewGamePlus = useScoreStore((state) => state.setNewGamePlus);
 
   const { level, updateBossProgress, bossProgression, setMenu, setIsShopOpen } =
     useGame();
   const boss = bosses.bosses.find((b) => b.level === level) || bosses.bosses[0];
-  const { theme } = useGame();
+  const { theme, setLevel } = useGame();
   const color =
     themes.themes.find((b) => b.theme === theme) || themes.themes[0];
+
+  useEffect(() => {
+    if (isOpen) {
+      if(bossProgress['8'] !== 2){
+        playSting('Victory Stinger 1');
+      } else {
+        playSting('Epilogue');
+      }
+    }
+  }, [isOpen]);
 
   const winnerGame = () => {
     gameOver();
@@ -42,73 +58,48 @@ export const GameWinnerPopup = ({
     setMenu('storymode');
     //reward player for beating boss
     applyBossRewards(level);
+    enableAllCards(); //needed for when cards are disabled
   };
 
   const completeGame = () => {
     gameOver();
     game.reset();
-    //setIsShopOpen(true);
+    setIsShopOpen(true);
     setGamePosition(game.fen());
     closeGameWinnerPopup(); // Close popup
-    setMenu('settings');
+    setMenu('storymode');
     //reward player for beating boss
     applyBossRewards(level);
+    enableAllCards(); //needed for when cards are disabled
+    setLevel(1);
+    setNewGamePlus();
   };
 
   return (
     <PopupRetro isOpen={isOpen} onClose={closeGameWinnerPopup}>
       {bossProgress['8'] !== 2 ? (
-        <div className='text-center'>
-          <Image
-            src={boss.image}
-            width={200}
-            height={200}
-            priority
-            quality={100}
-            alt='Enemy Profile Picture'
-            className='mx-auto'
-          />
-          <p className='font-minecraft-bold mb-2 text-3xl drop-shadow-md'>
-            You Win
+        <div className='popup-body-div'>
+          <p className='popup-title'>You Win</p>
+          <p className='popup-subtitle'>
+            <span className='popup-subtitle-emphasis'>Reward:</span>{' '}
+            {boss.description}
           </p>
-          <p>Reward: {boss.description}</p>
-          <div className='mt-2 w-full max-w-md'>
-            <Stats></Stats>
-          </div>
-          <ButtonFlashRetro className='mt-4' onClick={winnerGame}>
-            Main Menu
-          </ButtonFlashRetro>
+          <StatsAndButtons
+            onContinue={winnerGame}
+            text='Continue'
+          ></StatsAndButtons>
         </div>
       ) : (
         <div className='text-center'>
-          <p className='font-minecraft-bold mb-2 text-3xl drop-shadow-md'>
-            You Beat the Demo!
+          <p className='popup-title'>You Beat the Game!</p>
+          <p className='popup-subtitle'>
+            <span className='popup-subtitle-emphasis'>Reward: </span> You have
+            unlocked endless mode. Continue playing to get a high score!
           </p>
-          <div className='text-md mx-auto max-w-72'>Reward: a handwritten thank you letter. Just send your address via the Feedback form!</div>
-          <div className='mt-2'>
-            <ButtonRetro
-              onClick={() =>
-                window.open(
-                  'https://docs.google.com/forms/d/e/1FAIpQLSd2UyVk5W1cDmfaQTHdwdePJNI62BaiTVbQ67Se_ZZjY6GYLw/viewform?usp=sharing',
-                  '_blank'
-                )
-              }
-              className='my-4 w-64 py-1 text-lg'
-            >
-              Give Feedback
-            </ButtonRetro>
-          </div>
-          <div className='mt-2'>
-            <ButtonRetro
-              onClick={() => setMenu('settings')}
-                            className='my-4 w-64 py-1 text-lg'
-            >
-           Acknowledgements
-            </ButtonRetro>
-          </div>
-          <div className='mt-6'>
-            <Stats></Stats>
-          </div>
+          <StatsAndButtons
+            onContinue={completeGame}
+            text='Endless Mode'
+          ></StatsAndButtons>
         </div>
       )}
     </PopupRetro>

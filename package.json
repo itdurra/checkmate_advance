@@ -12,12 +12,14 @@
     "migration:squash": "supabase migration squash --linked",
     "generate:licenses": "license-checker --production --json > public/third-party-licenses.json",
     "generate:licensespage": "npx oss-attribution-generator --format=html --output=public/attributions.html"
-
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@supabase/supabase-js": "^2.49.4",
     "chess.js": "^1.0.0",
     "framer-motion": "^12.4.5",
     "howler": "^2.2.4",
+    "html-to-image": "^1.11.13",
     "next": "^15.1.6",
     "next-route-handler-pipe": "^1.0.5",
     "pixel-retroui": "^1.0.67",

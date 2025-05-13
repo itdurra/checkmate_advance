@@ -13,9 +13,12 @@ export const Licensing = () => {
 
   return (
     <>
-      <div className='mx-auto mt-10 max-w-5xl space-y-6 px-4 text-left text-sm text-white'>
+      <div className='mx-auto max-w-5xl space-y-6 px-4 text-left text-sm text-white'>
         <div className='w-full'></div>
-        <ButtonRetro className='mr-auto w-48' onClick={() => setMenu('main')}>
+        <ButtonRetro
+          className='mr-auto hidden w-48 md:block'
+          onClick={() => setMenu('main')}
+        >
           Main Menu
         </ButtonRetro>
         <CardRetro className='p-4'>
@@ -24,9 +27,9 @@ export const Licensing = () => {
           </h1>
           <p>
             <strong>Checkmate Advance</strong> is a non-commercial indie game
-            experiment made for fun. Huge thanks to the developers, artists, and
-            musicians whose work helped bring it to life. A special thanks to
-            indie gems{' '}
+            experiment made by a solo-developer. Huge thanks to the artists,
+            musicians, and play-testers whose work helped bring it to life. A
+            special thanks to indie gems{' '}
             <a
               href='https://store.steampowered.com/app/2379780/Balatro/'
               target='_blank'
@@ -84,17 +87,30 @@ export const Licensing = () => {
 
         <CardRetro className='p-4'>
           <h2 className='font-minecraft-bold mb-2 text-xl'>🎵 Music</h2>
-          <p>
-            Songs composed by{' '}
-            <a
-              href='https://www.youtube.com/watch?v=BUa7BKMf378&ab_channel=MatthewIvic'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='text-blue-400 underline hover:text-blue-300'
-            >
-              Matthew A. Ivic
-            </a>{' '}
-          </p>
+          <ul className='mt-2 list-disc space-y-1 pl-5'>
+            <li>
+              Songs composed by{' '}
+              <a
+                href='https://www.youtube.com/watch?v=BUa7BKMf378&ab_channel=MatthewIvic'
+                target='_blank'
+                rel='noopener noreferrer'
+                className='text-blue-400 underline hover:text-blue-300'
+              >
+                Matthew A. Ivic
+              </a>{' '}
+            </li>
+            <li>
+              Sound Effects by {' '}
+              <a
+                href='https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks'
+                target='_blank'
+                rel='noopener noreferrer'
+                className='text-blue-400 underline hover:text-blue-300'
+              >
+                Kenney.nl
+              </a>{' '}
+            </li>
+          </ul>
         </CardRetro>
 
         <CardRetro className='p-4'>
@@ -122,6 +138,17 @@ export const Licensing = () => {
                 Dskie09&apos;s RetroUI
               </a>{' '}
             </li>
+            <li>
+              Additional textures by{' '}
+              <a
+                href='https://opengameart.org/content/shiny-window-pane'
+                className='text-blue-400 underline hover:text-blue-300'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                Fupi
+              </a>{' '}
+            </li>
           </ul>
         </CardRetro>
 
@@ -143,6 +170,9 @@ export const Licensing = () => {
             commercial game entity.
           </p>
         </CardRetro>
+        <ButtonRetro className='mr-auto w-48' onClick={() => setMenu('main')}>
+          Main Menu
+        </ButtonRetro>
       </div>
     </>
   );

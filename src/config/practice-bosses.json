@@ -1,0 +1,21 @@
+{
+  "bosses": [
+    {
+      "level": 3,
+      "name": "Practice",
+      "image": "/img/chess/qb.svg",
+      "bg": "#fefcd0",
+      "baseBg": "#c381b5",
+      "textColor": "black",
+      "borderColor": "black",
+      "shadowColor": "#c381b5",
+      "description": "practice mode boss",
+      "weakness": "practice mode boss weakness",
+      "depth": 10,
+      "elo": 1,
+      "moveTime": 300,
+      "score": 0,
+      "song": "Conviction"
+    }
+  ]
+}

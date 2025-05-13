@@ -11,11 +11,11 @@ export const BoxCountUp = ({ value, text }: { value: number, text: string }) => 
   const isHighValue = value > 1000; // Visual feedback threshold
 
   return (
-    <CardRetro className={`text-center${
+    <CardRetro className={`text-center ${
       isHighValue ? 'bg-[#f8e5c8]' : '' // Light orange background for high values
     }`}>
       <div className=''>
-        <div className='text-5xl drop-shadow-md'>
+        <div className='text-xl md:text-4xl drop-shadow-md'>
           <AnimatedCountUp value={value} />
         </div>
         <div className='text-base text-gray-700'>{text}</div>

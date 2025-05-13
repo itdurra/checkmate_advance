@@ -4,7 +4,10 @@ import { create } from 'zustand';
 import Engine from '@/components/chessboard/stockfish';
 import pieces from '@/config/pieces.json';
 import type { Card } from '@/types/card';
+import type { cardType } from '@/types/cardType';
+import type { rarity } from '@/types/rarity';
 import type { ScoreStore } from '@/types/score-store';
+import type { subtype } from '@/types/subtype';
 
 //helper to create an empty board
 function createEmptyBoard(): Map<string, number> {
@@ -25,9 +28,13 @@ const allCards: Card[] = pieces.pieces.map((piece) => ({
   effect: piece.effect,
   name: piece.name,
   description: piece.description,
-  type: piece.type,
-  rarity: piece.rarity,
+  type: piece.type as cardType,
+  subtype: piece.subtype as subtype,
+  rarity: piece.rarity as rarity,
   cost: piece.cost,
+  upgrade: piece.upgrade,
+  value: piece.value,
+  active: piece.active as Boolean,
 }));
 
 export const useScoreStore = create<ScoreStore>((set, get) => ({
@@ -36,20 +43,20 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
   to: '',
   from: '',
   piece: '',
+  historyPointer: 0,
+  setHistoryPointer: (move: number) => {
+    set({ historyPointer: move });
+  },
   gamePosition: new Chess().fen(),
   setGamePosition: (position) => {
     const { game } = get();
-    console.log('test valid fen');
     game.load(position); //loads FEN w/o move history
-    set({ gamePosition: position });
-
+    set({ gamePosition: position, historyPointer: game.history().length });
   },
   setGamePositionPGN: (position) => {
     const { game } = get();
-    console.log(position,'must be pgn');
     game.loadPgn(position);
-    console.log(game.fen(),'game.fen()');
-    set({ gamePosition: game.fen() });
+    set({ gamePosition: game.fen(), historyPointer: game.history().length });
   },
   resetGame: () => {
     const game = new Chess();
@@ -74,13 +81,51 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
   animatePieceTrigger: false,
   animateSquareTrigger: false,
   animateMaterialTrigger: false,
+  animateSquare: false,
+  setAnimateSquare: (value: boolean) => set({ animateSquare: value }),
+  animatePieceMap: {},
+  setAnimatePieceMap: (pieceKey: string, value: boolean) =>
+    set((state) => ({
+      animatePieceMap: {
+        ...state.animatePieceMap,
+        [pieceKey]: value,
+      },
+    })),
+  animatePiece: false,
+  setAnimatePiece: (value: boolean) => set({ animatePiece: value }),
+  animateFormula: 0,
+  setAnimateFormula: (value: number) => set({ animateFormula: value }),
+  animateNewGame: false,
+  setAnimateNewGame: (value: boolean) => set({ animateNewGame: value }),
   isPlayerTurn: true,
   isGameOver: false,
-  showTooltips: true,
+  showTooltips: false,
   difficulty: 'medium', // 'easy' | 'medium' | 'expert'
   setDifficulty: (level) => set({ difficulty: level }),
+  gameState: ['level-select'],
+  pieceDelays: new Map<string, number>(),
 
+  //tutorial triggers
+  isActive: false,
+  currentStep: 0,
+
+  newGamePlus: 0,
   bossProgress: Array(9).fill(0), // all bosses locked by default
+  bossEffect: 'Pawn',
+  setBossEffect: () => {
+    //sets a random piece as the effect
+    const basePieceTypes = <subtype[]>[
+      'Pawn',
+      'Knight',
+      'Bishop',
+      'Rook',
+      'Queen',
+    ];
+    const roll = Math.floor(Math.random() * basePieceTypes.length); // 0 to 4
+    set(() => ({ bossEffect: basePieceTypes[roll] }));
+  },
+  bossRewards: ['Pawn', 'Pawn', 'Pawn'], //CHANGE THIS
+  setBossRewards: () => set(() => ({ board: createEmptyBoard() })),
   buffedPieces: [] as string[],
   setBuffedPieces: (squares: string[]) => set({ buffedPieces: squares }),
   showBuffs: true,
@@ -93,6 +138,7 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
   moneyMultiplier: 1,
   setMoney: (amount: number) => set({ money: amount }),
   score: 0,
+  bonus: 0,
   pieceScore: 0,
   squareScore: 0,
   playerMaterial: 0,
@@ -104,6 +150,7 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
 
   //cards
   activeCards: [],
+  setActiveCards: (cards: Card[]) => set({ activeCards: cards }),
   shopCards: [],
   setShopCards: (cards: Card[]) => set({ shopCards: cards }),
   seenShopCards: new Set(),
@@ -111,16 +158,30 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
   maxCards: 3,
   maxShopCards: 3,
 
-  resetRun: () => {
-    set(() => {
-      return {
-        // Boss progression reset
-        bossProgress: Array(9).fill(0),
+  setNewGamePlus: () => {
+    set((state) => {
+      // Call the resetBossProgress function
+      state.resetBossProgress();
 
+      // Increment newGamePlus
+      return {
+        newGamePlus: state.newGamePlus + 1,
+      };
+    });
+  },
+
+  resetRun: () => {
+    set((state) => {
+      state.resetBossProgress();
+      state.setBossEffect();
+      state.setAnimateNewGame(true);
+
+      return {
         // Gameplay counters
         turns: 10,
         money: 0,
         score: 0,
+        bonus: 0,
         pieceScore: 0,
         squareScore: 0,
         playerMaterial: 0,
@@ -130,6 +191,8 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
         negativeMultiplier: 1,
         consecutiveChecks: 0,
         moneyMultiplier: 1,
+        newGamePlus: 0,
+        historyPointer: 0,
 
         // Board and pieces
         board: createEmptyBoard(),
@@ -156,6 +219,7 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
     set((state) => {
       const turns = 10;
       const score = 0;
+      const bonus = 0;
       const pieceScore = 0;
       const squareScore = 0;
       const playerMaterial = 0;
@@ -164,10 +228,12 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
       const materialMultiplier = 1;
       const negativeMultiplier = 1;
       const consecutiveChecks = 0;
+      const historyPointer = 0;
 
       return {
         turns: turns,
         score: score,
+        bonus: bonus,
         pieceScore: pieceScore,
         squareScore: squareScore,
         playerMaterial: playerMaterial,
@@ -176,6 +242,7 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
         materialMultiplier: materialMultiplier,
         negativeMultiplier: negativeMultiplier,
         consecutiveChecks: consecutiveChecks,
+        historyPointer: historyPointer,
 
         // Board and pieces
         board: createEmptyBoard(),
@@ -204,6 +271,7 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
     set((state) => {
       const turns = 10;
       const score = 0;
+      const bonus = 0;
       const pieceScore = 0;
       const squareScore = 0;
       const playerMaterial = 0;
@@ -212,10 +280,13 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
       const materialMultiplier = 1;
       const negativeMultiplier = 1;
       const consecutiveChecks = 0;
+      const historyPointer = 0;
+      state.setAnimateNewGame(true);
 
       return {
         turns: turns,
         score: score,
+        bonus: bonus,
         pieceScore: pieceScore,
         squareScore: squareScore,
         playerMaterial: playerMaterial,
@@ -224,6 +295,7 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
         materialMultiplier: materialMultiplier,
         negativeMultiplier: negativeMultiplier,
         consecutiveChecks: consecutiveChecks,
+        historyPointer: historyPointer,
 
         // Board and pieces
         board: createEmptyBoard(),
@@ -344,21 +416,23 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
       },
     })),
 
+  //main score formula is set here
   getScore: () => {
     const {
       pieceScore,
       squareScore,
-      playerMaterial,
-      enemyMaterial,
+      bonus,
       multiplier,
       negativeMultiplier,
-      materialMultiplier,
       getMaterialAdvantage,
     } = get();
 
     return (
+      bonus +
       multiplier *
-      (negativeMultiplier * (pieceScore + squareScore) * getMaterialAdvantage())
+        (negativeMultiplier *
+          (pieceScore + squareScore) *
+          getMaterialAdvantage())
     );
   },
 
@@ -473,130 +547,133 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
     return true;
   },
 
-  /** 🔹 Remove a card from player’s hand */
   removeCard: (cardId) => {
     const { activeCards } = get();
-    if (!activeCards.some((card) => card.id === cardId)) {
+
+    const indexToRemove = activeCards.findIndex((card) => card.id === cardId);
+    if (indexToRemove === -1) {
       console.warn('Card not found!');
       return false;
     }
 
-    set((state) => ({
-      activeCards: state.activeCards.filter((card) => card.id !== cardId),
-    }));
+    const newActiveCards = [...activeCards];
+    newActiveCards.splice(indexToRemove, 1);
+
+    set({ activeCards: newActiveCards });
     return true;
   },
 
   /** 🔹 Clear all active cards */
   clearActiveCards: () => set(() => ({ activeCards: [] })),
 
-  /** 🔹 Add a new card to the shop (without duplicates) */
-  addCardToShop: () => {
-    const { shopCards, activeCards, seenShopCards, allCards, maxShopCards } =
-      get();
-    if (shopCards.length >= maxShopCards) {
-      console.warn('Shop is full!');
-      return false;
-    }
-
-    const availableCards = allCards.filter(
-      (card) =>
-        !activeCards.some((c) => c.id === card.id) &&
-        !shopCards.some((c) => c.id === card.id) &&
-        !seenShopCards.has(card.id)
-    );
-
-    if (availableCards.length === 0) {
-      console.warn('No more unique cards available for the shop.');
-      return false;
-    }
-
-    const randomIndex = Math.floor(Math.random() * availableCards.length);
-    const selectedCard = availableCards[randomIndex];
-
-    set((state) => ({
-      shopCards: [...state.shopCards, selectedCard],
-      seenShopCards: new Set([...state.seenShopCards, selectedCard.id]),
-    }));
-
-    return true;
-  },
-
-  /** 🔹 Remove a card from the shop */
+  /** 🔹 Remove a single instance of a card from the shop */
   removeCardFromShop: (cardId) => {
     const { shopCards } = get();
-    if (!shopCards.some((card) => card.id === cardId)) {
+
+    const indexToRemove = shopCards.findIndex((card) => card.id === cardId);
+    if (indexToRemove === -1) {
       console.warn('Card not found in shop!');
       return false;
     }
 
-    set((state) => ({
-      shopCards: state.shopCards.filter((card) => card.id !== cardId),
-    }));
+    const newShopCards = [...shopCards];
+    newShopCards.splice(indexToRemove, 1);
 
+    set({ shopCards: newShopCards });
     return true;
   },
 
   refreshShop: () => {
     const { allCards, activeCards, seenShopCards, bossProgress } = get();
-  
+
     const usedIds = new Set([...activeCards.map((c) => c.id)]);
-  
+
     // Helper to filter by rarity
     const availableCardsByRarity = (rarity: string) =>
       allCards.filter(
         (card) => card.rarity === rarity && !usedIds.has(card.id)
       );
-  
+
     // Determine unlocks
     const hasUncommon = bossProgress[1] === 2; // level 2 completed
     const hasRare = bossProgress[4] === 2; // level 5 completed
     const hasLegendary = bossProgress[7] === 2; // level 8 completed
-  
+
     // Get pools per rarity
     const commonPool = availableCardsByRarity('Common');
     const uncommonPool = hasUncommon ? availableCardsByRarity('Uncommon') : [];
     const rarePool = hasRare ? availableCardsByRarity('Rare') : [];
-    const legendaryPool = hasLegendary ? availableCardsByRarity('Legendary') : [];
-  
+    const legendaryPool = hasLegendary
+      ? availableCardsByRarity('Legendary')
+      : [];
+
     // Shuffle helper
     const getRandomCard = (pool: Card[]) =>
       pool.length > 0 ? pool[Math.floor(Math.random() * pool.length)] : null;
-  
+
     // Determine pools for each slot based on progression
     let slot1Pool = commonPool;
     let slot2Pool = commonPool;
     let slot3Pool = commonPool;
-  
+
     if (hasLegendary) {
-      slot1Pool = rarePool.length > 0 ? rarePool : uncommonPool.length > 0 ? uncommonPool : commonPool;
-      slot2Pool = legendaryPool.length > 0 ? legendaryPool : rarePool.length > 0 ? rarePool : uncommonPool.length > 0 ? uncommonPool : commonPool;
-      slot3Pool = legendaryPool.length > 0 ? legendaryPool : rarePool.length > 0 ? rarePool : uncommonPool.length > 0 ? uncommonPool : commonPool;
+      slot1Pool =
+        rarePool.length > 0
+          ? rarePool
+          : uncommonPool.length > 0
+          ? uncommonPool
+          : commonPool;
+      slot2Pool =
+        legendaryPool.length > 0
+          ? legendaryPool
+          : rarePool.length > 0
+          ? rarePool
+          : uncommonPool.length > 0
+          ? uncommonPool
+          : commonPool;
+      slot3Pool =
+        legendaryPool.length > 0
+          ? legendaryPool
+          : rarePool.length > 0
+          ? rarePool
+          : uncommonPool.length > 0
+          ? uncommonPool
+          : commonPool;
     } else if (hasRare) {
       slot1Pool = uncommonPool.length > 0 ? uncommonPool : commonPool;
-      slot2Pool = rarePool.length > 0 ? rarePool : uncommonPool.length > 0 ? uncommonPool : commonPool;
-      slot3Pool = rarePool.length > 0 ? rarePool : uncommonPool.length > 0 ? uncommonPool : commonPool;
+      slot2Pool =
+        rarePool.length > 0
+          ? rarePool
+          : uncommonPool.length > 0
+          ? uncommonPool
+          : commonPool;
+      slot3Pool =
+        rarePool.length > 0
+          ? rarePool
+          : uncommonPool.length > 0
+          ? uncommonPool
+          : commonPool;
     } else if (hasUncommon) {
       slot2Pool = uncommonPool.length > 0 ? uncommonPool : commonPool;
       slot3Pool = uncommonPool.length > 0 ? uncommonPool : commonPool;
     }
-  
+
     // Select one card from each slot's pool
     const selectedCards: Card[] = [];
     const card1 = getRandomCard(slot1Pool);
     const card2 = getRandomCard(slot2Pool);
     const card3 = getRandomCard(slot3Pool);
-  
+
     if (card1) selectedCards.push(card1);
     if (card2) selectedCards.push(card2);
     if (card3) selectedCards.push(card3);
-  
+
     // Fallback to common cards if any slot didn't get a card
     while (selectedCards.length < 3) {
       const fallbackCard = getRandomCard(commonPool);
       if (fallbackCard) selectedCards.push(fallbackCard);
     }
-  
+
     set((state) => ({
       shopCards: selectedCards.slice(0, 3),
       seenShopCards: new Set([
@@ -649,4 +726,40 @@ export const useScoreStore = create<ScoreStore>((set, get) => ({
     const mustBeat = [2, 5, 8];
     return mustBeat.every((i) => progress[i] === 2);
   },
+
+  //tutorial triggers
+  steps: [
+    {
+      selector: '.tutorial-chessboard',
+      content:
+        'Welcome to Checkmate Advance. Make a move on the board to start the game!',
+    },
+    {
+      selector: '.tutorial-score',
+      content:
+        'This is your current score. Score higher than the boss score to win!',
+    },
+    {
+      selector: '.tutorial-turns',
+      content:
+        'You have 10 turns before the game ends. Plan your moves carefully.',
+    },
+    {
+      selector: '.tutorial-piece-values',
+      content: "Each piece has a value used to calculate this turn's score.",
+    },
+  ],
+  start: () => set({ isActive: true, currentStep: 0 }),
+  next: () =>
+    set((state) => ({
+      currentStep:
+        state.currentStep + 1 >= state.steps.length
+          ? state.currentStep
+          : state.currentStep + 1,
+    })),
+  back: () =>
+    set((state) => ({
+      currentStep: state.currentStep === 0 ? 0 : state.currentStep - 1,
+    })),
+  exit: () => set({ isActive: false }),
 }));

@@ -16,10 +16,10 @@ export const BoxCountDown = ({ value, text }: { value: number, text: string }) =
       isUrgent ? 'animate-pulse bg-[#c381b5],' : ''
     }`}>
       <div className=''>
-        <div className='text-5xl drop-shadow-md'>
+        <div className='text-xl md:text-4xl drop-shadow-md'>
           <AnimatedCountDown value={value} />
         </div>
-        <div className='text-base text-gray-700'>{text}</div>
+        <div className='text-sm md:text-base text-gray-700'>{text}</div>
       </div>
     </CardRetroAlt>
   );

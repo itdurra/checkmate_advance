@@ -18,24 +18,27 @@ export const GameSettingsPopup = ({
 }: GameSettingsPopupProps) => {
   return (
     <PopupRetro isOpen={isOpen} onClose={closeGameSettingsPopup}>
-      <div className='text-center font-minecraft text-sm'>
-        <p className='font-minecraft-bold my-4 text-lg'>
-          Hide/Display Square Values
-        </p>
-        <ToggleDisplay></ToggleDisplay>
-        <div className='mx-auto mt-4 w-[90%] max-w-72 text-center'>
-          <p className='mb-4'>
+      <div className='popup-body-div space-y-2'>
+        <p className='popup-title'>Settings</p>
+        <div>
+          <div className='grid grid-cols-2 items-center justify-center'>
+            <p className='font-minecraft-bold uppercase'>Square Values: </p>
+            <ToggleDisplay></ToggleDisplay>
+          </div>
+          <p className='popup-subtitle'>
             Square values default to hidden at 0, but can be increased by having
             active cards in your hand. They will display on the board.
           </p>
         </div>
-        <p className='font-minecraft-bold my-4 text-lg'>
-          Hide/Display Tool Tips
-        </p>
-        <ToggleTooltips></ToggleTooltips>
-        <div className='mx-auto mt-4 w-[90%] max-w-72 text-center'>
-          <p className='mb-4'>
-            Display helpful popups with tutorial information about the game when mousing over certain items.
+        <hr className='border-dashed border-[#c381b5] border-2'></hr>
+        <div>
+          <div className='grid grid-cols-2 items-center justify-center'>
+            <p className='font-minecraft-bold uppercase'>Tutorial Info: </p>
+            <ToggleTooltips></ToggleTooltips>
+          </div>
+          <p className='popup-subtitle'>
+            Display helpful popups with tutorial information about the game when
+            mousing over certain items.
           </p>
         </div>
         <div className='mt-4'>
