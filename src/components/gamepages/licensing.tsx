@@ -100,7 +100,7 @@ export const Licensing = () => {
               </a>{' '}
             </li>
             <li>
-              Sound Effects by {' '}
+              Sound Effects by{' '}
               <a
                 href='https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks'
                 target='_blank'
@@ -125,6 +125,17 @@ export const Licensing = () => {
                 className='text-blue-400 underline hover:text-blue-300'
               >
                 therealqtpi & caderek (sharechess.github.io)
+              </a>
+            </li>
+            <li>
+              Card Art by{' '}
+              <a
+                href='https://opengameart.org/content/496-pixel-art-icons-for-medievalfantasy-rpg'
+                target='_blank'
+                rel='noopener noreferrer'
+                className='text-blue-400 underline hover:text-blue-300'
+              >
+                Henrique Lazarini
               </a>
             </li>
             <li>
