@@ -12,7 +12,7 @@ export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Checkmate Advance',
-  description: 'Retro game meets modern chess',
+  description: 'Roguelike deckbuilding meets modern chess',
 };
 
 export default function RootLayout({ children }: PropsWithChildren) {
@@ -41,16 +41,16 @@ function AppBar() {
 
 function Footer() {
   return (
-    <footer className='mt-auto hidden px-4 pt-6 text-sm text-gray-400 md:flex md:flex-col items-center space-y-2'>
+    <footer className='mt-auto px-4 pt-6 text-sm text-gray-400 md:flex md:flex-col items-center space-y-2'>
       {/* Link Row */}
       <div className='flex flex-row justify-center space-x-6'>
         <a
-          href='https://docs.google.com/forms/d/e/1FAIpQLSd2UyVk5W1cDmfaQTHdwdePJNI62BaiTVbQ67Se_ZZjY6GYLw/viewform?usp=sharing'
+          href='https://ko-fi.com/iandurra'
           target='_blank'
           rel='noopener noreferrer'
           className='hover:text-blue-300 transition'
         >
-          Feedback
+          Ko-fi
         </a>
         <a
           href='https://github.com/itdurra/checkmate_advance'
@@ -60,19 +60,19 @@ function Footer() {
         >
           Github
         </a>
+                <a
+          href='/privacy'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='hover:text-blue-300 transition'
+        >
+          Privacy Policy
+        </a>
       </div>
 
       {/* Developer Credit */}
       <div className='text-center font-minecraft'>
-        Checkmate Advance © {new Date().getFullYear()} — Developed by{' '}
-        <a
-          href='https://github.com/itdurra'
-          target='_blank'
-          rel='noopener noreferrer'
-          className='underline hover:text-blue-300'
-        >
-          Ian Durra
-        </a>
+        Ian Durra Games LLC
       </div>
     </footer>
   );

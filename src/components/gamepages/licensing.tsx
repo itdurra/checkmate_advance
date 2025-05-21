@@ -26,7 +26,7 @@ export const Licensing = () => {
             🎓 Licensing & Acknowledgements
           </h1>
           <p>
-            <strong>Checkmate Advance</strong> is a non-commercial indie game
+            <strong>Checkmate Advance</strong> is an indie game
             experiment made by a solo-developer. Huge thanks to the artists,
             musicians, and play-testers whose work helped bring it to life. A
             special thanks to indie gems{' '}

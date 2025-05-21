@@ -1,6 +1,8 @@
-# ♟️ Checkmate Advance
+# ♟️ Checkmate Advance by Ian Durra
 
-A Balatro-inspired chess experiment built with React, TypeScript, and open-source libraries. This was my first project in React and was built solely to learn. It has many bugs to improve but I am moving onto other projects! Try the game here at [CheckmateAdvance.com](https://checkmateadvance.com)
+ Try the game here at [CheckmateAdvance.com](https://checkmateadvance.com)
+
+A Balatro-inspired chess experiment built with React, TypeScript, and open-source libraries. This is the first game I have made, and was built solely to learn. If you would like me to continue development on this project, let me know on [kofi: iandurra](https://ko-fi.com/iandurra#)
 
 ## Features
 - Chess gameplay + Roguelike deck building game
@@ -36,6 +38,7 @@ A Balatro-inspired chess experiment built with React, TypeScript, and open-sourc
 | Asset Type | Source |
 |------------|--------|
 | Pixel Neon Chess Set | [Sharechess Project: therealqtpi & caderek ](https://sharechess.github.io) |
+| Card Art | [Henrique Lazarini](https://opengameart.org/content/496-pixel-art-icons-for-medievalfantasy-rpg) |
 | UI Elements | [RetroUI](https://www.retroui.io/) | 
 | Textures | [Fupi](https://opengameart.org/content/shiny-window-pane) |
 | Music | Matthew A. Ivic |

@@ -85,14 +85,14 @@ function NavLinks({ onClick }: { onClick?: () => void }) {
       <button
         onClick={() => {
           window.open(
-            'https://docs.google.com/forms/d/e/1FAIpQLSd2UyVk5W1cDmfaQTHdwdePJNI62BaiTVbQ67Se_ZZjY6GYLw/viewform?usp=sharing',
+            'https://ko-fi.com/iandurra',
             '_blank'
           );
           onClick?.();
         }}
         className='transition-all hover:text-blue-800'
       >
-        Feedback🖤
+        Ko-fi🖤
       </button>
     </div>
   );

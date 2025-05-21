@@ -33,7 +33,8 @@ interface GameContextType {
     | 'character_unlock'
     | 'game'
     | 'feedback'
-    | 'practice';
+    | 'practice'
+    | 'privacy';
   isFreePlay: boolean;
   bossProgression: BossProgress[];
   isShopOpen: boolean;
@@ -64,6 +65,7 @@ interface GameContextType {
       | 'game'
       | 'feedback'
       | 'practice'
+      | 'privacy'
   ) => void;
   setIsFreePlay: (isFreePlay: boolean) => void;
   updateBossProgress: (
@@ -108,6 +110,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     | 'game'
     | 'feedback'
     | 'practice'
+    | 'privacy'
   >('main');
   const [isFreePlay, setIsFreePlay] = useState<boolean>(true);
   const [isShopOpen, setIsShopOpen] = useState<boolean>(false);

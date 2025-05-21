@@ -4,11 +4,10 @@ import { ButtonAltRetro } from '@/components/ui-retro/button-alt-retro';
 import { ButtonRetro } from '@/components/ui-retro/button-retro';
 import themes from '@/config/themes.json';
 import { useGame } from '@/context/game-context';
-import { useMusicStore } from '@/stores/useMusicStore';
 
 import { BackgroundMusic } from '../background-music';
+import { BioCard } from '../bio-card';
 import { EmailSignupForm } from '../email-signup-form';
-import { CardRetro } from '../ui-retro/card-retro';
 import { CardRetroAltNoMotion } from '../ui-retro/card-retro-alt-no-motion';
 import { CardRetroNoMotion } from '../ui-retro/card-retro-no-motion';
 
@@ -17,6 +16,7 @@ import { Game } from './game';
 import { Licensing } from './licensing';
 import { Practice } from './practice';
 import { PracticeCutScene } from './practice-cutscene';
+import { Privacy } from './privacy';
 import { StoryMode } from './story-mode';
 
 export const MainMenu = () => {
@@ -29,14 +29,11 @@ export const MainMenu = () => {
       <div className='justify-center text-center'>
         <CardRetroNoMotion className='mx-auto max-w-lg'>
           <div className='py-8'>
-            <p className='font-minecraft-bold mb-1 text-3xl md:text-4xl'>
-              CheckMate Advance
+            <p className='font-minecraft-bold text-3xl md:text-4xl'>
+              Checkmate Advance
             </p>
-            <p className='font-minecraft-bold mb-4 text-lg text-[#c381b5]'>
-              A chess deck-building roguelike
-            </p>
-            <p className='font-minecraft text-gray-400'>
-              Developer: <span className='text-[#c381b5]'>Ian Durra</span>
+            <p className='font-minecraft-bold mb-3 text-2xl italic text-[#c381b5] md:text-3xl'>
+              by Ian Durra
             </p>
             <p className='font-minecraft text-gray-400'>
               Music: <span className='text-[#c381b5]'>Matthew A. Ivic</span>
@@ -66,7 +63,7 @@ export const MainMenu = () => {
             </ButtonRetro>
           </div>
         </CardRetroNoMotion>
-        <div className='mx-auto w-full text-center max-w-4xl flex flex-col md:grid md:grid-cols-2 md:gap-4 justify-center items-center'>
+        <div className='mx-auto flex w-full max-w-4xl flex-col items-center justify-center text-center md:grid md:grid-cols-2 md:gap-4'>
           <CardRetroAltNoMotion className='mt-8 max-w-md p-4'>
             <EmailSignupForm />
           </CardRetroAltNoMotion>
@@ -96,6 +93,12 @@ export const MainMenu = () => {
             </ul>
           </CardRetroAltNoMotion>
         </div>
+        <div>
+          <CardRetroAltNoMotion className='max-w-md mx-auto mt-6'>
+            {' '}
+            <BioCard />
+          </CardRetroAltNoMotion>
+        </div>
       </div>
     );
   }
@@ -109,6 +112,7 @@ export const MainMenu = () => {
       {menu === 'settings' && <Licensing />}
       {menu === 'practice' && <Practice />}
       {menu === 'practice_cutscene' && <PracticeCutScene />}
+      {menu === 'privacy' && <Privacy />}
       <BackgroundMusic></BackgroundMusic>
     </div>
   );
