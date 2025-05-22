@@ -20,6 +20,7 @@ export const BossUI = () => {
   const isPlayerTurn = useScoreStore((state) => state.isPlayerTurn);
   const bossProgress = useScoreStore((state) => state.bossProgress);
   const resetRun = useScoreStore((state) => state.resetRun);
+  const isGameOver = useScoreStore((state) => state.isGameOver);
 
   const { theme, menu, level, setMenu, setIsShopOpen, isShopOpen } = useGame();
   const color =
@@ -37,32 +38,48 @@ export const BossUI = () => {
       {menu === 'game' && (
         <CardRetroAlt className='p-3 font-minecraft text-lg'>
           {bossProgress[level - 1] !== 2 ? (
-            <>
-              <div className='items-center gap-1'>
-                <MoveHistory></MoveHistory>
-                <div className='text-center font-bold'>
-                  {isPlayerTurn ? 'Your Turn' : 'Boss Turn'}
+            !isGameOver ? (
+              <>
+                <div className='items-center gap-1'>
+                  <MoveHistory></MoveHistory>
+                  <div className='text-center font-bold'>
+                    {isPlayerTurn ? 'Your Turn' : 'Boss Turn'}
+                  </div>
+                  {/* Large screens */}
+                  <div className='hidden grid-cols-2 lg:grid'>
+                    <ButtonRetro onClick={() => setGameSettingsPopup(true)}>
+                      Settings
+                    </ButtonRetro>
+                    <ButtonRetro onClick={() => setGameOverPopup(true)}>
+                      Quit
+                    </ButtonRetro>
+                  </div>
+                  {/* Medium screens - truncate settings text */}
+                  <div className='grid grid-cols-2 lg:hidden'>
+                    <ButtonRetro onClick={() => setGameSettingsPopup(true)}>
+                      ⚙️
+                    </ButtonRetro>
+                    <ButtonRetro onClick={() => setGameOverPopup(true)}>
+                      Quit
+                    </ButtonRetro>
+                  </div>
                 </div>
-                {/* Large screens */}
-                <div className='hidden grid-cols-2 lg:grid'>
+              </>
+            ) : (
+              <>
+                <div className='grid items-center gap-1'>
+                  <div className='text-center text-base font-bold'>
+                    Game Over!
+                  </div>
                   <ButtonRetro onClick={() => setGameSettingsPopup(true)}>
                     Settings
                   </ButtonRetro>
-                  <ButtonRetro onClick={() => setGameOverPopup(true)}>
-                    Quit
-                  </ButtonRetro>
+                  <ButtonFlashRetro onClick={() => setGameOverPopup(true)}>
+                    ➡ Quit
+                  </ButtonFlashRetro>
                 </div>
-                {/* Medium screens - truncate settings text */}
-                <div className='grid grid-cols-2 lg:hidden'>
-                  <ButtonRetro onClick={() => setGameSettingsPopup(true)}>
-                    ⚙️
-                  </ButtonRetro>
-                  <ButtonRetro onClick={() => setGameOverPopup(true)}>
-                    Quit
-                  </ButtonRetro>
-                </div>
-              </div>
-            </>
+              </>
+            )
           ) : (
             <>
               <div className='grid items-center gap-1'>
