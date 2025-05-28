@@ -3,7 +3,6 @@
 import { useState } from 'react';
 
 import { useGame } from '@/context/game-context';
-import { supabase } from '@/lib/supabase';
 
 export const EmailSignupForm = () => {
   const { setMenu } = useGame();
@@ -33,22 +32,22 @@ export const EmailSignupForm = () => {
 
     try {
       const formData = new FormData();
-      formData.append("EMAIL", email);
+      formData.append('EMAIL', email);
 
       const response = await fetch(
-        "https://iandurra.us5.list-manage.com/subscribe/post?u=7b96c4b1a9d2c87f5882b1985&amp;id=e47b71f0c1&amp;f_id=0026edebf0",
+        'https://checkmateadvance.us5.list-manage.com/subscribe/post?u=7b96c4b1a9d2c87f5882b1985&amp;id=e47b71f0c1&amp;f_id=0026edebf0',
         {
-          method: "POST",
-          mode: "no-cors", // required for Mailchimp
+          method: 'POST',
+          mode: 'no-cors', // required for Mailchimp
           body: formData,
         }
       );
 
-      localStorage.setItem("email_submitted", Date.now().toString());
-      setStatus("success");
-      setEmail("");
+      localStorage.setItem('email_submitted', Date.now().toString());
+      setStatus('success');
+      setEmail('');
     } catch (err) {
-      setStatus("error");
+      setStatus('error');
     }
   };
 
@@ -101,7 +100,7 @@ export const EmailSignupForm = () => {
       )}
       <div
         onClick={() => setMenu('privacy')}
-        className='mt-2 cursor-pointer hover:underline text-sm text-gray-700'
+        className='mt-2 cursor-pointer text-sm text-gray-700 hover:underline'
       >
         Privacy Policy
       </div>
