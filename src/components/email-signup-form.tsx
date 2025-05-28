@@ -31,18 +31,24 @@ export const EmailSignupForm = () => {
       return;
     }
 
-    const { error } = await supabase
-      .from('emails')
-      .insert([{ email, monthly }]);
+    try {
+      const formData = new FormData();
+      formData.append("EMAIL", email);
 
-    if (error) {
-      console.error(error);
-      setStatus('error');
-    } else {
-      localStorage.setItem('email_submitted', Date.now().toString());
-      setEmail('');
-      setMonthly(false);
-      setStatus('success');
+      const response = await fetch(
+        "https://iandurra.us5.list-manage.com/subscribe/post?u=7b96c4b1a9d2c87f5882b1985&amp;id=e47b71f0c1&amp;f_id=0026edebf0",
+        {
+          method: "POST",
+          mode: "no-cors", // required for Mailchimp
+          body: formData,
+        }
+      );
+
+      localStorage.setItem("email_submitted", Date.now().toString());
+      setStatus("success");
+      setEmail("");
+    } catch (err) {
+      setStatus("error");
     }
   };
 
