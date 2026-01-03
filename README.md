@@ -2,7 +2,7 @@
 
  Try the game here at [CheckmateAdvance.com](https://checkmateadvance.com)
 
-A Balatro-inspired chess experiment built with React, TypeScript, and open-source libraries. This is the first game I have made, and was built solely to learn. If you would like me to continue development on this project, let me know on [kofi: iandurra](https://ko-fi.com/iandurra#)
+A Balatro-inspired chess experiment built with React, TypeScript, and open-source libraries. This is the first game I have made, and was built solely to learn.
 
 ## Features
 - Chess gameplay + Roguelike deck building game
