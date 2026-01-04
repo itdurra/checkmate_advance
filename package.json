@@ -20,7 +20,7 @@
     "framer-motion": "^12.4.5",
     "howler": "^2.2.4",
     "html-to-image": "^1.11.13",
-    "next": "^15.1.6",
+    "next": "15.1.11",
     "next-route-handler-pipe": "^1.0.5",
     "pixel-retroui": "^1.0.67",
     "react": "^19.0.0",
